@@ -8,6 +8,5 @@ namespace OnlineShoesStore
     public class ShoesDTO
     {
         //tester
-        // 123
     }
 }
