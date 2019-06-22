@@ -15,6 +15,16 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
+        public IActionResult Category()
+        {
+            return View();
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
