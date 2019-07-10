@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShoesStore", "OnlineShoesStore\OnlineShoesStore.csproj", "{BAD28C02-893F-4E4B-9159-1B102677B900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{EB90A698-C7AE-4CFF-8F3F-5EBFF7D9F6F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "ClassLibrary1\DTOs.csproj", "{EB90A698-C7AE-4CFF-8F3F-5EBFF7D9F6F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
