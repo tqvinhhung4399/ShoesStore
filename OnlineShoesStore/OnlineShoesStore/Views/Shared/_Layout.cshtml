@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - OnlineShoesStore</title>
 
     <environment include="Development">
+        <link rel="stylesheet" href="~/css/DataTableCSS.css">
         <link rel="stylesheet" href="~/css/linearicons.css">
         <link rel="stylesheet" href="~/css/font-awesome.min.css">
         <link rel="stylesheet" href="~/css/themify-icons.css">
@@ -200,6 +201,12 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
         <script src="~/js/gmaps.min.js"></script>
         <script src="~/js/main.js"></script>
+        <script src="~/js/DataTableJS.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#test').DataTable();
+            });
+        </script>
     </environment>
     @*<environment exclude="Development">
             <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
