@@ -5,11 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShoesStore.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace OnlineShoesStore.Controllers
 {
     public class HomeController : Controller
     {
+        public IConfiguration Configuration { get; }
+        public HomeController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public IActionResult Cart()
         {
             return View();
@@ -20,6 +27,7 @@ namespace OnlineShoesStore.Controllers
         }
         public IActionResult Register()
         {
+
             return View();
         }
         public IActionResult Index()
