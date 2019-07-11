@@ -27,9 +27,25 @@ namespace OnlineShoesStore.Controllers
         }
         public IActionResult Register()
         {
-
             return View();
         }
+
+        public IActionResult ProcessRegister() {
+            string username = Request.Form["txtUsername"];
+            string password = Request.Form["txtPassword"];
+            string gender = Request.Form["txtGender"];
+            string fullname = Request.Form["txtFullname"];
+            string dob = Request.Form["txtDob"];
+            string address = Request.Form["txtAddress"];
+            string phoneNumber = Request.Form["txtPhoneNumber"];
+            string role = "user";
+            bool isDeleted = false;
+            UserData ud = new UserData(Configuration);
+            UserDTO user = new UserDTO(username, password, fullname, gender, DateTime.Parse(dob), address, phoneNumber, isDeleted, role);
+            ud.RegisterUser(user);
+            return View("Index");
+        }
+
         public IActionResult Index()
         {
             return View();
