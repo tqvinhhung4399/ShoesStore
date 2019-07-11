@@ -35,15 +35,16 @@
             <div class="col-lg-6">
                 <div class="login_form_inner">
                     <h3>Log in to enter</h3>
-                    <form class="row login_form" action="ProcessRegister" id="register_form" method="POST">
+                    <form class="row login_form" action="ProcessRegister" id="register_form" method="POST" onsubmit="return validatePassword()">
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="username" name="txtUsername" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required>
+                            <input type="email" class="form-control" id="username" name="txtUsername" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required oninvalid="this.setCustomValidity('Please input an email (ex: sneakerhead@email.com)')" oninput="this.setCustomValidity('')">
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="password" name="txtPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required>
+                            <input type="password" class="form-control" id="password" name="txtPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required pattern="[a-zA-Z0-9]{6,18}" oninvalid="this.setCustomValidity('Password is 6 - 18 characters (digits and letters)')" oninput="this.setCustomValidity('')">
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="confirmPassword" name="txtConfirmPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
+                            <input type="password" class="form-control" id="confirmPassword" name="txtConfirmPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
+                            <span class="text-danger" id="txtError"></span>
                         </div>
                         <div class="col-md-12">
                             <label style="float:left">Gender</label>
@@ -64,23 +65,19 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <br />
-                            <input type="text" class="form-control" id="fullname" name="txtFullname" placeholder="Fullname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Fullname'" required>
+                            <input type="text" class="form-control" id="fullname" name="txtFullname" placeholder="Fullname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Fullname'" required pattern=".{1,50}" oninvalid="this.setCustomValidity('Name is under 50 characters')" oninput="this.setCustomValidity('')">
                         </div>
                         <div class="col-md-12 form-group">
-                            <label style="float:left">Birthdate</label>
-                            <input type="date" class="form-control" id="dob" name="txtDob" placeholder="Birthdate" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Birthdate'" required>
+                            <label style="float:left">Date of birth</label>
+                            <input type="date" class="form-control date" id="dob" name="txtDob" placeholder="Birthdate" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Date of birth'" required>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="address" name="txtAddress" placeholder="Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'" required>
+                            <input type="text" class="form-control" id="address" name="txtAddress" placeholder="Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'" required pattern=".{5,100}" oninvalid="this.setCustomValidity('Address between 5 - 100 characters')" oninput="this.setCustomValidity('')">
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="tel" class="form-control" id="tel" name="txtPhoneNumber" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" required>
+                            <input type="tel" class="form-control" id="tel" name="txtPhoneNumber" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" required pattern="[0-9]{8,15}" oninvalid="this.setCustomValidity('Phone number is number, 8 - 15 digits')" oninput="this.setCustomValidity('')">
                         </div>
                         <div class="col-md-12 form-group">
-                            <div class="creat_account">
-                                <input type="checkbox" id="f-option2" name="selector">
-                                <label for="f-option2">Keep me logged in</label>
-                            </div>
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="button primary-btn">Register</button>

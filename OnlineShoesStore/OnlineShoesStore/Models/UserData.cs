@@ -91,18 +91,21 @@ namespace OnlineShoesStore.Models
 
     public class UserData
     {
-        public IConfiguration Configuration { get; }
-        public UserData(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        //dat connection string o day xai` tam nha
+        private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
         
-        public void RegisterUser(UserDTO user)
+        // may cai nay anh test thu, khong quan trong nhung cung dung xoa nha
+        //public IConfiguration Configuration { get; }
+        //public UserData(IConfiguration configuration)
+        //{
+        //    Configuration = configuration;
+        //}
+
+        public bool RegisterUser(UserDTO user)
         {
 
             //string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
-            string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-            Console.WriteLine(connectionString);
+            bool result;
             string sql = "Insert into Users values (@username, @password, @role, @fullname, " +
                 "@gender, @dob, @address, @tel, @isDeleted)";
             SqlConnection cnn = new SqlConnection(connectionString);
@@ -120,8 +123,36 @@ namespace OnlineShoesStore.Models
             cmd.Parameters.AddWithValue("@address", user.Address);
             cmd.Parameters.AddWithValue("@tel", user.Tel);
             cmd.Parameters.AddWithValue("@isDeleted", user.IsDeleted);
-            cmd.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
+            return result;
+        }
+        
+        public UserDTO CheckLogin(string username, string password)
+        {
+            UserDTO user = null;
+            string sql = "Select fullname, gender, dob, address, tel, role From Users Where UserID like @username and Password like @password and isDeleted = @false";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@false", false);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                string fullname = (string)dr[0];
+                string gender = (string)dr[1];
+                DateTime dob = (DateTime)dr[2];
+                string address = (string)dr[3];
+                string tel = (string)dr[4];
+                string role = (string)dr[5];
+                user = new UserDTO(username, password = null, fullname, gender, dob, address, tel, false, role);
+            } 
+            return user;
         }
     }
 }

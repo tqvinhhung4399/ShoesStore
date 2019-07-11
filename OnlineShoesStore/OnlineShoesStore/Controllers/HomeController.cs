@@ -40,10 +40,36 @@ namespace OnlineShoesStore.Controllers
             string phoneNumber = Request.Form["txtPhoneNumber"];
             string role = "user";
             bool isDeleted = false;
-            UserData ud = new UserData(Configuration);
+            //UserData ud = new UserData(Configuration);
+
+            UserData ud = new UserData();
             UserDTO user = new UserDTO(username, password, fullname, gender, DateTime.Parse(dob), address, phoneNumber, isDeleted, role);
-            ud.RegisterUser(user);
-            return View("Index");
+            if (ud.RegisterUser(user))
+            {
+                return View("Index");
+            } else
+            {
+                return View("Error");
+            }
+        }
+
+        public IActionResult ProcessLogin()
+        {
+            string username = Request.Form["txtUsername"];
+            string password = Request.Form["txtPassword"];
+            UserDTO user = new UserData().CheckLogin(username, password);
+            if (user == null)
+            {
+                ViewBag.Invalid = "Wrong username or password";
+                ViewBag.Username = username;
+                return View("Login");
+            } else if (user.Role.Equals("admin"))
+            {
+                return View("~/Views/Admin/UserManager.cshtml");
+            } else
+            {
+                return View("Index");
+            }
         }
 
         public IActionResult Index()
