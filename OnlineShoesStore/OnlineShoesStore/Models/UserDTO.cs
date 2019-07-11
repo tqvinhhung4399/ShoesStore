@@ -15,7 +15,7 @@ namespace DTOs
         private string tel;
         private bool isDeleted;
         private string role;
-
+        private int i;
         public UserDTO(string username, string password, string fullname, string gender, DateTime dateOfBirth, string address, string tel, bool isDeleted, string role)
         {
             this.username = username;
