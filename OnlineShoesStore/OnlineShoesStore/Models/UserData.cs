@@ -151,7 +151,8 @@ namespace OnlineShoesStore.Models
                 string tel = (string)dr[4];
                 string role = (string)dr[5];
                 user = new UserDTO(username, password = null, fullname, gender, dob, address, tel, false, role);
-            } 
+            }
+            cnn.Close();
             return user;
         }
     }
