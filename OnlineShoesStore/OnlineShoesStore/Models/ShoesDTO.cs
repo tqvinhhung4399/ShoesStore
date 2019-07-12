@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DTOs
 {
@@ -73,5 +76,130 @@ namespace DTOs
             set { isDeleted = value; }
         }
 
+    }
+
+    public class ShoesData
+    {
+        private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+        public List<ShoesDTO> FindAll()
+        {
+            List<ShoesDTO> result = null;
+            string sql = "Select * From Shoes Where isDeleted = @Deleted";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Deleted", false);
+            SqlDataReader dr = cmd.ExecuteReader();
+            int shoesId, categoryId, brandId, originId;
+            string name, material, des;
+            result = new List<ShoesDTO>();
+            while (dr.Read())
+            {
+                shoesId = dr.GetInt32(0);
+                name = dr.GetString(1);
+                categoryId = dr.GetInt32(2);
+                brandId = dr.GetInt32(3);
+                material = dr.GetString(4);
+                des = dr.GetString(5);
+                originId = dr.GetInt32(6);
+                result.Add(new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false));
+            }
+            cnn.Close();
+            return result;
+        }
+
+        public List<ShoesDTO> FindByCategory(int categoryId)
+        {
+            List<ShoesDTO> result = null;
+            string sql = "Select * From Shoes Where isDeleted = @Deleted And categoryId = @Id";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Deleted", false);
+            cmd.Parameters.AddWithValue("@Id", categoryId);
+            SqlDataReader dr = cmd.ExecuteReader();
+            int shoesId, brandId, originId;
+            string name, material, des;
+            result = new List<ShoesDTO>();
+            while (dr.Read())
+            {
+                shoesId = dr.GetInt32(0);
+                name = dr.GetString(1);
+                brandId = dr.GetInt32(3);
+                material = dr.GetString(4);
+                des = dr.GetString(5);
+                originId = dr.GetInt32(6);
+                result.Add(new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false));
+            }
+            cnn.Close();
+            return result;
+        }
+
+        public List<ShoesDTO> FindByBrand(int brandId)
+        {
+            List<ShoesDTO> result = null;
+            string sql = "Select * From Shoes Where isDeleted = @Deleted And brandId = @Id";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Deleted", false);
+            cmd.Parameters.AddWithValue("@Id", brandId);
+            SqlDataReader dr = cmd.ExecuteReader();
+            int shoesId, categoryId, originId;
+            string name, material, des;
+            result = new List<ShoesDTO>();
+            while (dr.Read())
+            {
+                shoesId = dr.GetInt32(0);
+                name = dr.GetString(1);
+                categoryId = dr.GetInt32(2);
+                material = dr.GetString(4);
+                des = dr.GetString(5);
+                originId = dr.GetInt32(6);
+                result.Add(new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false));
+            }
+            cnn.Close();
+            return result;
+        }
+
+        public List<ShoesDTO> FindByOrigin(int originId)
+        {
+            List<ShoesDTO> result = null;
+            string sql = "Select * From Shoes Where isDeleted = @Deleted And originId = @Id";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Deleted", false);
+            cmd.Parameters.AddWithValue("@Id", originId);
+            SqlDataReader dr = cmd.ExecuteReader();
+            int shoesId, categoryId, brandId;
+            string name, material, des;
+            result = new List<ShoesDTO>();
+            while (dr.Read())
+            {
+                shoesId = dr.GetInt32(0);
+                name = dr.GetString(1);
+                categoryId = dr.GetInt32(2);
+                brandId = dr.GetInt32(3);
+                material = dr.GetString(4);
+                des = dr.GetString(5);
+                result.Add(new ShoesDTO(shoesId, name, categoryId, originId, material, des, originId, false));
+            }
+            cnn.Close();
+            return result;
+        }
     }
 }

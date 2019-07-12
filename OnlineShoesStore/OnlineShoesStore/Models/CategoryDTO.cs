@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace DTOs
 {
-    class CategoryDTO
+    public class CategoryDTO
     {
         private int categoryId;
         private string name;
@@ -35,5 +37,35 @@ namespace DTOs
             set { isDeleted = value; }
         }
 
+    }
+
+    public class CategoryData
+    {
+        private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+        public List<CategoryDTO> FindCategories()
+        {
+            List<CategoryDTO> result = null;
+            string sql = "Select * From Categories Where isDeleted = @Deleted";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Deleted", false);
+            SqlDataReader dr = cmd.ExecuteReader();
+            int categoryId;
+            string name;
+            result = new List<CategoryDTO>();
+            while (dr.Read())
+            {
+                categoryId = dr.GetInt32(0);
+                name = dr.GetString(1);
+                result.Add(new CategoryDTO(categoryId, name, false));
+            }
+            cnn.Close();
+            return result;
+        }
     }
 }
