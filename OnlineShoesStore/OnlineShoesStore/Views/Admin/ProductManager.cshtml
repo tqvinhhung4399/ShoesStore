@@ -1,9 +1,8 @@
 ﻿
 @{
-    ViewData["Title"] = "UserManager";
-    Layout = "_Admin";
+    ViewData["Title"] = "ProductManager";
+    Layout = "~/Views/Shared/_Admin.cshtml";
 }
-
 
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -13,7 +12,7 @@
                 <h1>Order Tracking</h1>
                 <nav class="d-flex align-items-center">
                     <a href="#">Admin<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="#">User Manager</a>
+                    <a href="#">Product Manager</a>
                 </nav>
             </div>
         </div>
@@ -23,7 +22,10 @@
 <!--================Tracking Box Area =================-->
 <section class="tracking_box_area section_gap">
     <div class="container">
-        <center><h1 style="color='red';">Administrator - User Manager</h1></center>
+        <center>
+            <h1 style="color=red;">Administrator - Product Manager</h1>
+            <a class="primary-btn btn-lg" asp-controller="Admin" asp-action="AddProduct">Add new product</a>
+        </center>
         <div>
             <table id="test" class="display">
                 <thead>
@@ -197,4 +199,3 @@
     </div>
 </section>
 <!--================End Tracking Box Area =================-->
-

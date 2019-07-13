@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewData["Title"] = "ProductManager";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Order Tracking</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="#">Admin<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Product Manager</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Tracking Box Area =================-->
+<section class="tracking_box_area section_gap">
+    <div class="container">
+        <center>
+            <h1 style="color=red;">Administrator - Add new product</h1>
+        </center>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-12 col-md-10">
+                    <form action="MainController" method="POST">
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="1">Name: </label>
+                            <input style="color: white;" type="text" class="form-control" id="1" name="txtProductName" required placeholder="Product's name" />
+                        </div>
+                        <label style="color: #000000; font-weight: bold" class="">Category: </label>
+                        <div class="form-group">
+                            <select class="custom-select" name="slCategory">
+                                <option selected value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <br />
+                        </div>
+                        <label style="color: #000000; font-weight: bold" class="">Brand: </label>
+                        <div class="form-group">
+                            <select class="custom-select" name="slBrand">
+                                <option selected value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <br />
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="2">Material: </label>
+                            <input style="color: white;" type="text" class="form-control" id="2" name="txtMaterial" required placeholder="Product's material" />
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="3">Description: </label>
+                            <input style="color: white;" type="text" class="form-control" id="3" name="txtProductName" required placeholder="Product's description" />
+                        </div>
+                        <label style="color: #000000; font-weight: bold" class="">Origin: </label>
+                        <div class="form-group">
+                            <select class="custom-select" name="slOrigin">
+                                <option selected value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <br />
+                        </div>
+                        <div class="form-group" id="MainProduct">
+                            <center><h3>Product 1</h3></center>
+                            <div class="form-group">
+                                <label style="color: #000000; font-weight: bold">Price: </label>
+                                <input style="color: white;" type="number" class="form-control" name="txtPrice[]" required placeholder="Product's price" />
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #000000; font-weight: bold">Color: </label>
+                                <input style="color: white;" type="text" class="form-control" name="txtColor[]" required placeholder="Product's color" />
+                            </div>
+                        </div>
+                        <button class="primary-btn" type="button" onclick="add()">Add product</button>
+                        <button class="primary-btn" type="button" onclick="remove()">Remove product</button>
+                        <div class="form-group">
+                            @*<input type="submit" name="action" class="btn btn-success btn-lg" value="Update" />*@
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->
