@@ -21,7 +21,7 @@ namespace OnlineShoesStore.Controllers
         }
         public IActionResult UserManager()
         {
-            return View(checkAdmin()=="admin"?"":checkAdmin());
+            return View(checkAdmin()=="admin"?null:checkAdmin());
         }
 
         public IActionResult BanUser()
