@@ -57,7 +57,7 @@ namespace OnlineShoesStore.Controllers
         {
             string username = Request.Form["txtUsername"];
             string password = Request.Form["txtPassword"];
-            UserDTO user = new UserData().CheckLogin(username, password);
+            UserDTO user = new UserData().CheckLogin(username, password); 
             if (user == null)
             {
                 ViewBag.Invalid = "Wrong username or password";
@@ -74,6 +74,8 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Index()
         {
+            List<CategoryDTO> categories = new CategoryData().GetCategories();
+            ViewBag.Categories = categories;
             return View();
         }
 
