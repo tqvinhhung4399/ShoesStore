@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using OnlineShoesStore.Models;
 using Microsoft.Extensions.Configuration;
 
@@ -57,7 +58,7 @@ namespace OnlineShoesStore.Controllers
         {
             string username = Request.Form["txtUsername"];
             string password = Request.Form["txtPassword"];
-            UserDTO user = new UserData().CheckLogin(username, password); 
+            UserDTO user = new UserData().CheckLogin(username, password);
             if (user == null)
             {
                 ViewBag.Invalid = "Wrong username or password";
@@ -65,9 +66,13 @@ namespace OnlineShoesStore.Controllers
                 return View("Login");
             } else if (user.Role.Equals("admin"))
             {
-                return View("~/Views/Admin/UserManager.cshtml");
+                HttpContext.Session.SetString("SessionUser", user.Username);
+                HttpContext.Session.SetString("SessionRole", user.Role);
+                return RedirectToAction("UserManager", "Admin");
             } else
             {
+                HttpContext.Session.SetString("SessionUser", user.Username);
+                HttpContext.Session.SetString("SessionRole", user.Role);
                 return View("Index");
             }
         }
