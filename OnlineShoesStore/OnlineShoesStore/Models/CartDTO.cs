@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
-    class CartDTO
+    public class CartDTO
     {
         private int cartId;
         private string username;

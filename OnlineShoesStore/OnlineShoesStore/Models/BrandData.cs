@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
     public class BrandDTO
     {
@@ -43,7 +43,7 @@ namespace DTOs
     {
         private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        public List<BrandDTO> FindBrands()
+        public List<BrandDTO> GetBrands()
         {
             List<BrandDTO> result = null;
             string sql = "Select * From Brands Where isDeleted = @Deleted";

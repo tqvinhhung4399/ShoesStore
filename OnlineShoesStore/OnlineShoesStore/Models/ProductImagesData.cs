@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
-    class ProductImagesDTO
+    public class ProductImagesDTO
     {
         private int productImageId;
         private int productId;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
     public class ShoesDTO
     {

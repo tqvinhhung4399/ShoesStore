@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
     public class CategoryDTO
     {
@@ -43,7 +43,7 @@ namespace DTOs
     {
         private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        public List<CategoryDTO> FindCategories()
+        public List<CategoryDTO> GetCategories()
         {
             List<CategoryDTO> result = null;
             string sql = "Select * From Categories Where isDeleted = @Deleted";

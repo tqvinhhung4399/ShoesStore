@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
     public class OriginDTO
     {
@@ -42,7 +42,7 @@ namespace DTOs
     {
         private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        public List<OriginDTO> FindOrigins()
+        public List<OriginDTO> GetOrigins()
         {
             List<OriginDTO> result = null;
             string sql = "Select * From Origins Where isDeleted = @Deleted";

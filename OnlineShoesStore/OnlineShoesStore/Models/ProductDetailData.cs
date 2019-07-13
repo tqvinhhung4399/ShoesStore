@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
-    class ProductDetailDTO
+    public class ProductDetailDTO
     {
         private int productDetailId;
         private float size;
