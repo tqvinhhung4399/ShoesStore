@@ -10,6 +10,14 @@ namespace OnlineShoesStore.Controllers
 {
     public class AdminController : Controller
     {
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+        public IActionResult ProductManager()
+        {
+            return View();
+        }
         public IActionResult UserManager()
         {
             return View();
