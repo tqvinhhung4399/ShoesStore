@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
     public class OriginDTO
     {

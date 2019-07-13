@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTOs
+namespace OnlineShoesStore.Models
 {
-    class OrderDTO
+    public class OrderDTO
     {
         private int orderId;
         private string paymentMethod;
