@@ -77,6 +77,13 @@ namespace OnlineShoesStore.Controllers
             }
         }
 
+        public IActionResult ProcessLogout()
+        {
+            HttpContext.Session.SetString("SessionUser", null);
+            HttpContext.Session.SetString("SessionRole", null);
+            return View("Index");
+        }
+
         public IActionResult Index()
         {
             List<CategoryDTO> categories = new CategoryData().GetCategories();
@@ -94,22 +101,10 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
-        //public IActionResult About()
-        //{
-        //    ViewData["Message"] = "Your application description page.";
-
-        //    return View();
-        //}
-
         public IActionResult Contact()
         {
             return View();
         }
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
