@@ -156,7 +156,7 @@ namespace OnlineShoesStore.Models
             return user;
         }
 
-        public List<UserDTO> loadUsers()
+        public List<UserDTO> LoadUsers()
         {
             List<UserDTO> result = new List<UserDTO>();
             string sql = "Select userID, fullname, gender, dob, address, tel, isDeleted, role From Users";
@@ -179,6 +179,24 @@ namespace OnlineShoesStore.Models
                 UserDTO user = new UserDTO(username,null,fullname,gender,dob,address,tel,isDeleted,role);
                 result.Add(user);
             }
+            cnn.Close();
+            return result;
+        }
+
+        public bool BanUserByUsername(string username)
+        {
+            bool result = false;
+            string sql = "Update Users Set isDeleted = @isDeleted Where userID = @userID";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@isDeleted", true);
+            cmd.Parameters.AddWithValue("@userID", username);
+            result = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
             return result;
         }
     }

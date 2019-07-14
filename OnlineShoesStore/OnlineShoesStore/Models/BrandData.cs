@@ -67,6 +67,24 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return result;
         }
+
+        public string GetBrandNameByID(int id) {
+            string brandName = "";
+            string sql = "Select name From Brands Where brandID = @brandID";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@brandID", id);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read()) {
+                brandName = (string)dr[0];
+            }
+            cnn.Close();
+            return brandName;
+        }
     }
 }
 
