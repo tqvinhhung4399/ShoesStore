@@ -28,7 +28,7 @@
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center">
                 <div class="col-12 col-md-10">
-                    <form action="#" method="POST">
+                    <form action="AddProduct" method="POST">
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="1">Name: </label>
                             <input type="text" class="form-control" id="1" name="txtProductName" required placeholder="Product's name" />
@@ -36,10 +36,10 @@
                         <label style="color: #000000; font-weight: bold" class="">Category: </label>
                         <div class="form-group">
                             <select name="slCategory">
-                                <option selected value="0">Sneakers</option>
-                                <option value="1">Slipers</option>
-                                <option value="2">Sandals</option>
-                                <option value="3">Boots</option>
+                                @foreach (OriginDTO origin in ViewBag.ListOrigins)
+                                {
+                                    <option value="@origin.OriginId">@origin.Name</option>
+                                }
                             </select>
                             <br />
                             <br />
@@ -77,11 +77,11 @@
                             <center><h3>Product 1</h3></center>
                             <div class="form-group">
                                 <label style="color: #000000; font-weight: bold">Price: </label>
-                                <input id="check" type="number" class="form-control" name="txtPrice[]" required placeholder="Product's price" />
+                                <input type="number" class="form-control" name="txtPrice[]" min="0" required placeholder="Product's price" />
                             </div>
                             <div class="form-group">
                                 <label style="color: #000000; font-weight: bold">Color: </label>
-                                <input id="check" type="text" class="form-control" name="txtColor[]" required placeholder="Product's color" />
+                                <input type="text" class="form-control" name="txtColor[]" min="0" placeholder="Product's color" />
                             </div>
                         </div>
                         <div class="form-group">

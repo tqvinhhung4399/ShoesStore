@@ -67,5 +67,23 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return result;
         }
+
+        public string GetCategoryNameByID(int id) {
+            string categoryID = "";
+            string sql = "Select name From Categories Where categoryID = @categoryID";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@categoryID", id);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read()) {
+                categoryID = (string)dr[0];
+            }
+            cnn.Close();
+            return categoryID;
+        }
     }
 }

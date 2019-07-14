@@ -20,14 +20,15 @@
         <link rel="stylesheet" href="~/css/magnific-popup.css">
         <link rel="stylesheet" href="~/css/main.css">
         <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
+        <link rel="icon" href="~/img/fav.png" >
     </environment>
     @*
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>*@
+        <environment exclude="Development">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        </environment>*@
 </head>
 <body>
     <header class="header_area sticky-header">
@@ -49,14 +50,14 @@
                             <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
 
                             @*
-                            <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Admin</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserManager">User Manager</a></li>
-                                    <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
-                                </ul>
-                            </li>*@
+                                <li class="nav-item submenu dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">Admin</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserManager">User Manager</a></li>
+                                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
+                                    </ul>
+                                </li>*@
                             <li class="nav-item">Welcome, <a class="nav-link" href="#">User</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -199,18 +200,36 @@
                 $("center").remove(s);
                 count--;
             };
+
             function add() {
-                var s = "<center id='MP" + count + "'><h3>Product " + count + "</h3></center>"
-                    + "<div class='form-group' id='MP" + count + "'>"
-                    + "<label style='color: #000000; font-weight: bold' >Price: </label>"
-                    + "<input type='number' class='form-control' name='txtPrice[]' required placeholder='Products price' />"
-                    + "</div>"
-                    + "<div class='form-group' id='MP" + count + "'>"
-                    + "<label style='color: #000000; font-weight: bold' >Color: </label>"
-                    + "<input type='text' class='form-control' name='txtColor[]' required placeholder='Products color' />"
-                    + "</div>"
-                $("#MainProduct").append(s);
-                count++;
+                if (checkEmpty() === false) {
+                    return;
+                } else {
+                    var s = "<center id='MP" + count + "'><h3>Product " + count + "</h3></center>"
+                        + "<div class='form-group' id='MP" + count + "'>"
+                        + "<label style='color: #000000; font-weight: bold' >Price: </label>"
+                        + "<input type='number' class='form-control' name='txtPrice[]' min='0' required placeholder='Products price' />"
+                        + "</div>"
+                        + "<div class='form-group' id='MP" + count + "'>"
+                        + "<label style='color: #000000; font-weight: bold' >Color: </label>"
+                        + "<input type='text' class='form-control' name='txtColor[]' min='0' required placeholder='Products color' />"
+                        + "</div>"
+                    $("#MainProduct").append(s);
+                    count++;
+                }
+
+            };
+
+            function checkEmpty() {
+                var check = true;
+                var tags = document.getElementsByClassName("input");
+                for (i = 0; i < tags.length; i++) {
+                    if (tags[i].value.length === 0) {
+                        check = false;
+                        break;
+                    }
+                }
+                return check;
             };
         </script>
         @*<script>
@@ -271,20 +290,20 @@
         </script>*@
     </environment>
     @*<environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>*@
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+            </script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>*@
 
     @RenderSection("Scripts", required: false)
 </body>
