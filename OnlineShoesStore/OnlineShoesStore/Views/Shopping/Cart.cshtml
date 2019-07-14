@@ -10,8 +10,8 @@
             <div class="col-first">
                 <h1>Shopping Cart</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="category.html">Cart</a>
+                    <a asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a asp-controller="Shopping" asp-action="Cart">Cart</a>
                 </nav>
             </div>
         </div>
@@ -131,16 +131,16 @@
                         </tr>
                         <tr class="bottom_button">
                             <td>
-                                <a class="gray_btn" href="#">Update Cart</a>
+                                <a class="primary-btn" href="#">Update Cart</a>
                             </td>
                             <td></td>
                             <td></td>
                             <td>
-                                <div class="cupon_text d-flex align-items-center">
+                                @*<div class="cupon_text d-flex align-items-center">
                                     <input type="text" placeholder="Coupon Code">
                                     <a class="primary-btn" href="#">Apply</a>
                                     <a class="gray_btn" href="#">Close Coupon</a>
-                                </div>
+                                </div>*@
                             </td>
                         </tr>
                         <tr>
@@ -153,7 +153,7 @@
                                 <h5>$2160.00</h5>
                             </td>
                         </tr>
-                        <tr class="shipping_area">
+                        @*<tr class="shipping_area">
                             <td></td>
                             <td></td>
                             <td>
@@ -182,7 +182,7 @@
                                     <a class="gray_btn" href="#">Update Details</a>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>*@
                         <tr class="out_button_area">
                             <td></td>
                             <td></td>

@@ -10,9 +10,9 @@
             <div class="col-first">
                 <h1>Product Details Page</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="single-product.html">product-details</a>
+                    <a asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a asp-controller="Products" asp-action="Category">Category<span class="lnr lnr-arrow-right"></span></a>
+                    <a asp-controller="Products" asp-action="Product">Product's details</a>
                 </nav>
             </div>
         </div>
@@ -38,16 +38,16 @@
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
-                    <h3>Faded SkyBlu Denim Jeans</h3>
-                    <h2>$149.99</h2>
+                    <h3>Product's name</h3>
+                    <h2>$ Price</h2>
                     <ul class="list">
-                        <li><a class="active" href="#"><span>Category</span> : Household</a></li>
-                        <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+                        <li><a class="active" href="#"><span>Category</span> : Sneakers</a></li>
+                        @*<li><a href="#"><span>Availibility</span> : In Stock</a></li>*@
+                        <li><a href="#"><span>Brand</span> : Adidas</a></li>
+                        <li><a href="#"><span>Availibility</span> : (Number in stock?!?)</a></li>
                     </ul>
                     <p>
-                        Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
-                        something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
-                        during the winter.
+                        DETAILS [content]
                     </p>
                     <div class="product_count">
                         <label for="qty">Quantity:</label>
@@ -63,8 +63,8 @@
                     </div>
                     <div class="card_area d-flex align-items-center">
                         <a class="primary-btn" href="#">Add to Cart</a>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+                        @*<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
+                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>*@
                     </div>
                 </div>
             </div>
@@ -80,17 +80,17 @@
                 <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
                    aria-selected="false">Specification</a>
             </li>
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
                    aria-selected="false">Comments</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
                    aria-selected="false">Reviews</a>
-            </li>
+            </li>*@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -114,7 +114,7 @@
                     streamlined plan of cooking that is more efficient for one person creating less
                 </p>
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="table-responsive">
                     <table class="table">
                         <tbody>
@@ -186,7 +186,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            @*<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="comment_list">
@@ -422,7 +422,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </section>
