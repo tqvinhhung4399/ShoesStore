@@ -21,7 +21,8 @@ namespace OnlineShoesStore.Controllers
         }
         public IActionResult UserManager()
         {
-            return View(checkAdmin()=="admin"?null:checkAdmin());
+            ViewBag.ListUser = new UserData().loadUsers();
+            return View(checkAdmin());
         }
 
         public IActionResult BanUser()
@@ -40,7 +41,7 @@ namespace OnlineShoesStore.Controllers
             {
                 return "~/Views/Home/Index.cshtml";
             }
-            return "admin";
+            return null;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace OnlineShoesStore.Models
         private string password;
         private string fullname;
         private string gender;
-        private DateTime dateOfBirth;
+        private DateTime dob;
         private string address;
         private string tel;
         private bool isDeleted;
@@ -26,7 +26,7 @@ namespace OnlineShoesStore.Models
             this.password = password;
             this.fullname = fullname;
             this.gender = gender;
-            this.dateOfBirth = dateOfBirth;
+            this.dob = dateOfBirth;
             this.address = address;
             this.tel = tel;
             this.isDeleted = isDeleted;
@@ -57,10 +57,10 @@ namespace OnlineShoesStore.Models
             set { gender = value; }
         }
 
-        public DateTime DateOfBirth
+        public DateTime Dob
         {
-            get { return dateOfBirth; }
-            set { dateOfBirth = value; }
+            get { return dob; }
+            set { dob = value; }
         }
 
         public string Address
@@ -92,19 +92,19 @@ namespace OnlineShoesStore.Models
     public class UserData
     {
         //dat connection string o day xai` tam nha
-        private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private readonly string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
         
         // may cai nay anh test thu, khong quan trong nhung cung dung xoa nha
-        //public IConfiguration Configuration { get; }
-        //public UserData(IConfiguration configuration)
-        //{
+        // public IConfiguration Configuration { get; }
+        // public UserData(IConfiguration configuration)
+        // {
         //    Configuration = configuration;
-        //}
+        // }
 
         public bool RegisterUser(UserDTO user)
         {
 
-            //string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
+            // string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
             bool result;
             string sql = "Insert into Users values (@username, @password, @role, @fullname, " +
                 "@gender, @dob, @address, @tel, @isDeleted)";
@@ -119,7 +119,7 @@ namespace OnlineShoesStore.Models
             cmd.Parameters.AddWithValue("@role", user.Role);
             cmd.Parameters.AddWithValue("@fullname", user.Fullname);
             cmd.Parameters.AddWithValue("@gender", user.Gender);
-            cmd.Parameters.AddWithValue("@dob", user.DateOfBirth);
+            cmd.Parameters.AddWithValue("@dob", user.Dob);
             cmd.Parameters.AddWithValue("@address", user.Address);
             cmd.Parameters.AddWithValue("@tel", user.Tel);
             cmd.Parameters.AddWithValue("@isDeleted", user.IsDeleted);
@@ -154,6 +154,32 @@ namespace OnlineShoesStore.Models
             }
             cnn.Close();
             return user;
+        }
+
+        public List<UserDTO> loadUsers()
+        {
+            List<UserDTO> result = new List<UserDTO>();
+            string sql = "Select userID, fullname, gender, dob, address, tel, isDeleted, role From Users";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read()) {
+                string username = (string)dr[0];
+                string fullname = (string)dr[1];
+                string gender = (string)dr[2];
+                DateTime dob = (DateTime)dr[3];
+                string address = (string)dr[4];
+                string tel = (string)dr[5];
+                bool isDeleted = (bool)dr[6];
+                string role = (string)dr[7];
+                UserDTO user = new UserDTO(username,null,fullname,gender,dob,address,tel,isDeleted,role);
+                result.Add(user);
+            }
+            return result;
         }
     }
 }
