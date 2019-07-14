@@ -66,5 +66,23 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return result;
         }
+
+        public string GetOriginNameByID(int id) {
+            string originName = "";
+            string sql = "Select name From Origins Where originID = @originID";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@originID", id);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read()) {
+                originName = (string)dr[0];
+            }
+            cnn.Close();
+            return originName;
+        }
     }
 }

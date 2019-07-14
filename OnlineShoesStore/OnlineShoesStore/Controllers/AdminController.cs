@@ -11,36 +11,59 @@ namespace OnlineShoesStore.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly string index = "~/Views/Home/Index.cshtml";
+
         public IActionResult AddProduct()
         {
+            ViewBag.ListCategories = new CategoryData().GetCategories();
+            ViewBag.ListBrands = new BrandData().GetBrands();
+            ViewBag.ListOrigins = new OriginData().GetOrigins();
             return View();
         }
         public IActionResult ProductManager()
         {
+            if (CheckAdmin() != null) {
+                return View(index);
+            }
+            
             return View();
         }
         public IActionResult UserManager()
         {
-            return View(checkAdmin()=="admin"?null:checkAdmin());
+            if (CheckAdmin() != null) {
+                return View(index);
+            }
+            ViewBag.ListUser = new UserData().LoadUsers();
+            return View(CheckAdmin());
         }
 
         public IActionResult BanUser()
         {
-            return View(checkAdmin());
+            if (CheckAdmin() != null) { //role khong phai admin
+                return View(index);
+            }
+            string username = HttpContext.Request.Query["username"];
+            if (new UserData().BanUserByUsername(username))
+            {
+                ViewBag.BanSuccessful = "User " + username + "has been banned!";
+            } else {
+                ViewBag.BanFailed = "Ban user " + username + " failed!";
+            }
+            return View("UserManager");
         }
         
 
-        private string checkAdmin()
+        private string CheckAdmin()
         {
-            if (HttpContext.Session.GetString("SessionRole") == null)
+            if (HttpContext.Session.GetString("SessionRole") == null) //chưa đăng nhập
             {
-                return "~/Views/Home/Index.cshtml";
+                return index;
             }
-            else if (!HttpContext.Session.GetString("SessionRole").Equals("admin"))
+            else if (!HttpContext.Session.GetString("SessionRole").Equals("admin")) //role khác admin
             {
-                return "~/Views/Home/Index.cshtml";
+                return index;
             }
-            return "admin";
+            return null; //role là admin
         }
     }
 }

@@ -38,6 +38,7 @@
                         <th></th>
                     </tr>
                 </thead>
+                <!-- List user anh truyen qua tu UserManager action trong AdminController ten la @ViewBag.ListUser nha -->
                 <tbody>
                     <tr>
                         <td>tqvinhhung4399</td>
@@ -47,6 +48,8 @@
                         <td>447 Le Van Luong, Distric 7, HCM City</td>
                         <td>0974176274</td>
                         <td>false</td>
+                        <!-- nút ban này dẫn tới BanUser action trong AdminController, nếu được thì nên cho hộp thoại confirm trước khi Ban -->
+                        <!-- ban hay unban thì đều truyền cái username qua GET method cho anh lấy nha, đặt tên parameter là username -->
                         <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
                     </tr>
                     <tr>
