@@ -15,6 +15,9 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult AddProduct()
         {
+            ViewBag.ListCategories = new CategoryData().GetCategories();
+            ViewBag.ListBrands = new BrandData().GetBrands();
+            ViewBag.ListOrigins = new OriginData().GetOrigins();
             return View();
         }
         public IActionResult ProductManager()
