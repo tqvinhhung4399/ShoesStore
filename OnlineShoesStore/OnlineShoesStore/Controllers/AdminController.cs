@@ -25,7 +25,6 @@ namespace OnlineShoesStore.Controllers
             if (CheckAdmin() != null) {
                 return View(index);
             }
-            
             return View();
         }
         public IActionResult UserManager()
