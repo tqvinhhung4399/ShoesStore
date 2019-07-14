@@ -28,48 +28,48 @@
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center">
                 <div class="col-12 col-md-10">
-                    <form action="MainController" method="POST">
+                    <form action="#" method="POST">
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="1">Name: </label>
-                            <input style="color: white;" type="text" class="form-control" id="1" name="txtProductName" required placeholder="Product's name" />
+                            <input type="text" class="form-control" id="1" name="txtProductName" required placeholder="Product's name" />
                         </div>
                         <label style="color: #000000; font-weight: bold" class="">Category: </label>
                         <div class="form-group">
-                            <select class="custom-select" name="slCategory">
-                                <option selected value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
+                            <select name="slCategory">
+                                <option selected value="0">Sneakers</option>
+                                <option value="1">Slipers</option>
+                                <option value="2">Sandals</option>
+                                <option value="3">Boots</option>
                             </select>
                             <br />
                             <br />
                         </div>
                         <label style="color: #000000; font-weight: bold" class="">Brand: </label>
                         <div class="form-group">
-                            <select class="custom-select" name="slBrand">
-                                <option selected value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
+                            <select name="slBrand">
+                                <option selected value="0">Adidas</option>
+                                <option value="1">Nike</option>
+                                <option value="2">Bitis</option>
+                                <option value="3">New Balance</option>
                             </select>
                             <br />
                             <br />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="2">Material: </label>
-                            <input style="color: white;" type="text" class="form-control" id="2" name="txtMaterial" required placeholder="Product's material" />
+                            <input type="text" class="form-control" id="2" name="txtMaterial" required placeholder="Product's material" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="3">Description: </label>
-                            <input style="color: white;" type="text" class="form-control" id="3" name="txtProductName" required placeholder="Product's description" />
+                            <input type="text" class="form-control" id="3" name="txtProductName" required placeholder="Product's description" />
                         </div>
                         <label style="color: #000000; font-weight: bold" class="">Origin: </label>
                         <div class="form-group">
-                            <select class="custom-select" name="slOrigin">
-                                <option selected value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
+                            <select name="slOrigin">
+                                <option selected value="0">Vietnam</option>
+                                <option value="1">China</option>
+                                <option value="2">America</option>
+                                <option value="3">Thailand</option>
                             </select>
                             <br />
                         </div>
@@ -84,10 +84,15 @@
                                 <input id="check" type="text" class="form-control" name="txtColor[]" required placeholder="Product's color" />
                             </div>
                         </div>
-                        <button class="primary-btn" type="button" onclick="add()">Add product</button>
-                        <button class="primary-btn" type="button" onclick="remove()">Remove product</button>
                         <div class="form-group">
-                            @*<input type="submit" name="action" class="btn btn-success btn-lg" value="Update" />*@
+                            <center>
+                                <button class="primary-btn btn-sm" type="button" onclick="add()">Add product</button>
+                                <button class="primary-btn btn-sm" type="button" onclick="remove()">Remove product</button>
+                            </center>
+                        </div>
+                        <div class="form-group">
+                            @*<input type="submit" class="primary-btn btn-lg" value="CREATE" />*@
+                            <button style="width=1000px;" class="primary-btn btn-lg">CREATE</button>
                         </div>
                     </form>
 
