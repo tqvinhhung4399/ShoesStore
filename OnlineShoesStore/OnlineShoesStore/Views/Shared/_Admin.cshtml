@@ -186,28 +186,28 @@
             });
         </script>
         <script>
-            var i = 2;
+            var count = 2;
             function remove() {
-                if (i <= 1) {
+                if (count <= 2) {
                     return;
                 }
-                var s = "#MP" + (i - 1);
+                var s = "#MP" + (count - 1);
                 $("div").remove(s);
                 $("center").remove(s);
-                i--;
+                count--;
             };
             function add() {
-                var s = "<center id='MP" + i + "'><h3>Product " + i + "</h3></center>"
-                    + "<div class='form-group' id='MP" + i + "'>"
+                var s = "<center id='MP" + count + "'><h3>Product " + count + "</h3></center>"
+                    + "<div class='form-group' id='MP" + count + "'>"
                     + "<label style='color: #000000; font-weight: bold' >Price: </label>"
-                    + "<input style='color: white;' type='number' class='form-control' name='txtPrice[]' required placeholder='Products price' />"
+                    + "<input type='number' class='form-control' name='txtPrice[]' required placeholder='Products price' />"
                     + "</div>"
-                    + "<div class='form-group' id='MP" + i + "'>"
+                    + "<div class='form-group' id='MP" + count + "'>"
                     + "<label style='color: #000000; font-weight: bold' >Color: </label>"
-                    + "<input style='color: white;' type='text' class='form-control' name='txtColor[]' required placeholder='Products color' />"
+                    + "<input type='text' class='form-control' name='txtColor[]' required placeholder='Products color' />"
                     + "</div>"
                 $("#MainProduct").append(s);
-                i++;
+                count++;
             };
         </script>
     </environment>

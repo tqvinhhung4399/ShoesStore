@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewData["Title"] = "ProductManager";
-    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewData["Title"] = "AddNewProduct";
+    Layout = "_Admin";
 }
 
 <!-- Start Banner Area -->
@@ -42,6 +42,7 @@
                                 <option value="3">3</option>
                             </select>
                             <br />
+                            <br />
                         </div>
                         <label style="color: #000000; font-weight: bold" class="">Brand: </label>
                         <div class="form-group">
@@ -51,6 +52,7 @@
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
+                            <br />
                             <br />
                         </div>
                         <div class="form-group">
@@ -75,11 +77,11 @@
                             <center><h3>Product 1</h3></center>
                             <div class="form-group">
                                 <label style="color: #000000; font-weight: bold">Price: </label>
-                                <input style="color: white;" type="number" class="form-control" name="txtPrice[]" required placeholder="Product's price" />
+                                <input id="check" type="number" class="form-control" name="txtPrice[]" required placeholder="Product's price" />
                             </div>
                             <div class="form-group">
                                 <label style="color: #000000; font-weight: bold">Color: </label>
-                                <input style="color: white;" type="text" class="form-control" name="txtColor[]" required placeholder="Product's color" />
+                                <input id="check" type="text" class="form-control" name="txtColor[]" required placeholder="Product's color" />
                             </div>
                         </div>
                         <button class="primary-btn" type="button" onclick="add()">Add product</button>
