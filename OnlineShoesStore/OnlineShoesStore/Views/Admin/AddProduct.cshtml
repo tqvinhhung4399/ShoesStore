@@ -36,10 +36,10 @@
                         <label style="color: #000000; font-weight: bold" class="">Category: </label>
                         <div class="form-group">
                             <select name="slCategory">
-                                <option selected value="0">Sneakers</option>
-                                <option value="1">Slipers</option>
-                                <option value="2">Sandals</option>
-                                <option value="3">Boots</option>
+                                @foreach (OriginDTO origin in ViewBag.ListOrigins)
+                                {
+                                    <option value="@origin.OriginId">@origin.Name</option>
+                                }
                             </select>
                             <br />
                             <br />
