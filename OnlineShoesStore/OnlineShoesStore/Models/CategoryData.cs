@@ -40,7 +40,7 @@ namespace OnlineShoesStore.Models
     }
 
     public class CategoryData
-    {  
+    {      
         public List<ProductDTO> GetProductsByCategoryID(int id)
         {
             List<ProductDTO> list = new List<ProductDTO>();
