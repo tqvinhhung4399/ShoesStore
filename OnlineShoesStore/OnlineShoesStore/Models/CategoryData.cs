@@ -40,9 +40,7 @@ namespace OnlineShoesStore.Models
     }
 
     public class CategoryData
-    {
-        private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
+    {        
         public List<ProductDTO> GetProductsByCategoryID(int id)
         {
             List<ProductDTO> list = new List<ProductDTO>();
@@ -53,7 +51,7 @@ namespace OnlineShoesStore.Models
                 "AND s.categoryID = @catID " +
                 "AND p.isDeleted=0 " +
                 "AND s.isDeleted=0";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if(cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -92,7 +90,7 @@ namespace OnlineShoesStore.Models
                 "AND p.productID = i.productID " +
                 "AND p.isDeleted=0 " +
                 "AND s.isDeleted=0";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -125,7 +123,7 @@ namespace OnlineShoesStore.Models
         {
             List<CategoryDTO> result = null;
             string sql = "Select * From Categories Where isDeleted = @Deleted";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -149,7 +147,7 @@ namespace OnlineShoesStore.Models
         public string GetCategoryNameByID(int id) {
             string categoryID = "";
             string sql = "Select name From Categories Where categoryID = @categoryID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
