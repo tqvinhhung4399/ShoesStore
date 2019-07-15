@@ -23,7 +23,25 @@
 <!--================Tracking Box Area =================-->
 <section class="tracking_box_area section_gap">
     <div class="container">
-        <center><h1 style="color='red';">Administrator - User Manager</h1></center>
+        <center>
+            <h1 style="color='red';">Administrator - User Manager</h1>
+            @if (ViewBag.BanFailed != null)
+            {
+                <h5>@ViewBag.BanFailed</h5>
+            }
+            @if (ViewBag.BanSuccessful != null)
+            {
+                <h5>@ViewBag.BanSuccessful</h5>
+            }
+            @if (ViewBag.UnbanFailed != null)
+            {
+                <h5>@ViewBag.UnbanFailed</h5>
+            }
+            @if (ViewBag.UnbanSuccessful != null)
+            {
+                <h5>@ViewBag.UnbanSuccessful</h5>
+            }
+        </center>
         <div>
             <table id="test" class="display">
                 <thead>
@@ -38,71 +56,92 @@
                         <th></th>
                     </tr>
                 </thead>
-                <!-- List user anh truyen qua tu UserManager action trong AdminController ten la @ViewBag.ListUser nha -->
-                <tbody>
-                    <tr>
-                        <td>tqvinhhung4399</td>
-                        <td>Tang Quoc Vinh Hung</td>
-                        <td>4/3/1999</td>
-                        <td>Male</td>
-                        <td>447 Le Van Luong, Distric 7, HCM City</td>
-                        <td>0974176274</td>
-                        <td>false</td>
-                        <!-- nút ban này dẫn tới BanUser action trong AdminController, nếu được thì nên cho hộp thoại confirm trước khi Ban -->
-                        <!-- ban hay unban thì đều truyền cái username qua GET method cho anh lấy nha, đặt tên parameter là username -->
-                        <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
-                    </tr>
-                    <tr>
-                        <td>tester 1</td>
-                        <td>ABCDE ABCDE</td>
-                        <td>1/1/1999</td>
-                        <td>Male</td>
-                        <td>447 Le Van Luong, Distric 7, HCM City</td>
-                        <td>01214124833</td>
-                        <td>false</td>
-                        <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
-                    </tr>
-                    <tr>
-                        <td>tester 2</td>
-                        <td>BCDE BCDE</td>
-                        <td>2/2/1999</td>
-                        <td>Male</td>
-                        <td>447 Le Van Luong, Distric 7, HCM City</td>
-                        <td>01214124833</td>
-                        <td>false</td>
-                        <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
-                    </tr>
-                    <tr>
-                        <td>tester 3</td>
-                        <td>CDE CDE</td>
-                        <td>3/3/1999</td>
-                        <td>Male</td>
-                        <td>447 Le Van Luong, Distric 7, HCM City</td>
-                        <td>0794124833</td>
-                        <td>false</td>
-                        <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
-                    </tr>
-                    <tr>
-                        <td>tester 4</td>
-                        <td>DZ DZ</td>
-                        <td>4/4/1999</td>
-                        <td>Male</td>
-                        <td>447 Le Van Luong, Distric 7, HCM City</td>
-                        <td>0794124833</td>
-                        <td>true</td>
-                        <td><a href="#" class="btn-success btn-sm">Unban</a></td>
-                    </tr>
-                    <tr>
-                        <td>tester 5</td>
-                        <td>XYZ XYZ</td>
-                        <td>5/5/1999</td>
-                        <td>Male</td>
-                        <td>447 Le Van Luong, Distric 7, HCM City</td>
-                        <td>0974176274</td>
-                        <td>true</td>
-                        <td><a href="#" class="btn-success btn-sm">Unban</a></td>
-                    </tr>
-                </tbody>
+                <!-- List user anh truyen qua tu UserManager action trong AdminController ten la ViewBag.ListUser nha -->
+            <tbody>
+                @*<tr>
+                    <td>tqvinhhung4399</td>
+                    <td>Tang Quoc Vinh Hung</td>
+                    <td>4/3/1999</td>
+                    <td>Male</td>
+                    <td>447 Le Van Luong, Distric 7, HCM City</td>
+                    <td>0974176274</td>
+                    <td>false</td>
+                    <!-- nút ban này dẫn tới BanUser action trong AdminController, nếu được thì nên cho hộp thoại confirm trước khi Ban -->
+                    <!-- ban hay unban thì đều truyền cái username qua GET method cho anh lấy nha, đặt tên parameter là username -->
+                    <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
+                </tr>*@
+                @foreach (UserDTO dto in ViewBag.ListUser)
+                {
+                <tr>
+                    <td>@dto.Username</td>
+                    <td>@dto.Fullname</td>
+                    <td>@dto.Dob</td>
+                    <td>@dto.Gender</td>
+                    <td>@dto.Address</td>
+                    <td>@dto.Tel</td>
+                    <td>@dto.IsDeleted</td>
+                    @if (dto.IsDeleted == false)
+                    {
+                        <td><a href="/Admin/BanUser?username=@dto.Username" class="btn-danger btn-sm">Ban</a></td>
+                    }
+                    else
+                    {
+                        <td><a href="/Admin/UnbanUser?username=@dto.Username" class="btn-success btn-sm">Unban</a></td>
+                    }
+
+                </tr>
+                }
+                @*<tr>
+            <td>tester 1</td>
+            <td>ABCDE ABCDE</td>
+            <td>1/1/1999</td>
+            <td>Male</td>
+            <td>447 Le Van Luong, Distric 7, HCM City</td>
+            <td>01214124833</td>
+            <td>false</td>
+            <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
+        </tr>
+        <tr>
+            <td>tester 2</td>
+            <td>BCDE BCDE</td>
+            <td>2/2/1999</td>
+            <td>Male</td>
+            <td>447 Le Van Luong, Distric 7, HCM City</td>
+            <td>01214124833</td>
+            <td>false</td>
+            <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
+        </tr>
+        <tr>
+            <td>tester 3</td>
+            <td>CDE CDE</td>
+            <td>3/3/1999</td>
+            <td>Male</td>
+            <td>447 Le Van Luong, Distric 7, HCM City</td>
+            <td>0794124833</td>
+            <td>false</td>
+            <td><a href="#" class="btn-danger btn-sm">Ban</a></td>
+        </tr>
+        <tr>
+            <td>tester 4</td>
+            <td>DZ DZ</td>
+            <td>4/4/1999</td>
+            <td>Male</td>
+            <td>447 Le Van Luong, Distric 7, HCM City</td>
+            <td>0794124833</td>
+            <td>true</td>
+            <td><a href="#" class="btn-success btn-sm">Unban</a></td>
+        </tr>
+        <tr>
+            <td>tester 5</td>
+            <td>XYZ XYZ</td>
+            <td>5/5/1999</td>
+            <td>Male</td>
+            <td>447 Le Van Luong, Distric 7, HCM City</td>
+            <td>0974176274</td>
+            <td>true</td>
+            <td><a href="#" class="btn-success btn-sm">Unban</a></td>
+        </tr>*@
+            </tbody>
             </table>
         </div>
     </div>

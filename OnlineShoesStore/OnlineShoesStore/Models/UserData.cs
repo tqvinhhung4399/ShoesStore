@@ -199,5 +199,22 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return result;
         }
+
+        public bool UnbanUserByUsername(string username)
+        {
+            bool result = false;
+            string sql = "Update Users Set isDeleted = @isDeleted Where userID = @userID";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@isDeleted", false);
+            cmd.Parameters.AddWithValue("@userID", username);
+            result = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return result;
+        }
     }
 }
