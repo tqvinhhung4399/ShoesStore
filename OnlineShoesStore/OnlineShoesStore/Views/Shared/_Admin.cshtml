@@ -270,18 +270,18 @@
             })
         }
             /* Formatting function for row details - modify as you need */
-            function format(d) {
-                // `d` is the original data object for the row
+            //function format(d) {
+            //    // `d` is the original data object for the row
 
-                var s = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-                for (var i = 0; i < d.sizeQuantity.size(); i++) {
-                    s = s + '<tr>' +
-                        '<td>Size:</td>' +
-                        '<td>' + d.sizeQuantity[i] + ' pair(s)</td>' +
-                        '</tr>';
-                }
-                s = s + "'</table>';"
-                return s;
+            //    var s = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+            //    for (var i = 0; i < d.sizeQuantity.size(); i++) {
+            //        s = s + '<tr>' +
+            //            '<td>Size:</td>' +
+            //            '<td>' + d.sizeQuantity[i] + ' pair(s)</td>' +
+            //            '</tr>';
+            //    }
+            //    s = s + "'</table>';"
+            //    return s;
 
                  //return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                  //           '<tr>'+
@@ -307,11 +307,11 @@
                 //    '<td>And any further details here (images etc)...</td>' +
                 //    '</tr>' +
                 //    '</table>';
-            }
+            //}
 
             function initDatatable(data) {
                 var table = $('#example').DataTable({
-                    "ajax": '@Url.Action("LoadDataTable","Admin")',
+                    "data": '@Url.Action("LoadDataTable","Admin")',
                     "columns": [
                         {
                             "className": 'details-control',
