@@ -13,7 +13,7 @@ namespace OnlineShoesStore.Controllers
         public IActionResult Category()
         {
             string idStr = HttpContext.Request.Query["txtCategory"];
-            CategoryData data = new CategoryData();
+            ProductData data = new ProductData();
             if (idStr.Equals("all"))
             {
                 ViewBag.Products = data.GetAllProducts();
