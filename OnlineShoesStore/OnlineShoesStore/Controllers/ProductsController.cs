@@ -19,16 +19,16 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
-        public IActionResult Search()
+        public IActionResult Search(string search)
         {
-            string search = HttpContext.Request.Query["search"]; //lay gia tri can search: Products/Search/search=yezzy
+            //lay gia tri can search: Products/Search/search=yezzy
             ViewBag.ListSearch = new ShoesData().FindByName(search);
             return View();
         }
 
-        public IActionResult ProductDetail()
+        public IActionResult ProductDetail(string id)
         {
-            int shoesID = Int32.Parse(HttpContext.Request.Query["id"]);
+            int shoesID = Int32.Parse(id);
             ViewBag.Shoes = new ShoesData().ViewShoesDetailByShoesID(shoesID);
             //ViewBag.Products;
             //ViewBag.ProductDetails;

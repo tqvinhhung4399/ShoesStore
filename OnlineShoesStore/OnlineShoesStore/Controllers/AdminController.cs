@@ -46,12 +46,11 @@ namespace OnlineShoesStore.Controllers
             return View(CheckAdmin());
         }
 
-        public IActionResult BanUser()
+        public IActionResult BanUser(string username)
         {
             if (CheckAdmin() != null) { //role khong phai admin
                 return View(index);
             }
-            string username = HttpContext.Request.Query["username"];
             if (new UserData().BanUserByUsername(username))
             {
                 ViewBag.BanSuccessful = "User " + username + "has been banned!";
