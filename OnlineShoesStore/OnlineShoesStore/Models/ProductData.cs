@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OnlineShoesStore.Models
 {
-    class ProductDTO
+    public class ProductDTO
     {
         private int productId;
         private int shoesId;

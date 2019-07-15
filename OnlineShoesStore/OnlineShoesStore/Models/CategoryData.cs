@@ -41,7 +41,14 @@ namespace OnlineShoesStore.Models
 
     public class CategoryData
     {
-        private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+        //public List<ProductDTO> GetProductsByCategoryID(int id)
+        //{
+        //    //List<ProductDTO> list = new List<ProductDTO>;
+
+        //    //return list;
+        //}
 
         public List<CategoryDTO> GetCategories()
         {

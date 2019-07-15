@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -70,7 +71,10 @@
                                         <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
                                     </ul>
                                 </li>*@
-                            <li class="nav-item">Welcome, <a class="nav-link" href="#">User</a></li>
+                            @if (Context.Session.GetString("SessionUser") != null)
+                            {
+                                <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionUser").ToString()</a></li>
+                            }
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="nav-item"><a asp-controller="Shopping" asp-action="Cart" class="cart"><span class="ti-bag"></span></a></li>
@@ -249,28 +253,65 @@
             };
         </script>
         <script>
+            $(document).ready(function (){
+            LoadData();
+        })
+        function LoadData() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("LoadDataTable","Admin")',
+                success: function (data) {
+                    console.log(data);
+                    initDatatable(data);
+                },
+                error: function (data) {
+
+                }
+            })
+        }
             /* Formatting function for row details - modify as you need */
             function format(d) {
                 // `d` is the original data object for the row
-                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-                    '<tr>' +
-                    '<td>Size:</td>' +
-                    '<td>' + d.size + ' - ' + d.quantity +' pair(s)</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Size:</td>' +
-                    '<td>' + d.size + ' - ' + d.quantity +' pair(s)</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Extra info:</td>' +
-                    '<td>And any further details here (images etc)...</td>' +
-                    '</tr>' +
-                    '</table>';
+
+                var s = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+                for (var i = 0; i < d.sizeQuantity.size(); i++) {
+                    s = s + '<tr>' +
+                        '<td>Size:</td>' +
+                        '<td>' + d.sizeQuantity[i] + ' pair(s)</td>' +
+                        '</tr>';
+                }
+                s = s + "'</table>';"
+                return s;
+
+                 //return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                 //           '<tr>'+
+                 //               '<td>Full name:</td>'+
+                 //               '<td>'+d.name +'</td>'+
+                 //           '</tr>'+
+                 //           '<tr>'+
+                 //               '<td>Extension number:</td>'+
+                 //               '<td>'+d.name +'</td>'+
+                 //           '</tr>'+
+                 //           '<tr>'+
+                 //               '<td>Extra info:</td>'+
+                 //               '<td>And any further details here (images etc)...</td>'+
+                 //           '</tr>'+
+                 //       '</table>';
+
+                //return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                //    '<tr>' +
+                //    '<td>Size:</td>' +
+                //    '<td>' + d.size + ' - ' + d.quantity +' pair(s)</td>' +
+                //    '</tr>' +
+                //    '<td>Extra info:</td>' +
+                //    '<td>And any further details here (images etc)...</td>' +
+                //    '</tr>' +
+                //    '</table>';
             }
 
-            $(document).ready(function () {
+            function initDatatable(data) {
                 var table = $('#example').DataTable({
-                    "ajax": "../AJAXTEST.txt",
+                    "ajax": '@Url.Action("LoadDataTable","Admin")',
                     "columns": [
                         {
                             "className": 'details-control',
@@ -302,7 +343,7 @@
                         tr.addClass('shown');
                     }
                 });
-            });
+            };
         </script>
     </environment>
     @*<environment exclude="Development">
