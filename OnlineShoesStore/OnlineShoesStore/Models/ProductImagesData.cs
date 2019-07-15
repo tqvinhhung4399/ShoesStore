@@ -41,13 +41,11 @@ namespace OnlineShoesStore.Models
 
     public class ProductImageData
     {
-        private readonly string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public List<ProductImagesDTO> GetImagesByProductID(int productID)
         {
             List<ProductImagesDTO> result = new List<ProductImagesDTO>();
             string sql = "Select * From ProductImages Where productID = @productID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();

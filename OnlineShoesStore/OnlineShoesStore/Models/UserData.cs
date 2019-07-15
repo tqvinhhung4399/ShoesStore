@@ -92,7 +92,7 @@ namespace OnlineShoesStore.Models
     public class UserData
     {
         //dat connection string o day xai` tam nha
-        private readonly string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+        //private readonly string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
         
         // may cai nay anh test thu, khong quan trong nhung cung dung xoa nha
         // public IConfiguration Configuration { get; }
@@ -108,7 +108,7 @@ namespace OnlineShoesStore.Models
             bool result;
             string sql = "Insert into Users values (@username, @password, @role, @fullname, " +
                 "@gender, @dob, @address, @tel, @isDeleted)";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -132,7 +132,7 @@ namespace OnlineShoesStore.Models
         {
             UserDTO user = null;
             string sql = "Select fullname, gender, dob, address, tel, role From Users Where UserID = @username and Password = @password and isDeleted = @false";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -160,7 +160,7 @@ namespace OnlineShoesStore.Models
         {
             List<UserDTO> result = new List<UserDTO>();
             string sql = "Select userID, fullname, gender, dob, address, tel, isDeleted, role From Users";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -187,7 +187,7 @@ namespace OnlineShoesStore.Models
         {
             bool result = false;
             string sql = "Update Users Set isDeleted = @isDeleted Where userID = @userID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -204,7 +204,7 @@ namespace OnlineShoesStore.Models
         {
             bool result = false;
             string sql = "Update Users Set isDeleted = @isDeleted Where userID = @userID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
