@@ -41,6 +41,8 @@ namespace OnlineShoesStore.Models
 
     public class ProductImageData
     {
+        string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+
         public List<ProductImagesDTO> GetImagesByProductID(int productID)
         {
             List<ProductImagesDTO> result = new List<ProductImagesDTO>();
