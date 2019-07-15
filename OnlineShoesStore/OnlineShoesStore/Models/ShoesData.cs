@@ -353,27 +353,7 @@ namespace OnlineShoesStore.Models
             return price;
         }
 
-        public string GetImageByShoesID(int shoesID)
-        {
-            string image = "";
-            string sql = "Select top 1 PI.image " +
-                        "From ProductImages PI, (Select top 1 P.productID From Products P, Shoes S Where P.shoesID = S.shoesID and S.shoesID = @shoesID) PP " +
-                        "Where PI.productID = PP.productID";
-            SqlConnection cnn = new SqlConnection(connectionString);
-            if (cnn.State == ConnectionState.Closed)
-            {
-                cnn.Open();
-            }
-            SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@shoesID", shoesID);
-            SqlDataReader dr = cmd.ExecuteReader();
-            if (dr.Read())
-            {
-                image = (string)dr[0];
-            }
-            cnn.Close();
-            return image;
-        }
+        
 
     }
 }

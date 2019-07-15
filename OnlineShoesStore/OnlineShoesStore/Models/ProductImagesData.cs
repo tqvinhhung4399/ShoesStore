@@ -64,5 +64,25 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return result;
         }
+
+        public string GetImageByProductID(int productID)
+        {
+            string image = "";
+            string sql = "Select image From ProductImages Where productID = @productID";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@productID", productID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                image = (string)dr[0];
+            }
+            cnn.Close();
+            return image;
+        }
     }
 }
