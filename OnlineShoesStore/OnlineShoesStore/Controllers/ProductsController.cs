@@ -37,15 +37,16 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
-        public IActionResult ProductDetail(string id)
+        public IActionResult ProductDetail()
         {
-            int shoesID = Int32.Parse(id);
+            string idStr = HttpContext.Request.Query["txtID"];
+            int shoesID = Int32.Parse(idStr);
             ViewBag.Shoes = new ShoesData().ViewShoesDetailByShoesID(shoesID);
             //ViewBag.Products;
             //ViewBag.ProductDetails;
             //ViewBag.ProductImages;
 
-            return View();
+            return View("Product");
         }
     }
 }

@@ -127,7 +127,7 @@ namespace OnlineShoesStore.Models
 
     public class ShoesData
     {
-        private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public List<ShoesDTO> FindAll()
         {
@@ -289,7 +289,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@Deleted", false);
+            cmd.Parameters.AddWithValue("@isDeleted", false);
             cmd.Parameters.AddWithValue("@shoesID", shoesID);
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())

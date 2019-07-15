@@ -40,7 +40,7 @@ namespace OnlineShoesStore.Models
 
     public class OriginData
     {
-        private string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public List<OriginDTO> GetOrigins()
         {
