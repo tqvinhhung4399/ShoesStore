@@ -67,6 +67,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@productID", productID);
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {

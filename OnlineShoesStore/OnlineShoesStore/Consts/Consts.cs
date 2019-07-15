@@ -7,6 +7,6 @@ namespace OnlineShoesStore.Consts
 {
     public class Consts
     {
-        public const string connectionString = "Server=.\\SQLEXPRESS2008V1;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+        public const string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
     }
 }

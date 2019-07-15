@@ -43,8 +43,7 @@ namespace OnlineShoesStore.Models
     {
         private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        
-    {        
+             
         public List<ProductDTO> GetProductsByCategoryID(int id)
         {
             List<ProductDTO> list = new List<ProductDTO>();

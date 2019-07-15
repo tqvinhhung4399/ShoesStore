@@ -67,7 +67,7 @@ namespace OnlineShoesStore.Models
         {
             string image = "";
             string sql = "Select image From ProductImages Where productID = @productID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();

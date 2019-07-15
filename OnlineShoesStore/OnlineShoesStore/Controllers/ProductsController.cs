@@ -41,9 +41,9 @@ namespace OnlineShoesStore.Controllers
         {
             string idStr = HttpContext.Request.Query["txtID"];
             int shoesID = Int32.Parse(idStr);
-            ViewBag.Shoes = new ShoesData().GetShoesDetailByProductID(pID);
-            ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(pID);
-            ViewBag.ListImages = new ProductImageData().GetImagesByProductID(pID);
+            ViewBag.Shoes = new ShoesData().GetShoesDetailByProductID(shoesID);
+            ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(shoesID);
+            ViewBag.ListImages = new ProductImageData().GetImagesByProductID(shoesID);
             return View("Product");
         }
     }
