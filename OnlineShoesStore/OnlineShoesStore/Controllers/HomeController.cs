@@ -79,8 +79,8 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ProcessLogout()
         {
-            HttpContext.Session.SetString("SessionUser", null);
-            HttpContext.Session.SetString("SessionRole", null);
+            HttpContext.Session.SetString("SessionUser", "");
+            HttpContext.Session.SetString("SessionRole", "");
             return View("Index");
         }
 
