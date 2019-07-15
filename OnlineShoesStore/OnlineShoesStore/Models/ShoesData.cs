@@ -127,13 +127,11 @@ namespace OnlineShoesStore.Models
 
     public class ShoesData
     {
-        private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public List<ShoesDTO> FindAll()
         {
             List<ShoesDTO> result = null;
             string sql = "Select * From Shoes Where isDeleted = @Deleted";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -163,7 +161,7 @@ namespace OnlineShoesStore.Models
         {
             List<ShoesDTO> result = null;
             string sql = "Select * From Shoes Where isDeleted = @Deleted And categoryId = @Id";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -193,7 +191,7 @@ namespace OnlineShoesStore.Models
         {
             List<ShoesDTO> result = null;
             string sql = "Select * From Shoes Where isDeleted = @Deleted And brandId = @Id";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -223,7 +221,7 @@ namespace OnlineShoesStore.Models
         {
             List<ShoesDTO> result = null;
             string sql = "Select * From Shoes Where isDeleted = @Deleted And originId = @Id";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -253,7 +251,7 @@ namespace OnlineShoesStore.Models
         {
             List<ShoesDTO> result = null;
             string sql = "Select shoeID, name, categoryID, brandID From Shoes Where isDeleted = @Deleted And name like @name";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -279,11 +277,32 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
-        public ShoesDTO ViewShoesDetailByShoesID(int shoesID)
+        private int GetShoesIDByProductID(int productID)
         {
+            int shoesID = 0;
+            string sql = "Select ShoesID From Products Where productID = @productID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@productID", productID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                shoesID = (int)dr[0];
+            }
+            cnn.Close();
+            return shoesID;
+        }
+
+        public ShoesDTO GetShoesDetailByProductID(int productID)
+        {
+            int shoesID = GetShoesIDByProductID(productID);
             ShoesDTO shoes = null;
             string sql = "Select name, categoryID, brandID, material, description, originID From Shoes Where isDeleted = @isDeleted and shoesID = @shoesID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -316,7 +335,7 @@ namespace OnlineShoesStore.Models
         {
             float price = 0;
             string sql = "Select MIN(P.price) From Products P, Shoes S Where P.shoesID = S.shoesID and S.shoesID = @shoesID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -338,7 +357,7 @@ namespace OnlineShoesStore.Models
             string sql = "Select top 1 PI.image " +
                         "From ProductImages PI, (Select top 1 P.productID From Products P, Shoes S Where P.shoesID = S.shoesID and S.shoesID = @shoesID) PP " +
                         "Where PI.productID = PP.productID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();

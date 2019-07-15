@@ -41,13 +41,11 @@ namespace OnlineShoesStore.Models
 
     public class BrandData
     {
-        private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public List<BrandDTO> GetBrands()
         {
             List<BrandDTO> result = null;
             string sql = "Select * From Brands Where isDeleted = @Deleted";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -71,7 +69,7 @@ namespace OnlineShoesStore.Models
         public string GetBrandNameByID(int id) {
             string brandName = "";
             string sql = "Select name From Brands Where brandID = @brandID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();

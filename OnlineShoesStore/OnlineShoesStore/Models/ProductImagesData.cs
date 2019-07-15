@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace OnlineShoesStore.Models
@@ -35,5 +37,30 @@ namespace OnlineShoesStore.Models
             set { image = value; }
         }
 
+    }
+
+    public class ProductImageData
+    {
+        public List<ProductImagesDTO> GetImagesByProductID(int productID)
+        {
+            List<ProductImagesDTO> result = new List<ProductImagesDTO>();
+            string sql = "Select * From ProductImages Where productID = @productID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@productID", productID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                int productImageID = (int)dr[0];
+                string image = (string)dr[2];
+                result.Add(new ProductImagesDTO(productImageID, productID, image));
+            }
+            cnn.Close();
+            return result;
+        }
     }
 }

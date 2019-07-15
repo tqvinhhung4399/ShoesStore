@@ -62,13 +62,11 @@ namespace OnlineShoesStore.Models
 
     public class DataTableData
     {
-        private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public List<string> GetAllSizeQuantity(int id)
         {
             List<string> sizeQuantity;
             string sql = "SELECT size, quantity FROM ProductDetails p WHERE p.isDeleted = @Deleted AND p.productID = @Id";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -97,7 +95,7 @@ namespace OnlineShoesStore.Models
                                     "AND b.isDeleted = 0) a, Products p " +
                             "WHERE a.shoesID = p.shoesID " +
                                 "AND p.isDeleted = 0";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();

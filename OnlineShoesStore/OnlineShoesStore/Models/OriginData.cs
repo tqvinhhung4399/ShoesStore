@@ -40,13 +40,11 @@ namespace OnlineShoesStore.Models
 
     public class OriginData
     {
-        private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public List<OriginDTO> GetOrigins()
         {
             List<OriginDTO> result = null;
             string sql = "Select * From Origins Where isDeleted = @Deleted";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -70,7 +68,7 @@ namespace OnlineShoesStore.Models
         public string GetOriginNameByID(int id) {
             string originName = "";
             string sql = "Select name From Origins Where originID = @originID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
