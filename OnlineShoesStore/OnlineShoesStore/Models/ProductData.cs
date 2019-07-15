@@ -75,13 +75,11 @@ namespace OnlineShoesStore.Models
 
     public class ProductData
     {
-        string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public List<ProductDTO> GetProductsByCategoryID(int id)
         {
             List<ProductDTO> list = new List<ProductDTO>();
             string sql = "Select p.name, p.price, p.productID, p.color From Product P, Shoes S Where P.shoesID = S.ShoesID and S.categoryID = @catID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
@@ -112,7 +110,7 @@ namespace OnlineShoesStore.Models
         {
             List<ProductDTO> list = new List<ProductDTO>();
             string sql = "Select p.name, p.price, p.productID, p.color From Product P, Shoes S Where P.shoesID = S.ShoesID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
