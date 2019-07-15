@@ -40,7 +40,7 @@ namespace OnlineShoesStore.Controllers
         public IActionResult ProductDetail(string productID)
         {
             int pID = Int32.Parse(productID);
-            ViewBag.Shoes = new ShoesData().ViewShoesDetailByProductID(pID);
+            ViewBag.Shoes = new ShoesData().GetShoesDetailByProductID(pID);
             ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(pID);
             ViewBag.ListImages = new ProductImageData().GetImagesByProductID(pID);
             return View("Product");
