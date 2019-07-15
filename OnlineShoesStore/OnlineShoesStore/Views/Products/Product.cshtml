@@ -38,16 +38,16 @@
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
-                    <h3>Product's name</h3>
-                    <h2>$ Price</h2>
+                    <h3>@ViewBag.Shoes.Name</h3>
+                    <h2>$ @ViewBag.Shoes.Price</h2>
                     <ul class="list">
-                        <li><a class="active" href="#"><span>Category</span> : Sneakers</a></li>
+                        <li><a class="active" href="#"><span>Category</span> : @ViewBag.Shoes.CategoryName</a></li>
                         @*<li><a href="#"><span>Availibility</span> : In Stock</a></li>*@
-                        <li><a href="#"><span>Brand</span> : Adidas</a></li>
+                        <li><a href="#"><span>Brand</span> : @ViewBag.Shoes.BrandName</a></li>
                         <li><a href="#"><span>Availibility</span> : (Number in stock?!?)</a></li>
                     </ul>
                     <p>
-                        DETAILS [content]
+                        @ViewBag.Shoes.Description
                     </p>
                     <div class="product_count">
                         <label for="qty">Quantity:</label>

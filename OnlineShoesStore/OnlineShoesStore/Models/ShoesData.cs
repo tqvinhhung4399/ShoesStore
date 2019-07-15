@@ -308,7 +308,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@Deleted", false);
+            cmd.Parameters.AddWithValue("@isDeleted", false);
             cmd.Parameters.AddWithValue("@shoesID", shoesID);
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
