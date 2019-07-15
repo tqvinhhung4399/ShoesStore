@@ -92,7 +92,7 @@ namespace OnlineShoesStore.Models
     public class UserData
     {
         //dat connection string o day xai` tam nha
-        private readonly string connectionString = "Server=.\\SQLEXPRESS;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private readonly string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
         
         // may cai nay anh test thu, khong quan trong nhung cung dung xoa nha
         // public IConfiguration Configuration { get; }
@@ -131,7 +131,7 @@ namespace OnlineShoesStore.Models
         public UserDTO CheckLogin(string username, string password)
         {
             UserDTO user = null;
-            string sql = "Select fullname, gender, dob, address, tel, role From Users Where UserID like @username and Password like @password and isDeleted = @false";
+            string sql = "Select fullname, gender, dob, address, tel, role From Users Where UserID = @username and Password = @password and isDeleted = @false";
             SqlConnection cnn = new SqlConnection(connectionString);
             if (cnn.State == ConnectionState.Closed)
             {

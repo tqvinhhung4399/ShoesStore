@@ -86,8 +86,8 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Index()
         {
-            List<CategoryDTO> categories = new CategoryData().GetCategories();
-            ViewBag.Categories = categories;
+            //List<CategoryDTO> categories = new CategoryData().GetCategories();
+            //ViewBag.Categories = categories;
             return View();
         }
 

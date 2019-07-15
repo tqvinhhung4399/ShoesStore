@@ -28,6 +28,15 @@ namespace OnlineShoesStore.Controllers
 
             return View();
         }
+
+        public IActionResult LoadDataTable()
+        {
+            DataTableData data = new DataTableData();
+         
+            var result = data.GetData();
+            return Ok(result);
+        }
+
         public IActionResult UserManager()
         {
             if (CheckAdmin() != null) {

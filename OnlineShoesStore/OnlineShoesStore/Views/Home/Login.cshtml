@@ -35,7 +35,7 @@
             <div class="col-lg-6">
                 <div class="login_form_inner">
                     <h3>Sign In</h3>
-                    <form class="row login_form" action="ProcessLogin" method="post">
+                    <form class="row login_form" action="/Home/ProcessLogin" method="post">
                         <span class="text-danger">@ViewBag.Invalid</span>
                         <div class="col-md-12 form-group">
                             <input type="text" class="form-control" value="@ViewBag.Username" id="name" name="txtUsername" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required oninvalid="this.setCustomValidity('Please input an email (ex: sneakerhead@email.com)')" oninput="this.setCustomValidity('')">
