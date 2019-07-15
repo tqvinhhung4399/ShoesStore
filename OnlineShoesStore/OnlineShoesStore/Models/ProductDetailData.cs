@@ -57,13 +57,11 @@ namespace OnlineShoesStore.Models
 
     public class ProductDetailData
     {
-        private readonly string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public List<ProductDetailDTO> GetProductDetailsByProductID(int productID)
         {
             List<ProductDetailDTO> result = new List<ProductDetailDTO>();
             string sql = "Select * From ProductDetails Where productID = @productID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
