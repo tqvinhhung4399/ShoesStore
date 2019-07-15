@@ -46,14 +46,13 @@ namespace OnlineShoesStore.Controllers
             return View(CheckAdmin());
         }
 
-        public IActionResult UnbanUser()
+        public IActionResult UnbanUser(string username)
         {
             UserData data = new UserData();
             if (CheckAdmin() != null)
             {
                 return View(index);
             }
-            string username = HttpContext.Request.Query["username"];
             if (data.UnbanUserByUsername(username))
             {
                 ViewBag.UnbanSuccessful = "User " + username + " has been unbanned!";
@@ -66,14 +65,13 @@ namespace OnlineShoesStore.Controllers
             return View("UserManager");
         }
 
-        public IActionResult BanUser()
+        public IActionResult BanUser(string username)
         {
             UserData data = new UserData();
             if (CheckAdmin() != null) { //role khong phai admin
                 return View(index);
             }
-            string username = HttpContext.Request.Query["username"];
-            if (data.BanUserByUsername(username))
+            if (new UserData().BanUserByUsername(username))
             {
                 ViewBag.BanSuccessful = "User " + username + " has been banned!";
                 ViewBag.ListUser = data.LoadUsers();

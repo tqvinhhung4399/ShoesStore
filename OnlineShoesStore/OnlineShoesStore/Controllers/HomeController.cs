@@ -81,8 +81,6 @@ namespace OnlineShoesStore.Controllers
         {
             HttpContext.Session.Remove("SessionUser");
             HttpContext.Session.Remove("SessionRole");
-            //HttpContext.Session.SetString("SessionUser", "");
-            //HttpContext.Session.SetString("SessionRole", "");
             return View("Index");
         }
 
