@@ -84,13 +84,17 @@
                                         <li class="nav-item"><a class="nav-link" href="/Products/Category?txtCategory=@category.CategoryId">@category.Name</a></li>
 
                                     }
-                                    <li class="nav-item"><a class="nav-link" href="/Products/Category?txtCategory=all"/>All Products</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/Products/Category?txtCategory=all" />All Products</a></li>
                                 </ul>
                             </li>
 
                             @if (Context.Session.GetString("SessionUser") != null)
                             {
-                                <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionUser").ToString()</a></li>
+                                <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionUser").ToString()<a href="/Home/ProcessLogout">   (Logout)</a></a></li>
+                            }
+                            else
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Login">Login</a></li>
                             }
                         </ul>
                         <ul class="nav navbar-nav navbar-right">

@@ -63,17 +63,21 @@
                             <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
 
                             @*
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Admin</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserManager">User Manager</a></li>
-                                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
-                                    </ul>
-                                </li>*@
+        <li class="nav-item submenu dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">Admin</a>
+            <ul class="dropdown-menu">
+                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserManager">User Manager</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
+            </ul>
+        </li>*@
                             @if (Context.Session.GetString("SessionUser") != null)
                             {
-                                <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionUser").ToString()</a></li>
+                                <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionUser").ToString()<a href="/Home/ProcessLogout">   (Logout)</a></a></li>
+                            }
+                            else
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Login">Login</a></li>
                             }
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
