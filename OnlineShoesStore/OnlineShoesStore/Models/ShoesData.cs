@@ -281,7 +281,7 @@ namespace OnlineShoesStore.Models
         {
             int shoesID = 0;
             string sql = "Select ShoesID From Products Where productID = @productID";
-            SqlConnection cnn = new SqlConnection(connectionString);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
