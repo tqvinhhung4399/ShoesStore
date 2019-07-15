@@ -36,9 +36,9 @@
                         <label style="color: #000000; font-weight: bold" class="">Category: </label>
                         <div class="form-group">
                             <select name="slCategory">
-                                @foreach (OriginDTO origin in ViewBag.ListOrigins)
+                                @foreach (CategoryDTO category in ViewBag.ListCategories)
                                 {
-                                    <option value="@origin.OriginId">@origin.Name</option>
+                                    <option value="@category.CategoryId">@category.Name</option>
                                 }
                             </select>
                             <br />
@@ -47,10 +47,10 @@
                         <label style="color: #000000; font-weight: bold" class="">Brand: </label>
                         <div class="form-group">
                             <select name="slBrand">
-                                <option selected value="0">Adidas</option>
-                                <option value="1">Nike</option>
-                                <option value="2">Bitis</option>
-                                <option value="3">New Balance</option>
+                                @foreach (BrandDTO brand in ViewBag.ListBrands)
+                                {
+                                    <option value="@brand.BrandId">@brand.Name</option>
+                                }                                
                             </select>
                             <br />
                             <br />
@@ -66,10 +66,10 @@
                         <label style="color: #000000; font-weight: bold" class="">Origin: </label>
                         <div class="form-group">
                             <select name="slOrigin">
-                                <option selected value="0">Vietnam</option>
-                                <option value="1">China</option>
-                                <option value="2">America</option>
-                                <option value="3">Thailand</option>
+                                @foreach (OriginDTO origin in ViewBag.ListOrigins)
+                                {
+                                    <option value="@origin.OriginId">@origin.Name</option>
+                                }                                
                             </select>
                             <br />
                         </div>
@@ -87,12 +87,12 @@
                         <div class="form-group">
                             <center>
                                 <button class="primary-btn btn-sm" type="button" onclick="add()">Add product</button>
-                                <button class="primary-btn btn-sm" type="button" onclick="remove()">Remove product</button>
+                                <button class="primary-btn btn-sm" type="button" onclick="remove()" style="margin-left:40px;">Remove product</button>
                             </center>
                         </div>
                         <div class="form-group">
                             @*<input type="submit" class="primary-btn btn-lg" value="CREATE" />*@
-                            <button style="width=1000px;" class="primary-btn btn-lg">CREATE</button>
+                            <button style="width:100%; margin-top:40px;" class="primary-btn btn-lg">CREATE</button>
                         </div>
                     </form>
 
