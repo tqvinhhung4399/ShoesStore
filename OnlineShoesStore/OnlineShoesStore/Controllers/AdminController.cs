@@ -34,7 +34,7 @@ namespace OnlineShoesStore.Controllers
             DataTableData data = new DataTableData();
          
             var result = data.GetData();
-            return Ok(result);
+            return Json(result);
         }
 
         public IActionResult UserManager()

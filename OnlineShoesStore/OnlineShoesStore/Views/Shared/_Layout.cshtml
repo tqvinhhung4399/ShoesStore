@@ -81,10 +81,10 @@
                                 <ul class="dropdown-menu">
                                     @foreach (CategoryDTO category in new CategoryData().GetCategories())
                                     {
-                                        <li class="nav-item"><a class="nav-link" href="/Products/Category/txtCategory=@category.CategoryId">@category.Name</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="/Products/Category?txtCategory=@category.CategoryId">@category.Name</a></li>
 
                                     }
-                                    <li class="nav-item"><a class="nav-link" href="/Products/Category/txtCategory=all"/>All Products</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/Products/Category?txtCategory=all"/>All Products</a></li>
                                 </ul>
                             </li>
 

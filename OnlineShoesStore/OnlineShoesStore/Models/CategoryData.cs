@@ -43,12 +43,83 @@ namespace OnlineShoesStore.Models
     {
         private string connectionString = "Server=.;Database=ShoesStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        //public List<ProductDTO> GetProductsByCategoryID(int id)
-        //{
-        //    //List<ProductDTO> list = new List<ProductDTO>;
+        public List<ProductDTO> GetProductsByCategoryID(int id)
+        {
+            List<ProductDTO> list = new List<ProductDTO>();
+            string sql = "SELECT s.name, p.price, p.productID, i.image, p.color " +
+                "FROM Products p, Shoes s, ProductImages i " +
+                "WHERE p.shoesID = s.shoesID " +
+                "AND p.productID = i.productID " +
+                "AND s.categoryID = @catID " +
+                "AND p.isDeleted=0 " +
+                "AND s.isDeleted=0";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if(cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@catID", id);
+            SqlDataReader dr = cmd.ExecuteReader();
+            string color;
+            int productID;
+            string image;
+            double price;
+            string name;
+            ProductDTO dto = null;
+            while (dr.Read())
+            {
+                name = dr.GetString(0);
+                price = dr.GetDouble(1);
+                productID = dr.GetInt32(2);
+                image = dr.GetString(3);
+                color = dr.GetString(4);
+                dto = new ProductDTO(productID, 0, price, color, false);
+                dto.Name = name;
+                dto.Image = image;
+                list.Add(dto);
+            }
+            cnn.Close();
+            return list;
+        }
 
-        //    //return list;
-        //}
+        public List<ProductDTO> GetAllProducts()
+        {
+            List<ProductDTO> list = new List<ProductDTO>();
+            string sql = "SELECT s.name, p.price, p.productID, i.image, p.color " +
+                "FROM Products p, Shoes s, ProductImages i " +
+                "WHERE p.shoesID = s.shoesID " +
+                "AND p.productID = i.productID " +
+                "AND p.isDeleted=0 " +
+                "AND s.isDeleted=0";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            string color;
+            int productID;
+            string image;
+            double price;
+            string name;
+            ProductDTO dto = null;
+            while (dr.Read())
+            {
+                name = dr.GetString(0);
+                price = dr.GetDouble(1);
+                productID = dr.GetInt32(2);
+                image = dr.GetString(3);
+                color = dr.GetString(4);
+                dto = new ProductDTO(productID, 0, price, color, false);
+                dto.Name = name;
+                dto.Image = image;
+                list.Add(dto);
+            }
+            cnn.Close();
+            return list;
+        }
 
         public List<CategoryDTO> GetCategories()
         {

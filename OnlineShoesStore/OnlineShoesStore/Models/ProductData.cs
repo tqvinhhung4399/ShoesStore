@@ -6,13 +6,31 @@ namespace OnlineShoesStore.Models
 {
     public class ProductDTO
     {
+        private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        private string image;
+
+        public string Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+
+
+
         private int productId;
         private int shoesId;
-        private float price;
+        private double price;
         private string color;
         private bool isDeleted;
 
-        public ProductDTO(int productId, int shoesId, float price, string color, bool isDeleted)
+        public ProductDTO(int productId, int shoesId, double price, string color, bool isDeleted)
         {
             this.productId = productId;
             this.shoesId = shoesId;
@@ -33,7 +51,7 @@ namespace OnlineShoesStore.Models
             set { shoesId = value; }
         }
 
-        public float Price
+        public double Price
         {
             get { return price; }
             set { price = value; }
