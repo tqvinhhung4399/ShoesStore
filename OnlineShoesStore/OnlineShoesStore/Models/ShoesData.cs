@@ -279,8 +279,29 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
-        public ShoesDTO ViewShoesDetailByShoesID(int shoesID)
+        private int GetShoesIDByProductID(int productID)
         {
+            int shoesID = 0;
+            string sql = "Select ShoesID From Products Where productID = @productID";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@productID", productID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                shoesID = (int)dr[0];
+            }
+            cnn.Close();
+            return shoesID;
+        }
+
+        public ShoesDTO GetShoesDetailByProductID(int productID)
+        {
+            int shoesID = GetShoesIDByProductID(productID);
             ShoesDTO shoes = null;
             string sql = "Select name, categoryID, brandID, material, description, originID From Shoes Where isDeleted = @isDeleted and shoesID = @shoesID";
             SqlConnection cnn = new SqlConnection(connectionString);
