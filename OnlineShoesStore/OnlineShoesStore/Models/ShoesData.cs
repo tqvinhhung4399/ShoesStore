@@ -308,7 +308,7 @@ namespace OnlineShoesStore.Models
         {
             int shoesID = GetShoesIDByProductID(productID);
             ShoesDTO shoes = null;
-            string sql = "Select name, categoryID, brandID, material, description, originID, P.price, P.color From Shoes, Products P Where isDeleted = @isDeleted and shoesID = @shoesID and P.productID = @productID";
+            string sql = "Select name, categoryID, brandID, material, description, originID, P.price, P.color From Shoes, Products P Where Shoes.isDeleted = @isDeleted and Shoes.shoesID = @shoesID and P.productID = @productID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
