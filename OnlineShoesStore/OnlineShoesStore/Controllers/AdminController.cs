@@ -94,5 +94,11 @@ namespace OnlineShoesStore.Controllers
             }
             return null; //role là admin
         }
+
+        //Quản lí sản phảm
+        public IActionResult EditProduct()
+        {
+            return View("ProductManager");
+        }
     }
 }

@@ -9,19 +9,28 @@ namespace OnlineShoesStore.Models
 {
     public class DataTableDTO
     {
+        private int productID;
+
+        public int ProductID
+        {
+            get { return productID; }
+            set { productID = value; }
+        }
+
         private string name;
         private string color;
         private string brand;
         private double price;
         private List<string> sizeQuantity;
 
-        public DataTableDTO(string brand, string name, string color, double price, List<string> sizeQuantity)
+        public DataTableDTO(string brand, string name, string color, double price, List<string> sizeQuantity, int productID)
         {
             this.brand = brand;
             this.name = name;
             this.color = color;
             this.price = price;
             this.sizeQuantity = sizeQuantity;
+            this.productID = productID;
         }
 
         public List<string> SizeQuantity
@@ -102,6 +111,7 @@ namespace OnlineShoesStore.Models
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
             SqlDataReader dr = cmd.ExecuteReader();
+            int proID;
             string name;
             string brand;
             string color;
@@ -114,8 +124,9 @@ namespace OnlineShoesStore.Models
                 name = dr.GetString(1);
                 color = dr.GetString(2);
                 prices = dr.GetDouble(3);
+                proID = dr.GetInt32(4);
                 sizeQuantity = GetAllSizeQuantity(dr.GetInt32(4));
-                result.Add(new DataTableDTO(brand, name, color, prices, sizeQuantity));
+                result.Add(new DataTableDTO(brand, name, color, prices, sizeQuantity, proID));
             }
             cnn.Close();
             return result;
