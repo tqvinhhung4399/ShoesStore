@@ -384,5 +384,30 @@ namespace OnlineShoesStore.Models
             return image;
         }
 
+        public bool AddNewShoes(ShoesDTO shoes)
+        {
+            bool result = false;
+            string sql = "Insert into Shoes(name, categoryID, brandID, material, description, originID, isDeleted) values (@name, @categoryID, @brandID, @material, @description, @originID, @isDeleted)";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@name", shoes.Name);
+            cmd.Parameters.AddWithValue("@categoryID", shoes.CategoryId);
+            cmd.Parameters.AddWithValue("@brandID", shoes.BrandId);
+            cmd.Parameters.AddWithValue("@material", shoes.Material);
+            cmd.Parameters.AddWithValue("@description", shoes.Description);
+            cmd.Parameters.AddWithValue("@originID", shoes.OriginId);
+            cmd.Parameters.AddWithValue("@isDeleted", false);
+            if (cmd.ExecuteNonQuery() > 0)
+            {
+                result = true;
+            }
+            cnn.Close();
+            return result;
+        }
+
     }
 }
