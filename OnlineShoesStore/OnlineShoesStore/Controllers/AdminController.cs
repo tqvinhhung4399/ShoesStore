@@ -20,6 +20,24 @@ namespace OnlineShoesStore.Controllers
             ViewBag.ListOrigins = new OriginData().GetOrigins();
             return View();
         }
+
+        public IActionResult ProcessAddNewShoes()
+        {
+            string name = Request.Form["txtName"];
+            //lay cac parameter
+
+            if (new ShoesData().AddNewShoes(shoes))
+            {
+                ViewBag.Success = "Add new shoes successfully";
+                return View(); //view tuong ung sau khi AddNewShoes
+            } else
+            {
+                ViewBag.Failed = "Add new shoes failed!";
+                return View(); //view tuong ung khi add that bai
+            }
+            
+        }
+
         public IActionResult ProductManager()
         {
             if (CheckAdmin() != null) {
