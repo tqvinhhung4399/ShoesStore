@@ -40,10 +40,10 @@ namespace OnlineShoesStore.Controllers
         public IActionResult ProductDetail()
         {
             string idStr = HttpContext.Request.Query["txtID"];
-            int shoesID = Int32.Parse(idStr);
-            ViewBag.Shoes = new ShoesData().GetShoesDetailByProductID(shoesID);
-            ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(shoesID);
-            ViewBag.ListImages = new ProductImageData().GetImagesByProductID(shoesID);
+            int productID = Int32.Parse(idStr);
+            ViewBag.Shoes = new ShoesData().GetShoesDetailByProductID(productID);
+            ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(productID);
+            ViewBag.ListImages = new ProductImageData().GetImagesByProductID(productID);
             return View("Product");
         }
     }
