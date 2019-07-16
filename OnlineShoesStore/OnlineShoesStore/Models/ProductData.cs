@@ -78,7 +78,7 @@ namespace OnlineShoesStore.Models
         public List<ProductDTO> GetProductsByCategoryID(int id)
         {
             List<ProductDTO> list = new List<ProductDTO>();
-            string sql = "Select p.name, p.price, p.productID, p.color From Products p, Shoes s Where p.shoesID = s.ShoesID and s.categoryID = @catID";
+            string sql = "Select s.name, p.price, p.productID, p.color From Products p, Shoes s Where p.shoesID = s.ShoesID and s.categoryID = @catID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
@@ -99,6 +99,7 @@ namespace OnlineShoesStore.Models
                 productID = dr.GetInt32(2);
                 color = dr.GetString(3);
                 dto = new ProductDTO(productID, 0, price, color, false);
+                dto.Name = name;
                 dto.Image = new ProductImageData().GetImageByProductID(productID);
                 list.Add(dto);
             }
