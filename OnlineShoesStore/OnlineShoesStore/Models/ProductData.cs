@@ -131,6 +131,7 @@ namespace OnlineShoesStore.Models
                 color = dr.GetString(3);
                 dto = new ProductDTO(productID, 0, price, color, false);
                 dto.Image = new ProductImageData().GetImageByProductID(productID);
+                dto.Name = name;
                 list.Add(dto);
             }
             cnn.Close();

@@ -64,6 +64,13 @@ namespace OnlineShoesStore.Models
             this.originId = originId;
             this.isDeleted = isDeleted;
         }
+        private string color;
+
+        public string Color
+        {
+            get { return color; }
+            set { color = value; }
+        }
 
         public ShoesDTO(int shoesID, string name, string categoryName, string brandName, float price, string image)
         {
@@ -301,7 +308,7 @@ namespace OnlineShoesStore.Models
         {
             int shoesID = GetShoesIDByProductID(productID);
             ShoesDTO shoes = null;
-            string sql = "Select name, categoryID, brandID, material, description, originID From Shoes Where isDeleted = @isDeleted and shoesID = @shoesID";
+            string sql = "Select name, categoryID, brandID, material, description, originID, P.price, P.color From Shoes, Products P Where isDeleted = @isDeleted and shoesID = @shoesID and P.productID = @productID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
@@ -310,6 +317,7 @@ namespace OnlineShoesStore.Models
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@isDeleted", false);
             cmd.Parameters.AddWithValue("@shoesID", shoesID);
+            cmd.Parameters.AddWithValue("@productID", productID);
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
@@ -322,7 +330,10 @@ namespace OnlineShoesStore.Models
                 string description = (string)dr[4];
                 int originID = (int)dr[5];
                 string originName = new OriginData().GetOriginNameByID(originID);
-                shoes = new ShoesDTO(shoesID, name, categoryName, brandName, 0, null);
+                double price = (double)dr[6];
+                string color = (string)dr[7];
+                shoes = new ShoesDTO(shoesID, name, categoryName, brandName, (float)price, null);
+                shoes.Color = color;
                 shoes.Material = material;
                 shoes.Description = description;
                 shoes.OriginName = originName;
