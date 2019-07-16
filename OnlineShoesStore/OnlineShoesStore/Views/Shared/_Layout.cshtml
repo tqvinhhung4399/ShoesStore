@@ -221,11 +221,69 @@
         <script src="~/js/gmaps.min.js"></script>
         <script src="~/js/main.js"></script>
         <script src="~/js/DataTableJS.js"></script>
+        <script src="~/js/pagination.js"></script>
         <script>
             $(document).ready(function () {
                 $('#test').DataTable();
             });
         </script>
+        @if (ViewBag.Products != null)
+        {
+            <script>
+            $('#pagination-demo').twbsPagination({
+                    totalPages: Math.ceil(parseFloat(@ViewBag.Products.Count / 6)),
+                    visiblePages: 3,
+                    next: '>',
+                    prev: '<',
+                    first: '<<',
+                    last: '>>',
+            onPageClick: function (event, page) {
+                //fetch content and render here
+
+                var s = "";
+                var i = 0;
+               @foreach(ProductDTO dto in ViewBag.Products)
+                {
+
+                    <text>
+                i++;
+                if (i <= 6 * page && i > 6 * (page - 1)) {
+                    s += '<div class="col-lg-4 col-md-6">' +
+                        '<div class="single-product">' +
+                        '    <img class="img-fluid" src="~/img/product/p1.jpg" alt="">' +
+                        '    <div class="product-details">' +
+                        '        <center>' +
+                        '            <a class="btn-info btn-sm" style="font-size:25px;" href="/Products/ProductDetail?txtID=@dto.ProductId">@dto.Name</a>' +
+                        '            <h6>@dto.Color</h6>' +
+                        '            <h6 style="font-size:20px;">$@dto.Price</h6>' +
+                        '        </center>' +
+                        '        <div class="price">' +
+
+                        '        </div>' +
+                        '       <div class="prd-bottom">' +
+
+                        '            <a href="" class="social-info">' +
+                        '                <span class="ti-bag"></span>' +
+                        '               <p class="hover-text">Add to cart</p>' +
+                        '            </a>' +
+                        '            <a href="" class="social-info">' +
+                        '                <span class="lnr lnr-move"></span>' +
+                        '                <p class="hover-text">Show details</p>' +
+                        '            </a>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '</div>' +
+                        '</div>';
+
+                }
+                </text>
+
+                }
+                $('#content').html(s);
+        }
+        });
+            </script>
+        }
     </environment>
     @*<environment exclude="Development">
             <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
