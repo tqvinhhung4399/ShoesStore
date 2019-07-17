@@ -115,7 +115,7 @@ namespace OnlineShoesStore.Controllers
         //Quản lí sản phảm
         public IActionResult EditProduct()
         {
-            return View("ProductManager");
+            return View("EditProduct");
         }
     }
 }

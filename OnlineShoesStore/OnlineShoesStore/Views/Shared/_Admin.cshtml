@@ -214,32 +214,28 @@
             });
         </script>
         <script>
-            function add() {
-                var count = 3;
-                function remove() {
-                    if (count <= 3) {
-                        return;
-                    }
-                    var s = "#DP" + (count - 1);
-                    $("div").remove(s);
-                    $("center").remove(s);
-                    count--;
-                };
-                if (checkEmpty() === false) {
+            var count = 2;
+            function removeSize() {
+                if (count <= 2) {
                     return;
-                } else {
-                    var s = "<center id='DP" + count + "'><h3>Product " + count + "</h3></center>"
+                }
+                var s = "#DP" + (count - 1);
+                $("div").remove(s);
+                $("center").remove(s);
+                count--;
+            };
+            function addSize() {
+                var s = "<center id='DP" + count + "'><h3>Detail " + count + "</h3></center>"
                         + "<div class='form-group' id='DP" + count + "'>"
                         + "<label style='color: #000000; font-weight: bold' >Size: </label>"
                         + "<input type='number' class='form-control' name='txtSize' min='0' required placeholder='Products size' />"
                         + "</div>"
                         + "<div class='form-group' id='DP" + count + "'>"
                         + "<label style='color: #000000; font-weight: bold' >Quantity: </label>"
-                        + "<input type='text' class='form-control' name='txtQuantity' min='0' required placeholder='Products quantity' />"
+                        + "<input type='number' class='form-control' name='txtQuantity' min='0' required placeholder='Products quantity' />"
                         + "</div>"
-                    $("#MainProduct").append(s);
+                    $("#DetailProduct").append(s);
                     count++;
-                }
 
             };
         </script>
