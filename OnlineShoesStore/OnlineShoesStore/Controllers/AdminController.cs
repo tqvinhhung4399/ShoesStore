@@ -43,7 +43,6 @@ namespace OnlineShoesStore.Controllers
             if (CheckAdmin() != null) {
                 return View(index);
             }
-
             return View();
         }
 

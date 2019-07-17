@@ -216,5 +216,44 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return result;
         }
+
+        public bool ChangePassword(string username, string password)
+        {
+            bool result = false;
+            string sql = "Update Users Set password = @Password Where userID = @userID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Password", password);
+            cmd.Parameters.AddWithValue("@userID", username);
+            result = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return result;
+        }
+
+        public bool ChangeInfo(UserDTO dto)
+        {
+            bool result = false;
+            string sql = "Update Users Set password=@Password, fullname=@Fullname, gender=@Gender, dob=@Dob, address=@Address, tel=@Tel Where userID = @userID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Password", dto.Password);
+            cmd.Parameters.AddWithValue("@Fullname", dto.Fullname);
+            cmd.Parameters.AddWithValue("@Gender", dto.Gender);
+            cmd.Parameters.AddWithValue("@Dob", dto.Dob);
+            cmd.Parameters.AddWithValue("@Address", dto.Address);
+            cmd.Parameters.AddWithValue("@Tel", dto.Tel);
+            cmd.Parameters.AddWithValue("@userID", dto.Username);
+            result = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return result;
+        }
     }
 }
