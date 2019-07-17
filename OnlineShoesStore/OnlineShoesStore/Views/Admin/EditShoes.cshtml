@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewData["Title"] = "EditShoes";
+    Layout = "_Admin";
+}
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Order Tracking</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="#">Admin<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Product Manager</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Tracking Box Area =================-->
+<section class="tracking_box_area section_gap">
+    <div class="container">
+        <center>
+            <h1 style="color=red;">Administrator - Shoes Manager</h1>
+        </center>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-12 col-md-10">
+                    <form action="AddProduct" method="POST">
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="1">Name: </label>
+                            <input type="text" class="form-control" id="1" name="txtProductName" required placeholder="Shoes' name" value="@ViewBag.Shoes.Name" />
+                        </div>
+                        <label style="color: #000000; font-weight: bold" class="">Category: </label>
+                        <div class="form-group">
+                            <select name="slCategory">
+                                @foreach (CategoryDTO category in ViewBag.ListCategories)
+                                {
+                                    if (category.Name.Equals(ViewBag.Shoes.CategoryName))
+                                    {
+                                        <option value="@category.CategoryId" selected>@category.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@category.CategoryId">@category.Name</option>
+                                    }
+
+                                }
+                            </select>
+                            <br />
+                            <br />
+                        </div>
+                        <label style="color: #000000; font-weight: bold" class="">Brand: </label>
+                        <div class="form-group">
+                            <select name="slBrand">
+                                @foreach (BrandDTO brand in ViewBag.ListBrands)
+                                {
+                                    if (brand.Name.Equals(ViewBag.Shoes.BrandName))
+                                    {
+                                        <option value="@brand.BrandId" selected>@brand.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@brand.BrandId">@brand.Name</option>
+                                    }
+
+                                }
+                            </select>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="2">Material: </label>
+                            <input type="text" class="form-control" id="2" name="txtMaterial" required placeholder="Shoes' material" value="@ViewBag.Shoes.Material" />
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="3">Description: </label>
+                            <input type="text" class="form-control" id="3" name="txtDescription" required placeholder="Shoes' description" value="@ViewBag.Shoes.Description" />
+                        </div>
+                        <label style="color: #000000; font-weight: bold" class="">Origin: </label>
+                        <div class="form-group">
+                            <select name="slOrigin">
+                                @foreach (OriginDTO origin in ViewBag.ListOrigins)
+                                {
+                                    if (origin.Name.Equals(ViewBag.Shoes.OriginName))
+                                    {
+                                        <option value="@origin.OriginId" selected>@origin.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@origin.OriginId">@origin.Name</option>
+                                    }
+                                }
+                            </select>
+                            <br />
+                        </div>
+                        <div class="form-group" id="MainProduct">
+                            @{ int i = 1;}
+                            @foreach (ProductDTO dto in ViewBag.Products)
+                            {
+
+                                <center><h3>Product @i</h3></center>
+                                <div class="form-group">
+                                    <label style="color: #000000; font-weight: bold">Price: </label>
+                                    <input type="number" class="form-control" name="txtPrice" min="0" required value="@dto.Price" />
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #000000; font-weight: bold">Color: </label>
+                                    <input type="text" class="form-control" name="txtColor" value="@dto.Color" />
+                                </div>
+                                <input type="hidden" name="txtProductID" value="@dto.ProductId"/>
+                                i = i + 1;
+                            }
+                        </div>
+                        <div class="form-group">
+                            <center>
+                                <button class="primary-btn btn-sm" type="button" onclick="addNewProduct()">Add product</button>
+                                <button class="primary-btn btn-sm" type="button" onclick="removeNewProduct()" style="margin-left:40px;">Remove product</button>
+                            </center>
+                        </div>
+                        <div class="form-group">
+                            @*<input type="submit" class="primary-btn btn-lg" value="CREATE" />*@
+                            <button style="width:100%; margin-top:40px;" class="primary-btn btn-lg">UPDATE</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->

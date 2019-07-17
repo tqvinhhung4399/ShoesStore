@@ -53,6 +53,11 @@ namespace OnlineShoesStore.Models
         
         private bool isDeleted;
 
+        public ShoesDTO()
+        {
+
+        }
+
         public ShoesDTO(int shoesId, string name, int categoryId, int brandId, string material, string description, int originId, bool isDeleted)
         {
             this.shoesId = shoesId;
@@ -159,6 +164,41 @@ namespace OnlineShoesStore.Models
                 des = dr.GetString(5);
                 originId = dr.GetInt32(6);
                 result.Add(new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false));
+            }
+            cnn.Close();
+            return result;
+        }
+
+        public List<ShoesDTO> GetAllShoes()
+        {
+            List<ShoesDTO> result = null;
+            string sql = "Select * From Shoes Where isDeleted = @Deleted";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Deleted", false);
+            SqlDataReader dr = cmd.ExecuteReader();
+            int shoesId, categoryId, brandId, originId;
+            string name, material, des;
+            result = new List<ShoesDTO>();
+            ShoesDTO dto = null;
+            while (dr.Read())
+            {
+                shoesId = dr.GetInt32(0);
+                name = dr.GetString(1);
+                categoryId = dr.GetInt32(2);
+                brandId = dr.GetInt32(3);
+                material = dr.GetString(4);
+                des = dr.GetString(5);
+                originId = dr.GetInt32(6);
+                dto = new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false);
+                dto.BrandName = new BrandData().GetBrandNameByID(brandId);
+                dto.CategoryName = new CategoryData().GetCategoryNameByID(categoryId);
+                dto.OriginName = new OriginData().GetOriginNameByID(originId);
+                result.Add(dto);
             }
             cnn.Close();
             return result;
@@ -409,6 +449,7 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
+<<<<<<< HEAD
         public int GetNewestShoesId()
         {
             int shoesId = 0;
@@ -423,5 +464,48 @@ namespace OnlineShoesStore.Models
             return shoesId;
         }
 
+=======
+        public ShoesDTO GetShoesInformationByShoesID(int shoesID)
+        {
+            ShoesDTO shoes = null;
+            string sql = "SELECT * FROM Shoes WHERE shoesID = @shoesID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@shoesID", shoesID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                int shoesId = (int)dr[0];
+                string name = (string)dr[1];
+                int categoryID = (int)dr[2];
+                string categoryName = new CategoryData().GetCategoryNameByID(categoryID);
+                int brandID = (int)dr[3];
+                string brandName = new BrandData().GetBrandNameByID(brandID);
+                string material = (string)dr[4];
+                string description = (string)dr[5];
+                int originID = (int)dr[6];
+                string originName = new OriginData().GetOriginNameByID(originID);
+                shoes = new ShoesDTO
+                {
+                    ShoesId = shoesId,
+                    Name = name,
+                    CategoryId = categoryID,
+                    CategoryName = categoryName,
+                    BrandId = brandID,
+                    BrandName = brandName,
+                    Material = material,
+                    Description = description,
+                    OriginId = originID,
+                    OriginName = originName
+                };
+            }
+            cnn.Close();
+            return shoes;
+        }
+>>>>>>> b823d232678e73c11bb3d8ba485b7e6e919f36ba
     }
 }

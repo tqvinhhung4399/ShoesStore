@@ -38,6 +38,24 @@ namespace OnlineShoesStore.Controllers
             
         //}
 
+        public IActionResult ShoesManager()
+        {
+            ViewBag.ListShoes = new ShoesData().GetAllShoes();
+            return View();
+        }
+
+        public IActionResult EditShoes()
+        {
+            string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
+            int shoesID = Int32.Parse(shoesIDStr);
+            ViewBag.Shoes = new ShoesData().GetShoesInformationByShoesID(shoesID);
+            ViewBag.ListCategories = new CategoryData().GetCategories();
+            ViewBag.ListBrands = new BrandData().GetBrands();
+            ViewBag.ListOrigins = new OriginData().GetOrigins();
+            ViewBag.Products = new ProductData().GetProductsByShoesID(shoesID);
+            return View();
+        }
+
         public IActionResult ProductManager()
         {
             if (CheckAdmin() != null) {
