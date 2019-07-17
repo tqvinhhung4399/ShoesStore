@@ -75,6 +75,34 @@ namespace OnlineShoesStore.Models
 
     public class ProductData
     {
+        public List<ProductDTO> GetProductsByShoesID(int shoesID)
+        {
+            List<ProductDTO> list = new List<ProductDTO>();
+            string sql = "SELECT * FROM Products WHERE shoesID = @shoesID AND isDeleted=0";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@shoesID", shoesID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            string color;
+            int productID;
+            double price;
+            ProductDTO dto = null;
+            while (dr.Read())
+            {
+                price = dr.GetDouble(2);
+                productID = dr.GetInt32(0);
+                color = dr.GetString(3);
+                dto = new ProductDTO(productID, shoesID, price, color, false);
+                list.Add(dto);
+            }
+            cnn.Close();
+            return list;
+        }
+
         public List<ProductDTO> GetProductsByCategoryID(int id)
         {
             List<ProductDTO> list = new List<ProductDTO>();
