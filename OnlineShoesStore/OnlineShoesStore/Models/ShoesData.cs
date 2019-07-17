@@ -409,5 +409,19 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
+        public int GetNewestShoesId()
+        {
+            int shoesId = 0;
+            string sql = "Select TOP 1 shoesID From Shoes Order By shoesID DESC";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                shoesId = dr.GetInt32(0);
+            }
+            return shoesId;
+        }
+
     }
 }
