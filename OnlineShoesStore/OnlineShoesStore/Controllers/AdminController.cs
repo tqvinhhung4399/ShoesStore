@@ -38,12 +38,14 @@ namespace OnlineShoesStore.Controllers
             
         //}
 
+        //H
         public IActionResult ShoesManager()
         {
             ViewBag.ListShoes = new ShoesData().GetAllShoes();
             return View();
         }
 
+        //H
         public IActionResult EditShoes()
         {
             string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
@@ -56,6 +58,7 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
+
         public IActionResult ProductManager()
         {
             if (CheckAdmin() != null) {
@@ -64,6 +67,7 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
+        //H
         public IActionResult LoadDataTable()
         {
             DataTableData data = new DataTableData();
