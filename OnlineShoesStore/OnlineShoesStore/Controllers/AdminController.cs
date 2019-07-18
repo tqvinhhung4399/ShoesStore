@@ -103,7 +103,7 @@ namespace OnlineShoesStore.Controllers
                 //}
             }
             ViewBag.AddFailed = "Add new product failed!";
-            return View("ShoesManager");
+            return RedirectToAction("ShoesManager");
 
             //if (new ShoesData().AddNewShoes(shoes))
             //{
