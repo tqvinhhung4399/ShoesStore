@@ -449,6 +449,22 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
+<<<<<<< HEAD
+        public int GetNewestShoesId()
+        {
+            int shoesId = 0;
+            string sql = "Select TOP 1 shoesID From Shoes Order By shoesID DESC";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                shoesId = dr.GetInt32(0);
+            }
+            return shoesId;
+        }
+
+=======
         public ShoesDTO GetShoesInformationByShoesID(int shoesID)
         {
             ShoesDTO shoes = null;
@@ -490,5 +506,6 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return shoes;
         }
+>>>>>>> b823d232678e73c11bb3d8ba485b7e6e919f36ba
     }
 }
