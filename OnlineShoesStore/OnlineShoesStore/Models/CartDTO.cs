@@ -29,4 +29,9 @@ namespace OnlineShoesStore.Models
         }
 
     }
+
+    public class CartData
+    {
+
+    }
 }
