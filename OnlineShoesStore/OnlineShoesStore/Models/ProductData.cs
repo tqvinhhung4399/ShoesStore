@@ -228,24 +228,23 @@ namespace OnlineShoesStore.Models
             return dt;
         }
 
-        private static DataTable ConvertToTable(List<ProductDTO> entities)
-        {
-            var table = new DataTable(typeof(ProductDTO).Name);
+        //private static DataTable ConvertToTable(List<ProductDTO> entities)
+        //{
+        //    var table = new DataTable(typeof(ProductDTO).Name);
 
-            table.Columns.Add("Level", typeof(string));
-            table.Columns.Add("Message", typeof(string));
-            table.Columns.Add("EventTime", typeof(DateTime));
+        //    table.Columns.Add("Level", typeof(string));
+        //    table.Columns.Add("Message", typeof(string));
+        //    table.Columns.Add("EventTime", typeof(DateTime));
 
-            foreach (var entity in entities)
-            {
-                var row = table.NewRow();
-                row["Level"] = entity.Level;
-                row["Message"] = entity.Message;
-                row["EventTime"] = entity.EventTime;
-                table.Rows.Add(row);
-            }
-
-            return table;
-        }
+        //    foreach (var entity in entities)
+        //    {
+        //        var row = table.NewRow();
+        //        row["Level"] = entity.Level;
+        //        row["Message"] = entity.Message;
+        //        row["EventTime"] = entity.EventTime;
+        //        table.Rows.Add(row);
+        //    }
+        //    return table;
+        //}
     }
 }

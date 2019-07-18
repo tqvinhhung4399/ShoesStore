@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,39 @@ namespace OnlineShoesStore.Controllers
 {
     public class AdminController : Controller
     {
+        public IActionResult UploadImageAction()
+        {
+            return View("UploadImage");
+        }
+
         private readonly string index = "~/Views/Home/Index.cshtml";
+
+        [HttpPost("FileUpload")]
+        public async Task<IActionResult> UploadImage(List<IFormFile> files)
+        {
+            long size = files.Sum(f => f.Length);
+
+            var filePaths = new List<string>();
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    // full path to file in temp location
+                    var filePath = Path.GetTempFileName();
+                    filePaths.Add(filePath);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+            }
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+            
+            ViewBag.UploadSuccessful = Path.GetTempFileName();
+            return View("UploadImage");
+        }
 
         public IActionResult ProcessRemoveShoes()
         {
@@ -195,6 +228,10 @@ namespace OnlineShoesStore.Controllers
         //Quản lí sản phảm
         public IActionResult EditProduct()
         {
+            string shoesIDStr = HttpContext.Request.Query["txtProductID"];
+            int productID = Int32.Parse(shoesIDStr);
+            ViewBag.ShoesForPageEditProduct = new ShoesData().GetShoesDetailByProductID(productID);
+            ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(productID);
             return View("EditProduct");
         }
     }

@@ -221,90 +221,99 @@
             });
         </script>
         <script>
-            var count = 2;
+            var count1 = 2;
+            var limit1 = 2;
+           @if(ViewBag.ShoesForPageEditProduct != null) {
+                <text>
+                    count1 = @ViewBag.ListProductDetails.Count + 1;
+                    limit1 = @ViewBag.ListProductDetails.Count + 1;
+                </text>
+           }
+            
             function removeSize() {
-                if (count <= 2) {
+                if (count1 <= limit1) {
                     return;
                 }
-                var s = "#DP" + (count - 1);
+                var s = "#DP" + (count1 - 1);
                 $("div").remove(s);
                 $("center").remove(s);
-                count--;
+                count1--;
             };
             function addSize() {
-                var s = "<center id='DP" + count + "'><h3>Detail " + count + "</h3></center>"
-                    + "<div class='form-group' id='DP" + count + "'>"
+                var s = "<center id='DP" + count1 + "'><h3>Detail " + count1 + " (New)</h3></center>"
+                    + "<div class='form-group' id='DP" + count1 + "'>"
                     + "<label style='color: #000000; font-weight: bold' >Size: </label>"
-                    + "<input type='number' class='form-control' name='txtSize' min='0' required placeholder='Products size' />"
+                    + "<input type='number' class='form-control' name='txtNewSize' min='0' required placeholder='Products size' />"
                     + "</div>"
-                    + "<div class='form-group' id='DP" + count + "'>"
+                    + "<div class='form-group' id='DP" + count1 + "'>"
                     + "<label style='color: #000000; font-weight: bold' >Quantity: </label>"
-                    + "<input type='number' class='form-control' name='txtQuantity' min='0' required placeholder='Products quantity' />"
+                    + "<input type='number' class='form-control' name='txtNewQuantity' min='0' required placeholder='Products quantity' />"
                     + "</div>"
                 $("#DetailProduct").append(s);
-                count++;
+                count1++;
             };
         </script>
         <script>
-            var count = 2;
+            var count2 = 2;
             function remove() {
-                if (count <= 2) {
+                if (count2 <= 2) {
                     return;
                 }
-                var s = "#MP" + (count - 1);
+                var s = "#MP" + (count2 - 1);
                 $("div").remove(s);
                 $("center").remove(s);
-                count--;
+                count2--;
             };
 
             function add() {
-                    var s = "<center id='MP" + count + "'><h3>Product " + count + "</h3></center>"
-                        + "<div class='form-group' id='MP" + count + "'>"
+                    var s = "<center id='MP" + count2 + "'><h3>Product " + count2 + "</h3></center>"
+                        + "<div class='form-group' id='MP" + count2 + "'>"
                         + "<label style='color: #000000; font-weight: bold' >Price: </label>"
                         + "<input type='number' class='form-control' name='txtPrice' min='0' required placeholder='Products price' />"
                         + "</div>"
-                        + "<div class='form-group' id='MP" + count + "'>"
+                        + "<div class='form-group' id='MP" + count2 + "'>"
                         + "<label style='color: #000000; font-weight: bold' >Color: </label>"
                         + "<input type='text' class='form-control' name='txtColor' required placeholder='Products color' />"
                         + "</div>"
                     $("#MainProduct").append(s);
-                    count++;
+                    count2++;
                 
 
             };
         </script>
         <script>
-                var count = 2;
+                var count3 = 2;
                 var limit = 2;
             @if(ViewBag.Shoes != null)
-            {
-                <text>
-                count = @ViewBag.Products.Count + 1;
-                limit = @ViewBag.Products.Count + 1;
-                </text>
+            { 
+                    <text>
+                    count3 = @ViewBag.Products.Count + 1;
+                    limit = @ViewBag.Products.Count + 1;
+                    </text>
+                
             }
             function removeNewProduct() {
-                if (count <= limit) {
+                if (count3 <= limit) {
                     return;
                 }
-                var s = "#AP" + (count - 1);
+                var s = "#AP" + (count3 - 1);
                 $("div").remove(s);
                 $("center").remove(s);
-                count--;
+                count3--;
             };
 
             function addNewProduct() {
-                    var s = "<center id='AP" + count + "'><h3>Product " + count + "</h3></center>"
-                        + "<div class='form-group' id='AP" + count + "'>"
+                    var s = "<center id='AP" + count3 + "'><h3>Product " + count3 + "</h3></center>"
+                        + "<div class='form-group' id='AP" + count3 + "'>"
                         + "<label style='color: #000000; font-weight: bold' >Price: </label>"
                         + "<input type='number' class='form-control' name='txtNewPrice' min='0' required placeholder='Products price' />"
                         + "</div>"
-                        + "<div class='form-group' id='AP" + count + "'>"
+                        + "<div class='form-group' id='AP" + count3 + "'>"
                         + "<label style='color: #000000; font-weight: bold' >Color: </label>"
                         + "<input type='text' class='form-control' name='txtNewColor' required placeholder='Products color' />"
                         + "</div>"
                     $("#MainProduct").append(s);
-                    count++;
+                    count3++;
                 
 
             };
