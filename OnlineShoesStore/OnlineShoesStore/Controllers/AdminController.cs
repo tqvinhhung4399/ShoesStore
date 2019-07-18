@@ -21,26 +21,35 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
-        //public IActionResult ProcessAddNewShoes()
-        //{
-        //    string name = Request.Form["txtName"];
-        //    //lay cac parameter
+        public IActionResult ProcessAddNewShoes()
+        {
+            string name = Request.Form["txtName"];
+            int categoryID = int.Parse(Request.Form["slCategory"]);
+            int brandID = int.Parse(Request.Form["slBrand"]);
+            string material = Request.Form["txtMaterial"];
+            string description = Request.Form["txtDescription"];
+            int originID = int.Parse(Request.Form["slOrigin"]);
+            string[] colors = Request.Form["txtColor"];
+            string[] prices = Request.Form["txtPrice"];
 
-        //    if (new ShoesData().AddNewShoes(shoes))
-        //    {
-        //        ViewBag.Success = "Add new shoes successfully";
-        //        return View(); //view tuong ung sau khi AddNewShoes
-        //    } else
-        //    {
-        //        ViewBag.Failed = "Add new shoes failed!";
-        //        return View(); //view tuong ung khi add that bai
-        //    }
-            
-        //}
+
+            //if (new ShoesData().AddNewShoes(shoes))
+            //{
+            //    ViewBag.Success = "Add new shoes successfully";
+            //    return View(); //view tuong ung sau khi AddNewShoes
+            //}
+            //else
+            //{
+            //    ViewBag.Failed = "Add new shoes failed!";
+            //    return View(); //view tuong ung khi add that bai
+            //}
+            return View("ProductManager");
+        }
 
         public IActionResult ProductManager()
         {
-            if (CheckAdmin() != null) {
+            if (CheckAdmin() != null)
+            {
                 return View(index);
             }
             return View();
@@ -49,14 +58,15 @@ namespace OnlineShoesStore.Controllers
         public IActionResult LoadDataTable()
         {
             DataTableData data = new DataTableData();
-         
+
             var result = data.GetData();
             return Json(result);
         }
 
         public IActionResult UserManager()
         {
-            if (CheckAdmin() != null) {
+            if (CheckAdmin() != null)
+            {
                 return View(index);
             }
             ViewBag.ListUser = new UserData().LoadUsers();
@@ -85,19 +95,22 @@ namespace OnlineShoesStore.Controllers
         public IActionResult BanUser(string username)
         {
             UserData data = new UserData();
-            if (CheckAdmin() != null) { //role khong phai admin
+            if (CheckAdmin() != null)
+            { //role khong phai admin
                 return View(index);
             }
             if (new UserData().BanUserByUsername(username))
             {
                 ViewBag.BanSuccessful = "User " + username + " has been banned!";
                 ViewBag.ListUser = data.LoadUsers();
-            } else {
+            }
+            else
+            {
                 ViewBag.BanFailed = "Ban user " + username + " failed!";
             }
             return View("UserManager");
         }
-        
+
 
         private string CheckAdmin()
         {
