@@ -24,21 +24,21 @@
     <div class="container">
         <center>
             <h1>Administrator - Shoes Manager</h1>
-            @if (ViewBag.DeleteFailed != null)
+            @if (ViewBag.RemoveFailed != null)
             {
-                <h5>@ViewBag.DeleteFailed</h5>
+                <h5>@ViewBag.RemoveFailed</h5>
             }
-            @if (ViewBag.DeleteSuccessful != null)
+            @if (ViewBag.RemoveSuccessful != null)
             {
-                <h5>@ViewBag.DeleteSuccessful</h5>
+                <h5>@ViewBag.RemoveSuccessful</h5>
             }
-            @if (ViewBag.AddFailed != null)
+            @if (ViewBag.RestoreFailed != null)
             {
-                <h5>@ViewBag.AddFailed</h5>
+                <h5>@ViewBag.RestoreFailed</h5>
             }
-            @if (ViewBag.AddSuccessful != null)
+            @if (ViewBag.RestoreSuccessful != null)
             {
-                <h5>@ViewBag.AddSuccessful</h5>
+                <h5>@ViewBag.RestoreSuccessful</h5>
             }
         </center>
         <div>
@@ -67,11 +67,11 @@
                             <td>@dto.IsDeleted</td>
                             @if (dto.IsDeleted == false)
                             {
-                                <td><a href="#" class="btn-danger btn-sm">Remove</a></td>
+                                <td><a href="/Admin/ProcessRemoveShoes?txtShoesID=@dto.ShoesId" class="btn-danger btn-sm">Remove</a></td>
                             }
                             else
                             {
-                                <td><a href="#" class="btn-success btn-sm">Add</a></td>
+                                <td><a href="/Admin/ProcessRestoreShoes?txtShoesID=@dto.ShoesId" class="btn-success btn-sm">Restore</a></td>
                             }
                             <td><a href="/Admin/EditShoes?txtShoesID=@dto.ShoesId" class="btn-success btn-sm">Edit</a></td>
                         </tr>

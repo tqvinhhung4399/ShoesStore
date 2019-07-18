@@ -13,6 +13,38 @@ namespace OnlineShoesStore.Controllers
     {
         private readonly string index = "~/Views/Home/Index.cshtml";
 
+        public IActionResult ProcessRemoveShoes()
+        {
+            string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
+            int id = Int32.Parse(shoesIDStr);
+            if(new ShoesData().RemoveShoesByShoesID(id))
+            {
+                ViewBag.RemoveSuccessful = "Remove " + new ShoesData().GetShoesNameByShoesID(id) + " successfully";
+            }
+            else
+            {
+                ViewBag.RemoveFailed = "Remove " + new ShoesData().GetShoesNameByShoesID(id) + " failed";
+            }
+            ViewBag.ListShoes = new ShoesData().GetAllShoes();
+            return View("ShoesManager");
+        }
+
+        public IActionResult ProcessRestoreShoes()
+        {
+            string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
+            int id = Int32.Parse(shoesIDStr);
+            if (new ShoesData().RestoreShoesByShoesID(id))
+            {
+                ViewBag.RestoreSuccessful = "Restore " + new ShoesData().GetShoesNameByShoesID(id) + " successfully";
+            }
+            else
+            {
+                ViewBag.RestoreFailed = "Restore " + new ShoesData().GetShoesNameByShoesID(id) + " failed";
+            }
+            ViewBag.ListShoes = new ShoesData().GetAllShoes();
+            return View("ShoesManager");
+        }
+
         public IActionResult AddProduct()
         {
             ViewBag.ListCategories = new CategoryData().GetCategories();
