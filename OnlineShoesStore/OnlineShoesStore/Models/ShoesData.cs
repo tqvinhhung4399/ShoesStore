@@ -449,7 +449,7 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
-<<<<<<< HEAD
+
         public int GetNewestShoesId()
         {
             int shoesId = 0;
@@ -464,7 +464,7 @@ namespace OnlineShoesStore.Models
             return shoesId;
         }
 
-=======
+
         public ShoesDTO GetShoesInformationByShoesID(int shoesID)
         {
             ShoesDTO shoes = null;
@@ -506,6 +506,5 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return shoes;
         }
->>>>>>> b823d232678e73c11bb3d8ba485b7e6e919f36ba
     }
 }

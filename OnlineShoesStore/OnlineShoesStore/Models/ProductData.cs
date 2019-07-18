@@ -223,5 +223,24 @@ namespace OnlineShoesStore.Models
             }
             return dt;
         }
+
+        public bool UpdateProductById(ProductDTO product)
+        {
+            bool check = false;
+            string sql = "Update Products Set price = @Price, color = @Color Where productID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Price", product.Price);
+            cmd.Parameters.AddWithValue("@Color", product.Color);
+            cmd.Parameters.AddWithValue("@Id", product.ProductId);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
+
     }
 }
