@@ -18,6 +18,11 @@ namespace OnlineShoesStore.Controllers
             Configuration = configuration;
         }
 
+        public IActionResult EditInformation()
+        {
+            return View();
+        }
+
         public IActionResult Cart()
         {
             return View();

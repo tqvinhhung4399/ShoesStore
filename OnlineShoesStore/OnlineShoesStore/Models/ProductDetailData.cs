@@ -60,7 +60,7 @@ namespace OnlineShoesStore.Models
         public List<ProductDetailDTO> GetProductDetailsByProductID(int productID)
         {
             List<ProductDetailDTO> result = new List<ProductDetailDTO>();
-            string sql = "Select * From ProductDetails Where productID = @productID";
+            string sql = "Select * From ProductDetails Where productID = @productID and Quantity > 0";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {

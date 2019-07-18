@@ -11,6 +11,12 @@ namespace OnlineShoesStore.Models
         private string name;
         private int categoryId;
         private string categoryName;
+
+        public ShoesDTO()
+        {
+
+        }
+
         public string CategoryName
         {
             get { return categoryName; }
@@ -52,11 +58,7 @@ namespace OnlineShoesStore.Models
         }
         
         private bool isDeleted;
-
-        public ShoesDTO()
-        {
-
-        }
+        
 
         public ShoesDTO(int shoesId, string name, int categoryId, int brandId, string material, string description, int originId, bool isDeleted)
         {
@@ -139,6 +141,40 @@ namespace OnlineShoesStore.Models
 
     public class ShoesData
     {
+
+        
+
+        //H
+        public bool RemoveShoesByShoesID(int id)
+        {
+            string sql = "UPDATE Shoes SET isDeleted=1 WHERE shoesID=@shoesID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if(cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@shoesID", id);
+            bool result = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return result;
+        }
+
+        //H
+        public bool RestoreShoesByShoesID(int id)
+        {
+            string sql = "UPDATE Shoes SET isDeleted=0 WHERE shoesID=@shoesID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@shoesID", id);
+            bool result = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return result;
+        }
         public List<ShoesDTO> FindAll()
         {
             List<ShoesDTO> result = null;
@@ -172,17 +208,17 @@ namespace OnlineShoesStore.Models
         public List<ShoesDTO> GetAllShoes()
         {
             List<ShoesDTO> result = null;
-            string sql = "Select * From Shoes Where isDeleted = @Deleted";
+            string sql = "Select * From Shoes";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@Deleted", false);
             SqlDataReader dr = cmd.ExecuteReader();
             int shoesId, categoryId, brandId, originId;
             string name, material, des;
+            bool isDeleted;
             result = new List<ShoesDTO>();
             ShoesDTO dto = null;
             while (dr.Read())
@@ -194,7 +230,8 @@ namespace OnlineShoesStore.Models
                 material = dr.GetString(4);
                 des = dr.GetString(5);
                 originId = dr.GetInt32(6);
-                dto = new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false);
+                isDeleted = dr.GetBoolean(7);
+                dto = new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, isDeleted);
                 dto.BrandName = new BrandData().GetBrandNameByID(brandId);
                 dto.CategoryName = new CategoryData().GetCategoryNameByID(categoryId);
                 dto.OriginName = new OriginData().GetOriginNameByID(originId);
@@ -424,7 +461,7 @@ namespace OnlineShoesStore.Models
             return image;
         }
 
-        public bool AddNewShoes(ShoesDTO shoes)
+        public bool InsertShoes(ShoesDTO shoes)
         {
             bool result = false;
             string sql = "Insert into Shoes(name, categoryID, brandID, material, description, originID, isDeleted) values (@name, @categoryID, @brandID, @material, @description, @originID, @isDeleted)";
@@ -455,6 +492,10 @@ namespace OnlineShoesStore.Models
             int shoesId = 0;
             string sql = "Select TOP 1 shoesID From Shoes Order By shoesID DESC";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
             SqlCommand cmd = new SqlCommand(sql, cnn);
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
@@ -505,6 +546,26 @@ namespace OnlineShoesStore.Models
             }
             cnn.Close();
             return shoes;
+        }
+
+        public string GetShoesNameByShoesID(int shoesID)
+        {
+            string shoesName = "";
+            string sql = "SELECT name FROM Shoes WHERE shoesID = @shoesID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@shoesID", shoesID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                shoesName = dr.GetString(0);
+            }
+            cnn.Close();
+            return shoesName;
         }
     }
 }
