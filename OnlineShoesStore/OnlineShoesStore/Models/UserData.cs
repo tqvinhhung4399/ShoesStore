@@ -19,7 +19,10 @@ namespace OnlineShoesStore.Models
         private string tel;
         private bool isDeleted;
         private string role;
+        public UserDTO()
+        {
 
+        }
         public UserDTO(string username, string password, string fullname, string gender, DateTime dateOfBirth, string address, string tel, bool isDeleted, string role)
         {
             this.username = username;
@@ -161,6 +164,32 @@ namespace OnlineShoesStore.Models
             return user;
         }
 
+        public UserDTO GetUserInfoByUsername(string username)
+        {
+            UserDTO user = null;
+            string sql = "Select fullname, gender, dob, address, tel, role From Users Where UserID = @username";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@username", username);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                string fullname = (string)dr[0];
+                string gender = (string)dr[1];
+                DateTime dob = (DateTime)dr[2];
+                string address = (string)dr[3];
+                string tel = (string)dr[4];
+                string role = (string)dr[5];
+                user = new UserDTO(username, null, fullname, gender, dob, address, tel, false, role);
+            }
+            cnn.Close();
+            return user;
+        }
+
         public List<UserDTO> LoadUsers()
         {
             List<UserDTO> result = new List<UserDTO>();
@@ -239,7 +268,7 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
-        public bool ChangeInfo(UserDTO dto)
+        public bool UpdateUserInfoByUsername(UserDTO dto)
         {
             bool result = false;
             string sql = "Update Users Set fullname=@Fullname, gender=@Gender, dob=@Dob, address=@Address, tel=@Tel Where userID = @userID";
