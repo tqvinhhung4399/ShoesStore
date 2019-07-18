@@ -24,15 +24,22 @@
     <div class="container">
         <center>
             <h1 style="color=red;">Administrator - Product Manager</h1>
-            @if (ViewBag.UpdateSuccessful != null)
+
+            @if (ViewBag.Successful != null)
             {
-                <h3>@ViewBag.UpdateSuccessful</h3>
+                <script>
+                    alert("@ViewBag.Successful");
+                </script>
+                <h3 style="color:lawngreen;">@ViewBag.Successful</h3>
             }
-            @if (ViewBag.UpdateFailed != null)
+            @if (ViewBag.Failed != null)
             {
-                <h3>@ViewBag.UpdateFailed</h3>
+                <script>
+                    alert("@ViewBag.Failed");
+                </script>
+                <h3 style="color:red;">@ViewBag.Failed</h3>
             }
-            <a class="primary-btn btn-lg" asp-controller="Admin" asp-action="AddProduct">Add new product</a>
+
         </center>
         <div>
             <table id="example" class="display" style="width:100%">

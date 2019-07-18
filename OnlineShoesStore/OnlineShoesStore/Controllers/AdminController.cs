@@ -12,12 +12,96 @@ namespace OnlineShoesStore.Controllers
 {
     public class AdminController : Controller
     {
-        public IActionResult RemoveProduct()
+        //H
+        public IActionResult ProcessUpdateShoes()
         {
+            bool check = true;
+            int shoesID = int.Parse(Request.Form["txtShoesID"]);
+            string name = Request.Form["txtName"];
+            int categoryID = int.Parse(Request.Form["slCategory"]);
+            int brandID = int.Parse(Request.Form["slBrand"]);
+            string material = Request.Form["txtMaterial"];
+            string description = Request.Form["txtDescription"];
+            int originID = int.Parse(Request.Form["slOrigin"]);
+            string[] colors = Request.Form["txtColor"];
+            string[] prices = Request.Form["txtPrice"];
+            string[] newColors = Request.Form["txtNewColor"];
+            string[] newPrices = Request.Form["txtNewPrice"];
+            if (check = new ShoesData().UpdateShoes(new ShoesDTO { ShoesId = shoesID, Name = name, CategoryId = categoryID, BrandId = brandID, Material = material, Description = description, OriginId = originID }))
+            {
+                List<ProductDTO> listProducts = new List<ProductDTO>();
+                for (int i = 0; i < colors.Length; i++)
+                {
+                    listProducts.Add(new ProductDTO { ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]), IsDeleted = false });
+                }
+                //if(check = new ProductData().UpdateProductByNOTEHAM())
+                //{
+                //    if(newColors != null || newPrices != null)
+                //    {
+                //        List<ProductDTO> listNewProducts = new List<ProductDTO>();
+                //        for (int i = 0; i < colors.Length; i++)
+                //        {
+                //            listNewProducts.Add(new ProductDTO { ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]), IsDeleted = false });
+                //        }
+                //        check = new ProductData().InsertProducts(listNewProducts);
+                //    }
+                //}
+            }
+            if (check)
+            {
+                ViewBag.Successful = "Update successfully";
+            }
+            else
+            {
+                ViewBag.Failed = "Update failed";
+            }
+            return View("ShoesManager");
 
+            //if (new ShoesData().AddNewShoes(shoes))
+            //{
+            //    ViewBag.Success = "Add new shoes successfully";
+            //    return View(); //view tuong ung sau khi AddNewShoes
+            //}
+            //else
+            //{
+            //    ViewBag.Failed = "Add new shoes failed!";
+            //    return View(); //view tuong ung khi add that bai
+            //}
+        }
+
+        //H
+        public IActionResult RestoreProduct()
+        {
+            ProductData data = new ProductData();
+            int productID = Int32.Parse(HttpContext.Request.Query["txtProductID"]);
+            if (data.RestoreProduct(productID))
+            {
+                ViewBag.Successful = "Restore " + data.GetProductNameByProductID(productID) + " (" + data.GetProductByProductID(productID).Color + ") successfully";
+            }
+            else
+            {
+                ViewBag.Failed = "Restore " + data.GetProductNameByProductID(productID) + " (" + data.GetProductByProductID(productID).Color + ") failed";
+            }
             return View("ProductManager");
         }
 
+        //H
+        public IActionResult RemoveProduct()
+        {
+            ProductData data = new ProductData();
+            int productID = Int32.Parse(HttpContext.Request.Query["txtProductID"]);
+            if(data.RemoveProduct(productID))
+            {
+                ViewBag.Successful = "Remove " + data.GetProductNameByProductID(productID) + " (" + data.GetProductByProductID(productID).Color + ") successfully";
+            }
+            else
+            {
+                ViewBag.Failed = "Remove " + data.GetProductNameByProductID(productID) + " (" + data.GetProductByProductID(productID).Color + ") failed";
+            }
+            return View("ProductManager");
+        }
+
+        //H
         public IActionResult UpdateProduct()
         {
             bool check =false;
@@ -72,11 +156,11 @@ namespace OnlineShoesStore.Controllers
             }
             if (check)
             {
-                ViewBag.UpdateSuccessful = "Update successfully!";
+                ViewBag.Successful = "Update successfully!";
             }
             else
             {
-                ViewBag.UpdateFailed = "Update failed!";
+                ViewBag.Failed = "Update failed!";
             }
        
             return View("ProductManager");
@@ -108,6 +192,7 @@ namespace OnlineShoesStore.Controllers
             return View("UploadImage");
         }
 
+        //H
         public IActionResult ProcessRemoveShoes()
         {
             string shoesIDStr = HttpContext.Request.Query["txtShoesID"];

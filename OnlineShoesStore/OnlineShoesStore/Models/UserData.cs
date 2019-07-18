@@ -33,6 +33,11 @@ namespace OnlineShoesStore.Models
             this.role = role;
         }
 
+        public UserDTO()
+        {
+
+        }
+
         public string Username
         {
             get { return username; }
@@ -237,14 +242,13 @@ namespace OnlineShoesStore.Models
         public bool ChangeInfo(UserDTO dto)
         {
             bool result = false;
-            string sql = "Update Users Set password=@Password, fullname=@Fullname, gender=@Gender, dob=@Dob, address=@Address, tel=@Tel Where userID = @userID";
+            string sql = "Update Users Set fullname=@Fullname, gender=@Gender, dob=@Dob, address=@Address, tel=@Tel Where userID = @userID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@Password", dto.Password);
             cmd.Parameters.AddWithValue("@Fullname", dto.Fullname);
             cmd.Parameters.AddWithValue("@Gender", dto.Gender);
             cmd.Parameters.AddWithValue("@Dob", dto.Dob);
@@ -254,6 +258,34 @@ namespace OnlineShoesStore.Models
             result = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
             return result;
+        }
+
+        public UserDTO GetUserInfoByUserID(string username)
+        {
+            UserDTO dto = null;
+            string sql = "SELECT fullname, gender, dob, address, tel FROM Users WHERE userID=@username";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if(cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@username", username);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                dto = new UserDTO
+                {
+                    Fullname = dr.GetString(0),
+                    Gender = dr.GetString(1),
+                    Dob = dr.GetDateTime(2),
+                    Address = dr.GetString(3),
+                    Tel = dr.GetString(4),
+                    Username = username
+                };
+            }
+            cnn.Close();
+            return dto;
         }
     }
 }

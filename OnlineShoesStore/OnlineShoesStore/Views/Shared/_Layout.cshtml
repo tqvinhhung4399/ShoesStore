@@ -46,25 +46,7 @@
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
                             <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                            <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">TEST TEMPLATE</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Login">Login page</a></li>
-                                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Register">Register page</a></li>
-                                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Contact">Contact page</a></li>
-
-                                </ul>
-                            </li>
-                            <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                   aria-expanded="false">Product - Category</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                    <li class="nav-item"><a class="nav-link" asp-controller="Products" asp-action="Category">Category</a></li>
-                                    <li class="nav-item"><a class="nav-link" asp-controller="Products" asp-action="Product">Product</a></li>
-                                </ul>
-                            </li>
+                            
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                    aria-expanded="false">Shopping</a>
@@ -90,7 +72,7 @@
 
                             @if (Context.Session.GetString("SessionUser") != null)
                             {
-                                <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionUser").ToString()<a href="/Home/ProcessLogout">   (Logout)</a></a></li>
+                                <li class="nav-item">Welcome, <a class="nav-link" href="/Home/ViewUserInformation">@Context.Session.GetString("SessionUser").ToString()</a><a href="/Home/ProcessLogout">   (Logout)</a></li>
                             }
                             else
                             {

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "EditInformation";
+    ViewData["Title"] = "ViewUserInformation";
 }
 
 <!-- Start Banner Area -->
@@ -11,7 +11,7 @@
                 <h1>Edit Information</h1>
                 <nav class="d-flex align-items-center">
                     <a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="#">Edit Information</a>
+                    <a href="#">View Information</a>
                 </nav>
             </div>
         </div>
@@ -27,26 +27,13 @@
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center">
                 <div class="col-12 col-md-10">
-                    @if(ViewBag.Success != null)
-                        {
-                            <script>
-                                alert("@ViewBag.Success");
-                            </script>
-                        }
-                    @if(ViewBag.Failed != null)
-                        {
-                            <script>
-                                alert("@ViewBag.Failed");
-                            </script>
-                        }
-                    <form action="/Home/ProcessEditInfo" method="POST">
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="0">Username (Email): </label>
-                            <input type="text" class="form-control" name="txtUsername" readonly id="0" value="@ViewBag.UserInfo.Username" />
+                            <input type="text" class="form-control" readonly id="0" value="@ViewBag.UserInfo.Username" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="1">Fullname: </label>
-                            <input type="text" class="form-control" name="txtFullname" id="1" value="@ViewBag.UserInfo.Fullname" />
+                            <input type="text" class="form-control" readonly id="1" value="@ViewBag.UserInfo.Fullname" />
                         </div>
                         <label style="color: #000000; font-weight: bold" class="">Gender: </label>
                         @if (ViewBag.UserInfo.Gender.Equals("Male"))
@@ -73,20 +60,21 @@
                         }
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="2">Birthdate: </label>
-                            <input type="date" class="form-control date" id="2" name="txtDob" value="@ViewBag.UserInfo.Dob" />
+                            <input type="text" class="form-control" readonly id="2" value="@ViewBag.UserInfo.Dob" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="3">Address (Use for delivery): </label>
-                            <input type="text" class="form-control" id="3" name="txtAddress" value="@ViewBag.UserInfo.Address" />
+                            <input type="text" class="form-control" readonly id="3" name="txtAddress" value="@ViewBag.UserInfo.Address" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="4">Phone number: </label>
-                            <input type="tel" class="form-control" id="4" name="txtPhoneNumber" value="@ViewBag.UserInfo.Tel" />
+                            <input type="tel" class="form-control" id="4" readonly name="txtPhoneNumber" value="@ViewBag.UserInfo.Tel" />
                         </div>
                         <div class="form-group">
-                            <button class="primary-btn btn-lg">Update</button>
+                            <a href="/Home/EditInformation?txtUsername=@ViewBag.UserInfo.Username" class="primary-btn btn-lg">Edit Information</a>
+                            <a href="/Home/ChangePassword?txtUsername=@ViewBag.UserInfo.Username" class="primary-btn btn-lg">Change Password</a>
+                            <a href="#" class="primary-btn btn-lg">Transaction</a>
                         </div>
-                    </form>
 
                 </div>
             </div>

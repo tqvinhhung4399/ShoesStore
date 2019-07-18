@@ -18,9 +18,62 @@ namespace OnlineShoesStore.Controllers
             Configuration = configuration;
         }
 
+        public IActionResult ViewUserInformation()
+        {
+            string username = HttpContext.Session.GetString("SessionUser");
+            if(username != null)
+            {
+                ViewBag.UserInfo = new UserData().GetUserInfoByUserID(username);
+            }
+            else
+            {
+                return View("Index");
+            }
+            return View();
+        }
+
         public IActionResult EditInformation()
         {
+            string username = HttpContext.Session.GetString("SessionUser");
+            if (username != null)
+            {
+                ViewBag.UserInfo = new UserData().GetUserInfoByUserID(username);
+            }
+            else
+            {
+                return View("Index");
+            }
             return View();
+        }
+
+        public IActionResult ProcessEditInfo()
+        {
+            string username = Request.Form["txtUsername"];
+            string fullname = Request.Form["txtFullname"];
+            string gender = Request.Form["slGender"];
+            string dob = Request.Form["txtDob"];
+            string address = Request.Form["txtAddress"];
+            string phoneNumber = Request.Form["txtPhoneNumber"];
+            UserDTO dto = new UserDTO
+            {
+                Fullname = fullname,
+                Username = username,
+                Gender = gender,
+                Dob = DateTime.Parse(dob),
+                Address = address,
+                Tel = phoneNumber
+            };
+            if (new UserData().ChangeInfo(dto))
+            {
+                ViewBag.Success = "Update successfully";
+                
+            }
+            else
+            {
+                ViewBag.Failed = "Update failed";
+            }
+            ViewBag.UserInfo = new UserData().GetUserInfoByUserID(username);
+            return View("ViewUserInformation");
         }
 
         public IActionResult Cart()
