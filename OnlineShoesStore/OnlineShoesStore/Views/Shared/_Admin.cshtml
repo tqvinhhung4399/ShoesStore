@@ -354,7 +354,7 @@
                         '<td></td>' +
                         '<td></td>' +
                         '<td></td>' +
-                        '<td><a class="btn-info btn-sm" href="/Admin/EditProduct?txtProductID=' + d.productID  + '">Edit</a>&emsp;&emsp;&emsp;&emsp;<a class="btn-danger btn-sm" href="/Admin/DeleteProduct?txtProductID=' + d.productID  + '">Delete</a></td>' +
+                        '<td><a class="btn-info btn-sm" href="/Admin/EditProduct?txtProductID=' + d.productID  + '">Edit</a>&emsp;&emsp;&emsp;&emsp;<a class="btn-danger btn-sm" href="/Admin/RemoveProduct?txtProductID=' + d.productID  + '">Delete</a>&emsp;&emsp;&emsp;&emsp;<a class="btn-success btn-sm" href="/Admin/RestoreProduct?txtProductID=' + d.productID  + '">Restore</a></td>' +
                         '<td></td>' +
                         '<td></td>' +
                         '</tr>';
@@ -376,7 +376,8 @@
                         { "data": "name" },
                         { "data": "brand" },
                         { "data": "color" },
-                        { "data": "price" }
+                        { "data": "price" },
+                        { "data": "isDeleted"}
                     ],
                     "order": [[1, 'asc']]
                 });

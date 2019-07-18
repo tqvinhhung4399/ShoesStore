@@ -18,31 +18,24 @@ namespace OnlineShoesStore.Controllers
         }
 
         private readonly string index = "~/Views/Home/Index.cshtml";
-
-        [HttpPost("FileUpload")]
+        
         public async Task<IActionResult> UploadImage(List<IFormFile> files)
         {
-            long size = files.Sum(f => f.Length);
-
-            var filePaths = new List<string>();
             foreach (var formFile in files)
             {
                 if (formFile.Length > 0)
                 {
                     // full path to file in temp location
-                    var filePath = Path.GetTempFileName();
-                    filePaths.Add(filePath);
+                    var path = Path.Combine(
+                        Directory.GetCurrentDirectory(), "wwwroot/img",
+                        formFile.FileName);
 
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    using (var stream = new FileStream(path, FileMode.Create))
                     {
                         await formFile.CopyToAsync(stream);
                     }
                 }
             }
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-            
-            ViewBag.UploadSuccessful = Path.GetTempFileName();
             return View("UploadImage");
         }
 
@@ -104,10 +97,10 @@ namespace OnlineShoesStore.Controllers
                 {
                     listProducts.Add(new ProductDTO { ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]), IsDeleted = false });
                 }
-                if (new ProductData().InsertProducts(listProducts))
-                {
-                    ViewBag.AddSuccess = "Add new product successfully!";
-                }
+                //if (new ProductData().InsertProducts(listProducts))
+                //{
+                //    ViewBag.AddSuccess = "Add new product successfully!";
+                //}
             }
             ViewBag.AddFailed = "Add new product failed!";
             return RedirectToAction("ShoesManager");

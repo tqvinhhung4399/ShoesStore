@@ -505,7 +505,7 @@ namespace OnlineShoesStore.Models
             return shoesId;
         }
 
-
+        //H
         public ShoesDTO GetShoesInformationByShoesID(int shoesID)
         {
             ShoesDTO shoes = null;
@@ -571,7 +571,37 @@ namespace OnlineShoesStore.Models
         public bool UpdateShoes(ShoesDTO shoes)
         {
             bool result = false;
+            string sql = "Update Shoes Set name = @name, categoryID = @categoryID, brandID = @brandID, material = @material, description = @description, originID = @originID Where shoesID = @shoesID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@name", shoes.Name);
+            cmd.Parameters.AddWithValue("@categoryID", shoes.CategoryId);
+            cmd.Parameters.AddWithValue("@brandID", shoes.BrandId);
+            cmd.Parameters.AddWithValue("@material", shoes.Material);
+            cmd.Parameters.AddWithValue("@description", shoes.Description);
+            cmd.Parameters.AddWithValue("@originID", shoes.OriginId);
+            cmd.Parameters.AddWithValue("@shoesID", shoes.ShoesId);
+            result = cmd.ExecuteNonQuery() > 0;
+            return result;
+        }
 
+        public bool DeleteShoesByShoesID(int shoesID)
+        {
+            bool result = false;
+            string sql = "Update Shoes Set isDeleted = @isDeleted Where ShoesID = @shoesID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@isDeleted", true);
+            cmd.Parameters.AddWithValue("@shoesID", shoesID);
+            result = cmd.ExecuteNonQuery() > 0;
             return result;
         }
     }
