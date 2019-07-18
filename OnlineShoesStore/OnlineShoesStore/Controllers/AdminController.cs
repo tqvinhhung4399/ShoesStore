@@ -12,13 +12,82 @@ namespace OnlineShoesStore.Controllers
 {
     public class AdminController : Controller
     {
+        public IActionResult RemoveProduct()
+        {
+
+            return View("ProductManager");
+        }
+
+        public IActionResult UpdateProduct()
+        {
+            bool check =false;
+            string productIDStr = Request.Form["txtProductID"];
+            int productID = Int32.Parse(productIDStr);
+            string priceStr = Request.Form["txtProductPrice"];
+            double price = Double.Parse(priceStr);
+            string color = Request.Form["txtProductColor"];
+            ProductDTO proDto = new ProductDTO
+            {
+                ProductId = productID,
+                Color = color,
+                Price = price
+            };
+            if(check = new ProductData().UpdateProductById(proDto))
+            {
+                string[] size = Request.Form["txtSize"];
+                string[] quantity = Request.Form["txtQuantity"];
+                List<ProductDetailDTO> list = new List<ProductDetailDTO>();
+                ProductDetailDTO detailDto;
+                for (int i = 0; i < size.Length; i++)
+                {
+                    detailDto = new ProductDetailDTO
+                    {
+                        ProductId = productID,
+                        Quantity = Int32.Parse(quantity[i]),
+                        Size = Int32.Parse(size[i])
+                    };
+                    list.Add(detailDto);
+                }
+                if (check = new ProductDetailData().UpdateQuantityByProductDTO(list))
+                {
+                    string[] newSize = Request.Form["txtNewSize"];
+                    string[] newQuantity = Request.Form["txtNewQuantity"];
+                    if (newSize != null && newQuantity != null)
+                    {
+                        List<ProductDetailDTO> newList = new List<ProductDetailDTO>();
+                        ProductDetailDTO newDetailDto;
+                        for (int i = 0; i < newSize.Length; i++)
+                        {
+                            newDetailDto = new ProductDetailDTO
+                            {
+                                ProductId = productID,
+                                Quantity = Int32.Parse(newQuantity[i]),
+                                Size = Int32.Parse(newSize[i])
+                            };
+                            newList.Add(newDetailDto);
+                        }
+                        check = new ProductDetailData().AddProductDetailsByProductDTO(newList);
+                    }
+                }
+            }
+            if (check)
+            {
+                ViewBag.UpdateSuccessful = "Update successfully!";
+            }
+            else
+            {
+                ViewBag.UpdateFailed = "Update failed!";
+            }
+       
+            return View("ProductManager");
+        }
         public IActionResult UploadImageAction()
         {
             return View("UploadImage");
         }
 
         private readonly string index = "~/Views/Home/Index.cshtml";
-        
+
         public async Task<IActionResult> UploadImage(List<IFormFile> files)
         {
             foreach (var formFile in files)
@@ -43,7 +112,7 @@ namespace OnlineShoesStore.Controllers
         {
             string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
             int id = Int32.Parse(shoesIDStr);
-            if(new ShoesData().RemoveShoesByShoesID(id))
+            if (new ShoesData().RemoveShoesByShoesID(id))
             {
                 ViewBag.RemoveSuccessful = "Remove " + new ShoesData().GetShoesNameByShoesID(id) + " successfully";
             }
@@ -224,6 +293,7 @@ namespace OnlineShoesStore.Controllers
             string shoesIDStr = HttpContext.Request.Query["txtProductID"];
             int productID = Int32.Parse(shoesIDStr);
             ViewBag.ShoesForPageEditProduct = new ShoesData().GetShoesDetailByProductID(productID);
+            ViewBag.Product = new ProductData().GetProductByProductID(productID);
             ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(productID);
             return View("EditProduct");
         }

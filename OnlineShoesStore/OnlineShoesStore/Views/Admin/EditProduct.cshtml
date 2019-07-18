@@ -48,11 +48,11 @@
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="2">Price: </label>
-                            <input type="text" class="form-control" id="2" name="txtProductPrice" required placeholder="Product's price" value="@ViewBag.ShoesForPageEditProduct.Price" />
+                            <input type="text" class="form-control" id="2" name="txtProductPrice" required placeholder="Product's price" value="@ViewBag.Product.Price" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="3">Color: </label>
-                            <input type="text" class="form-control" id="3" name="txtColor" required placeholder="Product's color" value="@ViewBag.ShoesForPageEditProduct.Color" />
+                            <input type="text" class="form-control" id="3" name="txtProductColor" required placeholder="Product's color" value="@ViewBag.Product.Color" />
                         </div>
                         <div class="form-group" id="DetailProduct">
                             @{ int i = 1;}
@@ -81,6 +81,7 @@
                             <div class="form-group">
                                 <button style="width:100%; margin-top:40px;" class="primary-btn btn-lg">UPDATE</button>
                             </div>
+                        <input type="hidden" name="txtProductID" value="@ViewBag.Product.ProductId" />
                     </form>
 
                 </div>

@@ -77,6 +77,7 @@ namespace OnlineShoesStore.Models
 
     public class ProductData
     {
+
         public List<ProductDTO> GetProductsByShoesID(int shoesID)
         {
             List<ProductDTO> list = new List<ProductDTO>();
@@ -217,6 +218,12 @@ namespace OnlineShoesStore.Models
         {
             bool check = true;
             string sql = "Update Products Set price = @Price, color = @Color Where productID = @Id";
+        
+            
+            public ProductDTO GetProductByProductID(int productID)
+        {
+            ProductDTO product = null;
+            string sql = "Select * From Products Where productID = @productID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
@@ -239,17 +246,30 @@ namespace OnlineShoesStore.Models
         }
 
         public bool RemoveProduct(int productId)
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@productID", productID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                double price = (double)dr[2];
+                string color = (string)dr[3];
+                product = new ProductDTO { Price = price, Color = color, ProductId=productID };
+            }
+            cnn.Close();
+            return product;
+        }
+            public bool RemoveProduct(int productId)
         {
             bool check = false;
             string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
-            SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@IsDeleted", true);
-            cmd.Parameters.AddWithValue("@Id", productId);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@IsDeleted", true);
+            cmd.Parameters.AddWithValue("@Id", productId);
             check = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
             return check;
@@ -260,84 +280,18 @@ namespace OnlineShoesStore.Models
             bool check = false;
             string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
-            SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@IsDeleted", false);
-            cmd.Parameters.AddWithValue("@Id", productId);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@IsDeleted", false);
+            cmd.Parameters.AddWithValue("@Id", productId);
             check = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
             return check;
         }
 
-        //private DataTable ToDataTable<T>(List<T> collection)
-        //{
-        //    DataTable dt = new DataTable("DataTable");
-        //    Type t = typeof(T);
-        //    PropertyInfo[] pia = t.GetProperties();
-
-        //    //Inspect the properties and create the columns in the DataTable
-        //    foreach (PropertyInfo pi in pia)
-        //    {
-        //        Type ColumnType = pi.PropertyType;
-        //        if ((ColumnType.IsGenericType))
-        //        {
-        //            ColumnType = ColumnType.GetGenericArguments()[0];
-        //        }
-        //        dt.Columns.Add(pi.Name, ColumnType);
-        //    }
-
-        //    //Populate the data table
-        //    foreach (T item in collection)
-        //    {
-        //        DataRow dr = dt.NewRow();
-        //        dr.BeginEdit();
-        //        foreach (PropertyInfo pi in pia)
-        //        {
-        //            if (pi.GetValue(item, null) != null)
-        //            {
-        //                dr[pi.Name] = pi.GetValue(item, null);
-        //            }
-        //        }
-        //        dr.EndEdit();
-        //        dt.Rows.Add(dr);
-        //    }
-        //    return dt;
-        //}
-
-        //private static DataTable ConvertToTable(List<ProductDTO> entities)
-        //{
-        //    var table = new DataTable(typeof(ProductDTO).Name);
-
-        //    table.Columns.Add("Level", typeof(string));
-        //    table.Columns.Add("Message", typeof(string));
-        //    table.Columns.Add("EventTime", typeof(DateTime));
-
-        //    foreach (var entity in entities)
-        //    {
-        //        var row = table.NewRow();
-        //        row["Level"] = entity.Level;
-        //        row["Message"] = entity.Message;
-        //        row["EventTime"] = entity.EventTime;
-        //        table.Rows.Add(row);
-        //    }
-        //    table.Columns.Add("ShoesId", typeof(int));
-        //    table.Columns.Add("Price", typeof(float));
-        //    table.Columns.Add("Color", typeof(string));
-        //    table.Columns.Add("isDeleted", typeof(bool));
-        //    foreach (var entity in entities)
-        //    {
-        //        var row = table.NewRow();
-        //        row["ShoesId"] = entity.ShoesId;
-        //        row["Price"] = entity.Price;
-        //        row["Color"] = entity.Color;
-        //        row["isDeleted"] = entity.IsDeleted;
-        //        table.Rows.Add(row);
-        //    }
-
-        //    return table;
-        //}
+        
     }
 }
