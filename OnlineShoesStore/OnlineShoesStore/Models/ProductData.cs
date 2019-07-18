@@ -214,18 +214,41 @@ namespace OnlineShoesStore.Models
             return check;
         }
 
-        public bool RemoveProduct(int productId)
+        
+            
+            public ProductDTO GetProductByProductID(int productID)
         {
-            bool check = false;
-            string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
+            ProductDTO product = null;
+            string sql = "Select * From Products Where productID = @productID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
-            SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@IsDeleted", true);
-            cmd.Parameters.AddWithValue("@Id", productId);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@productID", productID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                double price = (double)dr[2];
+                string color = (string)dr[3];
+                product = new ProductDTO { Price = price, Color = color };
+            }
+            cnn.Close();
+            return product;
+        }
+            public bool RemoveProduct(int productId)
+        {
+            bool check = false;
+            string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@IsDeleted", true);
+            cmd.Parameters.AddWithValue("@Id", productId);
             check = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
             return check;
@@ -236,13 +259,13 @@ namespace OnlineShoesStore.Models
             bool check = false;
             string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
-            SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@IsDeleted", false);
-            cmd.Parameters.AddWithValue("@Id", productId);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@IsDeleted", false);
+            cmd.Parameters.AddWithValue("@Id", productId);
             check = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
             return check;
