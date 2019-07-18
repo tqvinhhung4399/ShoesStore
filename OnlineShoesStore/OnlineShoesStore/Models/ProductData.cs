@@ -252,6 +252,18 @@ namespace OnlineShoesStore.Models
         //{
         //    var table = new DataTable(typeof(ProductDTO).Name);
 
+        //    table.Columns.Add("Level", typeof(string));
+        //    table.Columns.Add("Message", typeof(string));
+        //    table.Columns.Add("EventTime", typeof(DateTime));
+
+        //    foreach (var entity in entities)
+        //    {
+        //        var row = table.NewRow();
+        //        row["Level"] = entity.Level;
+        //        row["Message"] = entity.Message;
+        //        row["EventTime"] = entity.EventTime;
+        //        table.Rows.Add(row);
+        //    }
         //    table.Columns.Add("ShoesId", typeof(int));
         //    table.Columns.Add("Price", typeof(float));
         //    table.Columns.Add("Color", typeof(string));

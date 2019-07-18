@@ -567,5 +567,12 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return shoesName;
         }
+
+        public bool UpdateShoes(ShoesDTO shoes)
+        {
+            bool result = false;
+
+            return result;
+        }
     }
 }
