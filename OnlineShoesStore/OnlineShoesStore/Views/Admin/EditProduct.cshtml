@@ -40,40 +40,47 @@
                     <form action="UpdateProduct" method="POST">
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="">Name: </label>
-                            <input type="text" class="form-control-plaintext" readonly value="@*@ViewBag.Product.Name*@ (Read Only)" />
+                            <input type="text" class="form-control-plaintext" readonly value="@ViewBag.ShoesForPageEditProduct.Name" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="">Brand: </label>
-                            <input type="text" class="form-control-plaintext" readonly value="@*@ViewBag.Product.Brand*@ (Read Only)" />
+                            <input type="text" class="form-control-plaintext" readonly value="@ViewBag.ShoesForPageEditProduct.BrandName" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="2">Price: </label>
-                            <input type="text" class="form-control" id="2" name="txtProductPrice" required placeholder="Product's price" value="@*@ViewBag.Product.Price*@" />
+                            <input type="text" class="form-control" id="2" name="txtProductPrice" required placeholder="Product's price" value="@ViewBag.ShoesForPageEditProduct.Price" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="3">Color: </label>
-                            <input type="text" class="form-control" id="3" name="txtColor" required placeholder="Product's color" value="@*@ViewBag.Product.Color*@" />
+                            <input type="text" class="form-control" id="3" name="txtColor" required placeholder="Product's color" value="@ViewBag.ShoesForPageEditProduct.Color" />
                         </div>
                         <div class="form-group" id="DetailProduct">
-                            <center><h3>Detail 1</h3></center>
+                            @{ int i = 1;}
+                            @foreach (ProductDetailDTO dto in ViewBag.ListProductDetails)
+                            {
+
+                                <center><h3>Detail @i (Old)</h3></center>
+                                <div class="form-group">
+                                    <label style="color: #000000; font-weight: bold">Size: </label>
+                                    <input type="number" class="form-control" name="txtSize" min="0" required placeholder="Product's size" value="@dto.Size" />
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #000000; font-weight: bold">Quantity: </label>
+                                    <input type="number" class="form-control" name="txtQuantity" min="0" placeholder="Product's quantity" value="@dto.Quantity" />
+                                </div>
+
+                                i = i + 1;
+                            }
+                        </div>
                             <div class="form-group">
-                                <label style="color: #000000; font-weight: bold">Price: </label>
-                                <input type="number" class="form-control" name="txtSize" min="0" required placeholder="Product's size" />
+                                <center>
+                                    <button class="primary-btn btn-sm" type="button" onclick="addSize()">Add more size</button>
+                                    <button class="primary-btn btn-sm" type="button" onclick="removeSize()" style="margin-left:40px;">Remove size</button>
+                                </center>
                             </div>
                             <div class="form-group">
-                                <label style="color: #000000; font-weight: bold">Color: </label>
-                                <input type="number" class="form-control" name="txtQuantity" min="0" placeholder="Product's quantity" />
+                                <button style="width:100%; margin-top:40px;" class="primary-btn btn-lg">UPDATE</button>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <center>
-                                <button class="primary-btn btn-sm" type="button" onclick="addSize()">Add more size</button>
-                                <button class="primary-btn btn-sm" type="button" onclick="removeSize()" style="margin-left:40px;">Remove size</button>
-                            </center>
-                        </div>
-                        <div class="form-group">
-                            <button style="width:100%; margin-top:40px;" class="primary-btn btn-lg">UPDATE</button>
-                        </div>
                     </form>
 
                 </div>

@@ -195,6 +195,59 @@ namespace OnlineShoesStore.Models
             return check;
         }
 
+        private DataTable ToDataTable<T>(List<T> collection)
+        {
+            DataTable dt = new DataTable("DataTable");
+            Type t = typeof(T);
+            PropertyInfo[] pia = t.GetProperties();
+
+            //Inspect the properties and create the columns in the DataTable
+            foreach (PropertyInfo pi in pia)
+            {
+                Type ColumnType = pi.PropertyType;
+                if ((ColumnType.IsGenericType))
+                {
+                    ColumnType = ColumnType.GetGenericArguments()[0];
+                }
+                dt.Columns.Add(pi.Name, ColumnType);
+            }
+
+            //Populate the data table
+            foreach (T item in collection)
+            {
+                DataRow dr = dt.NewRow();
+                dr.BeginEdit();
+                foreach (PropertyInfo pi in pia)
+                {
+                    if (pi.GetValue(item, null) != null)
+                    {
+                        dr[pi.Name] = pi.GetValue(item, null);
+                    }
+                }
+                dr.EndEdit();
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
+
+        public bool UpdateProductById(ProductDTO product)
+        {
+            bool check = false;
+            string sql = "Update Products Set price = @Price, color = @Color Where productID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Price", product.Price);
+            cmd.Parameters.AddWithValue("@Color", product.Color);
+            cmd.Parameters.AddWithValue("@Id", product.ProductId);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
+
         //private DataTable ToDataTable<T>(List<T> collection)
         //{
         //    DataTable dt = new DataTable("DataTable");
@@ -234,6 +287,18 @@ namespace OnlineShoesStore.Models
         //{
         //    var table = new DataTable(typeof(ProductDTO).Name);
 
+        //    table.Columns.Add("Level", typeof(string));
+        //    table.Columns.Add("Message", typeof(string));
+        //    table.Columns.Add("EventTime", typeof(DateTime));
+
+        //    foreach (var entity in entities)
+        //    {
+        //        var row = table.NewRow();
+        //        row["Level"] = entity.Level;
+        //        row["Message"] = entity.Message;
+        //        row["EventTime"] = entity.EventTime;
+        //        table.Rows.Add(row);
+        //    }
         //    table.Columns.Add("ShoesId", typeof(int));
         //    table.Columns.Add("Price", typeof(float));
         //    table.Columns.Add("Color", typeof(string));
