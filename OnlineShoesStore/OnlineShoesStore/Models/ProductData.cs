@@ -213,6 +213,31 @@ namespace OnlineShoesStore.Models
             return check;
         }
 
+        public bool UpdateListProducstById(List<ProductDTO> listProducts)
+        {
+            bool check = true;
+            string sql = "Update Products Set price = @Price, color = @Color Where productID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            foreach (ProductDTO product in listProducts)
+            {
+                SqlCommand cmd = new SqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@Price", product.Price);
+                cmd.Parameters.AddWithValue("@Color", product.Color);
+                cmd.Parameters.AddWithValue("@Id", product.ProductId);
+                if (cmd.ExecuteNonQuery() <= 0)
+                {
+                    check = false;
+                    break;
+                }
+            }
+            cnn.Close();
+            return check;
+        }
+
         public bool RemoveProduct(int productId)
         {
             bool check = false;
