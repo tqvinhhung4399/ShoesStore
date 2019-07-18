@@ -11,6 +11,12 @@ namespace OnlineShoesStore.Models
         private string name;
         private int categoryId;
         private string categoryName;
+
+        public ShoesDTO()
+        {
+
+        }
+
         public string CategoryName
         {
             get { return categoryName; }
@@ -52,11 +58,7 @@ namespace OnlineShoesStore.Models
         }
         
         private bool isDeleted;
-
-        public ShoesDTO()
-        {
-
-        }
+        
 
         public ShoesDTO(int shoesId, string name, int categoryId, int brandId, string material, string description, int originId, bool isDeleted)
         {
@@ -459,7 +461,7 @@ namespace OnlineShoesStore.Models
             return image;
         }
 
-        public bool AddNewShoes(ShoesDTO shoes)
+        public bool InsertShoes(ShoesDTO shoes)
         {
             bool result = false;
             string sql = "Insert into Shoes(name, categoryID, brandID, material, description, originID, isDeleted) values (@name, @categoryID, @brandID, @material, @description, @originID, @isDeleted)";
@@ -489,6 +491,10 @@ namespace OnlineShoesStore.Models
             int shoesId = 0;
             string sql = "Select TOP 1 shoesID From Shoes Order By shoesID DESC";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
             SqlCommand cmd = new SqlCommand(sql, cnn);
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
