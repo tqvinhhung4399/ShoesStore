@@ -505,7 +505,7 @@ namespace OnlineShoesStore.Models
             return shoesId;
         }
 
-
+        //H
         public ShoesDTO GetShoesInformationByShoesID(int shoesID)
         {
             ShoesDTO shoes = null;
