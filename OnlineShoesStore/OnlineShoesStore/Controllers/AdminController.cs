@@ -293,7 +293,7 @@ namespace OnlineShoesStore.Controllers
             string shoesIDStr = HttpContext.Request.Query["txtProductID"];
             int productID = Int32.Parse(shoesIDStr);
             ViewBag.ShoesForPageEditProduct = new ShoesData().GetShoesDetailByProductID(productID);
-            ViewBag.Product = new ProductData();
+            ViewBag.Product = new ProductData().GetProductByProductID(productID);
             ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(productID);
             return View("EditProduct");
         }

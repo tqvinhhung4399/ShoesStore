@@ -232,7 +232,7 @@ namespace OnlineShoesStore.Models
             {
                 double price = (double)dr[2];
                 string color = (string)dr[3];
-                product = new ProductDTO { Price = price, Color = color };
+                product = new ProductDTO { Price = price, Color = color, ProductId=productID };
             }
             cnn.Close();
             return product;
@@ -270,5 +270,7 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return check;
         }
+
+        
     }
 }
