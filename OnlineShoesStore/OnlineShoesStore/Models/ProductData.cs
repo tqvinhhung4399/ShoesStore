@@ -213,7 +213,9 @@ namespace OnlineShoesStore.Models
             return check;
         }
 
-        public ProductDTO GetProductByProductID(int productID)
+        
+            
+            public ProductDTO GetProductByProductID(int productID)
         {
             ProductDTO product = null;
             string sql = "Select * From Products Where productID = @productID";
@@ -233,6 +235,39 @@ namespace OnlineShoesStore.Models
             }
             cnn.Close();
             return product;
+        }
+            public bool RemoveProduct(int productId)
+        {
+            bool check = false;
+            string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@IsDeleted", true);
+            cmd.Parameters.AddWithValue("@Id", productId);
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
+
+        public bool RestoreProduct(int productId)
+        {
+            bool check = false;
+            string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@IsDeleted", false);
+            cmd.Parameters.AddWithValue("@Id", productId);
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
         }
     }
 }
