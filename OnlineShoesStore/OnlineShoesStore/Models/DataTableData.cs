@@ -21,9 +21,13 @@ namespace OnlineShoesStore.Models
         private string color;
         private string brand;
         private double price;
+        private bool isDeleted;
+
+        
+
         private List<string> sizeQuantity;
 
-        public DataTableDTO(string brand, string name, string color, double price, List<string> sizeQuantity, int productID)
+        public DataTableDTO(string brand, string name, string color, double price, List<string> sizeQuantity, int productID, bool isDeleted)
         {
             this.brand = brand;
             this.name = name;
@@ -31,6 +35,13 @@ namespace OnlineShoesStore.Models
             this.price = price;
             this.sizeQuantity = sizeQuantity;
             this.productID = productID;
+            this.isDeleted = isDeleted;
+        }
+
+        public bool IsDeleted
+        {
+            get { return isDeleted; }
+            set { isDeleted = value; }
         }
 
         public List<string> SizeQuantity
@@ -97,14 +108,13 @@ namespace OnlineShoesStore.Models
         public List<DataTableDTO> GetData()
         {
             List<DataTableDTO> result = null;
-            string sql = "SELECT a.brand, a.name, p.color, p.price, p.productID " +
+            string sql = "SELECT a.brand, a.name, p.color, p.price, p.productID, p.isDeleted " +
                             "FROM(SELECT b.name as brand, s.name, s.shoesID " +
                                     "FROM Shoes s, Brands b " +
                                     "WHERE s.brandID = b.brandID " +
                                     "AND s.isDeleted = 0 " +
                                     "AND b.isDeleted = 0) a, Products p " +
-                            "WHERE a.shoesID = p.shoesID " +
-                                "AND p.isDeleted = 0";
+                            "WHERE a.shoesID = p.shoesID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
@@ -117,6 +127,7 @@ namespace OnlineShoesStore.Models
             string brand;
             string color;
             double prices;
+            bool isDeleted;
             List<string> sizeQuantity;
             result = new List<DataTableDTO>();
             while (dr.Read())
@@ -127,7 +138,8 @@ namespace OnlineShoesStore.Models
                 prices = dr.GetDouble(3);
                 proID = dr.GetInt32(4);
                 sizeQuantity = GetAllSizeQuantity(dr.GetInt32(4));
-                result.Add(new DataTableDTO(brand, name, color, prices, sizeQuantity, proID));
+                isDeleted = dr.GetBoolean(5);
+                result.Add(new DataTableDTO(brand, name, color, prices, sizeQuantity, proID, isDeleted));
             }
             cnn.Close();
             return result;
