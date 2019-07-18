@@ -34,7 +34,8 @@ namespace OnlineShoesStore.Models
 
     public class CartData
     {
-        private int CheckCartIsExisted(string username)
+        //kiểm tra xem đã tồn tại Cart cho user đó chưa, nếu có thì trả ra cartID, chưa thì trả ra 0
+        private int CheckCartIsExisted(string username) 
         {
             int cartID = 0;
             string sql = "Select * From Carts Where UserID = @userID and isCheckedOut = @isCheckedOut";
@@ -55,6 +56,7 @@ namespace OnlineShoesStore.Models
             return cartID;
         }
 
+        //lấy cartID theo user, nếu có rồi thì lấy còn chưa có thì tạo mới
         public int GetCartIDByUsername(string username)
         {
             int cartID;
@@ -78,6 +80,7 @@ namespace OnlineShoesStore.Models
             return cartID;
         }
 
+        //lúc check out thì update thuộc tính isDeleted của bảng Carts
         public bool CheckOutCartByCartID(int cartID)
         {
             bool result = false;
