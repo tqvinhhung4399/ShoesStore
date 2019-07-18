@@ -24,56 +24,16 @@
     <div class="container">
         <center>
             <h1 style="color=red;">Administrator - Product Manager</h1>
+            @if (ViewBag.UpdateSuccessful != null)
+            {
+                <h3>@ViewBag.UpdateSuccessful</h3>
+            }
+            @if (ViewBag.UpdateFailed != null)
+            {
+                <h3>@ViewBag.UpdateFailed</h3>
+            }
             <a class="primary-btn btn-lg" asp-controller="Admin" asp-action="AddProduct">Add new product</a>
         </center>
-        @*<div>
-                <table id="test" class="display">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Brand</th>
-                            <th>Color</th>
-                            <th>Price</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Yeezy V2 350</td>
-                            <td>Adidas</td>
-                            <td>White</td>
-                            <td>$1000</td>
-                            <td><a href="#" class="btn-primary btn-sm">Manage</a></td>
-                            <td><a href="#" class="btn-danger btn-sm">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Yeezy V2 350</td>
-                            <td>Adidas</td>
-                            <td>Black</td>
-                            <td>$900</td>
-                            <td><a href="#" class="btn-primary btn-sm">Manage</a></td>
-                            <td><a href="#" class="btn-danger btn-sm">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Hunter X</td>
-                            <td>Bitis</td>
-                            <td>White - Orange</td>
-                            <td>$50</td>
-                            <td><a href="#" class="btn-primary btn-sm">Manage</a></td>
-                            <td><a href="#" class="btn-danger btn-sm">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Chuck Tailor II</td>
-                            <td>Converve</td>
-                            <td>White - Black</td>
-                            <td>$100</td>
-                            <td><a href="#" class="btn-primary btn-sm">Manage</a></td>
-                            <td><a href="#" class="btn-danger btn-sm">Delete</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>*@
         <div>
             <table id="example" class="display" style="width:100%">
                 <thead>

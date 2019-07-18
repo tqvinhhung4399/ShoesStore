@@ -77,6 +77,7 @@ namespace OnlineShoesStore.Models
 
     public class ProductData
     {
+
         public List<ProductDTO> GetProductsByShoesID(int shoesID)
         {
             List<ProductDTO> list = new List<ProductDTO>();

@@ -14,6 +14,11 @@ namespace OnlineShoesStore.Models
         private int productId;
         private bool isDeleted;
 
+        public ProductDetailDTO()
+        {
+
+        }
+
         public ProductDetailDTO(int productDetailId, float size, int quantity, int productId, bool isDeleted)
         {
             this.productDetailId = productDetailId;
@@ -81,11 +86,15 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
-        public bool UpdateProductDetailsBySize(List<ProductDetailDTO> listProducts)
+        public bool UpdateQuantityByProductDTO(List<ProductDetailDTO> listProducts)
         {
             bool check = true;
-            string sql = "Update Product Details Set quantity = @Quantity Where productID = @Id And size = @Size";
+            string sql = "Update ProductDetails Set quantity = @Quantity Where productID = @Id And size = @Size";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
             SqlCommand cmd;
             foreach (ProductDetailDTO detail in listProducts)
             {
@@ -93,34 +102,40 @@ namespace OnlineShoesStore.Models
                 cmd.Parameters.AddWithValue("@Quantity", detail.Quantity);
                 cmd.Parameters.AddWithValue("@Id", detail.ProductId);
                 cmd.Parameters.AddWithValue("@Size", detail.Size);
-                if (cmd.ExecuteNonQuery() <= 0)
-                {
-                    check = false;
-                    break;
-                }
-            }            
-            return check;
-        }
-
-        public bool AddProductDetailsByProductId(List<ProductDetailDTO> listProducts)
-        {
-            bool check = false;
-            string sql = "Insert Into ProductDetails(size, quantity, productID, isDeleted) Values (@Size, @Quantity, @ProductId, @IsDeleted)";
-            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
-            SqlCommand cmd;
-            foreach (ProductDetailDTO detail in listProducts)
-            {
-                cmd = new SqlCommand(sql, cnn);
-                cmd.Parameters.AddWithValue("@Size", detail.Size);
-                cmd.Parameters.AddWithValue("@Quantity", detail.Quantity);
-                cmd.Parameters.AddWithValue("@Id", detail.ProductId);
-                cmd.Parameters.AddWithValue("@IsDeleted", detail.IsDeleted);
                 if (cmd.ExecuteNonQuery() <= 0)
                 {
                     check = false;
                     break;
                 }
             }
+            cnn.Close();
+            return check;
+        }
+
+        public bool AddProductDetailsByProductDTO(List<ProductDetailDTO> listProducts)
+        {
+            bool check = true;
+            string sql = "Insert Into ProductDetails(size, quantity, productID, isDeleted) Values (@Size, @Quantity, @ProductId, @IsDeleted)";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd;
+            foreach (ProductDetailDTO detail in listProducts)
+            {
+                cmd = new SqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@Size", detail.Size);
+                cmd.Parameters.AddWithValue("@Quantity", detail.Quantity);
+                cmd.Parameters.AddWithValue("@ProductId", detail.ProductId);
+                cmd.Parameters.AddWithValue("@IsDeleted", false);
+                if (cmd.ExecuteNonQuery() <= 0)
+                {
+                    check = false;
+                    break;
+                }
+            }
+            cnn.Close();
             return check;
         }
     }
