@@ -191,7 +191,7 @@ namespace OnlineShoesStore.Models
                     check = false;
                     break;
                 }
-            }            
+            }
             cnn.Close();
             return check;
         }
@@ -214,17 +214,36 @@ namespace OnlineShoesStore.Models
             return check;
         }
 
-        
-            
-            public ProductDTO GetProductByProductID(int productID)
+        public bool UpdateListProducstById(List<ProductDTO> listProducts)
         {
-            ProductDTO product = null;
-            string sql = "Select * From Products Where productID = @productID";
+            bool check = true;
+            string sql = "Update Products Set price = @Price, color = @Color Where productID = @Id";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
+            foreach (ProductDTO product in listProducts)
+            {
+                SqlCommand cmd = new SqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@Price", product.Price);
+                cmd.Parameters.AddWithValue("@Color", product.Color);
+                cmd.Parameters.AddWithValue("@Id", product.ProductId);
+                if (cmd.ExecuteNonQuery() <= 0)
+                {
+                    check = false;
+                    break;
+                }
+            }
+            cnn.Close();
+            return check;
+        }
+
+        public ProductDTO GetProductByProductID(int productID)
+        {
+            ProductDTO product = null;
+            string sql = "Select * From Products Where productID = @productID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@productID", productID);
             SqlDataReader dr = cmd.ExecuteReader();
@@ -232,12 +251,13 @@ namespace OnlineShoesStore.Models
             {
                 double price = (double)dr[2];
                 string color = (string)dr[3];
-                product = new ProductDTO { Price = price, Color = color, ProductId=productID };
+                product = new ProductDTO { Price = price, Color = color, ProductId = productID };
             }
             cnn.Close();
             return product;
         }
-            public bool RemoveProduct(int productId)
+
+        public bool RemoveProduct(int productId)
         {
             bool check = false;
             string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
@@ -271,6 +291,6 @@ namespace OnlineShoesStore.Models
             return check;
         }
 
-        
+
     }
 }
