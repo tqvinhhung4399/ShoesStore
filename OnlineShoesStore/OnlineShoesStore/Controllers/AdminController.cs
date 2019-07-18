@@ -31,7 +31,21 @@ namespace OnlineShoesStore.Controllers
             int originID = int.Parse(Request.Form["slOrigin"]);
             string[] colors = Request.Form["txtColor"];
             string[] prices = Request.Form["txtPrice"];
-
+            if (new ShoesData().InsertShoes(new ShoesDTO { Name = name, CategoryId = categoryID, BrandId = brandID, Material = material, Description = description, OriginId = originID }))
+            {
+                int shoesID = new ShoesData().GetNewestShoesId();
+                List<ProductDTO> listProducts = new List<ProductDTO>();
+                for (int i = 0; i < colors.Length; i++)
+                {
+                    listProducts.Add(new ProductDTO { ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]), IsDeleted = false });
+                }
+                if (new ProductData().InsertProducts(listProducts))
+                {
+                    ViewBag.AddSuccess = "Add new product successfully!";
+                }
+            }
+            ViewBag.AddFailed = "Add new product failed!";
+            return View("ShoesManager");
 
             //if (new ShoesData().AddNewShoes(shoes))
             //{
@@ -43,7 +57,6 @@ namespace OnlineShoesStore.Controllers
             //    ViewBag.Failed = "Add new shoes failed!";
             //    return View(); //view tuong ung khi add that bai
             //}
-            return View("ProductManager");
         }
 
         //H

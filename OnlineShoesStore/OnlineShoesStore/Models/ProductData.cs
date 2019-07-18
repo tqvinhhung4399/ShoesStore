@@ -30,7 +30,10 @@ namespace OnlineShoesStore.Models
         private double price;
         private string color;
         private bool isDeleted;
+        public ProductDTO()
+        {
 
+        }
         public ProductDTO(int productId, int shoesId, double price, string color, bool isDeleted)
         {
             this.productId = productId;
@@ -72,7 +75,7 @@ namespace OnlineShoesStore.Models
 
     }
 
-    public class ProductData
+    public class ProductData 
     {
         public List<ProductDTO> GetProductsByShoesID(int shoesID)
         {
@@ -165,10 +168,10 @@ namespace OnlineShoesStore.Models
             return list;
         }
 
-        public bool AddProduct(List<ProductDTO> productList)
+        public bool InsertProducts(List<ProductDTO> productsList)
         {
             DataTable dt = new DataTable();
-            dt = ToDataTable<ProductDTO>(productList);
+            dt = ToDataTable<ProductDTO>(productsList);
 
             bool check = false;
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
@@ -176,14 +179,15 @@ namespace OnlineShoesStore.Models
             {
                 cnn.Open();
             }
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.InsertCommand = new SqlCommand("Insert Into Products(shoesID, price, color, isDeleted) Values (@ShoesId, @Price, @Color, @IsDeleted)");
-            da.InsertCommand.Parameters.Add("@ShoesId", SqlDbType.Int, productList.Count, "shoesID");
-            da.InsertCommand.Parameters.Add("@Price", SqlDbType.Float, productList.Count, "price");
-            da.InsertCommand.Parameters.Add("@Color", SqlDbType.VarChar, productList.Count, "color");
-            da.InsertCommand.Parameters.Add("@IsDeleted", SqlDbType.Bit, productList.Count, "isDeleted");
+            SqlCommand cmd = new SqlCommand("Insert Into Products(shoesID, price, color, isDeleted) Values (@ShoesId, @Price, @Color, @IsDeleted)", cnn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.InsertCommand = cmd;
+            da.InsertCommand.Parameters.Add("@ShoesId", SqlDbType.Int, productsList.Count, "shoesId");
+            da.InsertCommand.Parameters.Add("@Price", SqlDbType.Float, productsList.Count, "price");
+            da.InsertCommand.Parameters.Add("@Color", SqlDbType.VarChar, productsList.Count, "color");
+            da.InsertCommand.Parameters.Add("@IsDeleted", SqlDbType.Bit, productsList.Count, "isDeleted");
             da.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
-            da.UpdateBatchSize = productList.Count;
+            da.UpdateBatchSize = productsList.Count;
             da.Update(dt);
             cnn.Close();
             return check;
@@ -222,6 +226,26 @@ namespace OnlineShoesStore.Models
                 dt.Rows.Add(dr);
             }
             return dt;
+        }
+
+        private static DataTable ConvertToTable(List<ProductDTO> entities)
+        {
+            var table = new DataTable(typeof(ProductDTO).Name);
+
+            table.Columns.Add("Level", typeof(string));
+            table.Columns.Add("Message", typeof(string));
+            table.Columns.Add("EventTime", typeof(DateTime));
+
+            foreach (var entity in entities)
+            {
+                var row = table.NewRow();
+                row["Level"] = entity.Level;
+                row["Message"] = entity.Message;
+                row["EventTime"] = entity.EventTime;
+                table.Rows.Add(row);
+            }
+
+            return table;
         }
     }
 }
