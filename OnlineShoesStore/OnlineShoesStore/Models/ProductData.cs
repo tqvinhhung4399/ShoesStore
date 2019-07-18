@@ -213,6 +213,40 @@ namespace OnlineShoesStore.Models
             return check;
         }
 
+        public bool RemoveProduct(int productId)
+        {
+            bool check = false;
+            string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@IsDeleted", true);
+            cmd.Parameters.AddWithValue("@Id", productId);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
+
+        public bool RestoreProduct(int productId)
+        {
+            bool check = false;
+            string sql = "Update Products Set isDeleted = @IsDeleted Where productID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@IsDeleted", false);
+            cmd.Parameters.AddWithValue("@Id", productId);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
+
         //private DataTable ToDataTable<T>(List<T> collection)
         //{
         //    DataTable dt = new DataTable("DataTable");
