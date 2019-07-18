@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "AddNewProduct";
+}
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Edit Information</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="#">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Edit Information</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Tracking Box Area =================-->
+<section class="tracking_box_area section_gap">
+    <div class="container">
+        <center>
+            <h1 style="color=red;">Administrator - Add new product</h1>
+        </center>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-12 col-md-10">
+                    <form action="AddProduct" method="POST">
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="1">Fullname: </label>
+                            <input type="text" class="form-control" id="1" name="txtFullname" required placeholder="Fullname" />
+                        </div>
+                        <label style="color: #000000; font-weight: bold" class="">Gender: </label>
+                        <div class="form-group">
+                            <select name="slGender">
+                                <option value="Male" selected>Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="2">Birthdate: </label>
+                            <input type="date" class="form-control" id="2" name="txtBirthdate" required placeholder="Birthdate" />
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="3">Address (Use for delivery): </label>
+                            <input type="text" class="form-control" id="3" name="txtAddress" required placeholder="Address" />
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="4">Phone number: </label>
+                            <input type="tel" class="form-control" id="4" name="txtPhoneNumber" required placeholder="Phone number" />
+                        </div>
+                        <div class="form-group">
+                            <button style="width:100%; margin-top:40px;" class="primary-btn btn-lg">UPDATE</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->

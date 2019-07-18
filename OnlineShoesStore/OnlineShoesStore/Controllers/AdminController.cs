@@ -46,6 +46,27 @@ namespace OnlineShoesStore.Controllers
             return View("ProductManager");
         }
 
+        //H
+        public IActionResult ShoesManager()
+        {
+            ViewBag.ListShoes = new ShoesData().GetAllShoes();
+            return View();
+        }
+
+        //H
+        public IActionResult EditShoes()
+        {
+            string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
+            int shoesID = Int32.Parse(shoesIDStr);
+            ViewBag.Shoes = new ShoesData().GetShoesInformationByShoesID(shoesID);
+            ViewBag.ListCategories = new CategoryData().GetCategories();
+            ViewBag.ListBrands = new BrandData().GetBrands();
+            ViewBag.ListOrigins = new OriginData().GetOrigins();
+            ViewBag.Products = new ProductData().GetProductsByShoesID(shoesID);
+            return View();
+        }
+
+
         public IActionResult ProductManager()
         {
             if (CheckAdmin() != null)
@@ -55,6 +76,7 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
+        //H
         public IActionResult LoadDataTable()
         {
             DataTableData data = new DataTableData();
@@ -128,7 +150,7 @@ namespace OnlineShoesStore.Controllers
         //Quản lí sản phảm
         public IActionResult EditProduct()
         {
-            return View("ProductManager");
+            return View("EditProduct");
         }
     }
 }

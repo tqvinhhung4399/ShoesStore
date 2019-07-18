@@ -90,6 +90,7 @@ namespace OnlineShoesStore.Models
                 string sq = "" + dr.GetDouble(0) + " - " + dr.GetInt32(1);
                 sizeQuantity.Add(sq);
             }
+            cnn.Close();
             return sizeQuantity;
         }
 

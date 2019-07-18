@@ -60,17 +60,24 @@
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
                             <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserManager">User Manager</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
-
+                            <li class="nav-item submenu dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Product Manager</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ShoesManager">Shoes Manager</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="AddProduct">Add new shoes</a></li>
+                                </ul>
+                            </li>
                             @*
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Admin</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserManager">User Manager</a></li>
-                                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
-                                    </ul>
-                                </li>*@
+        <li class="nav-item submenu dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">Admin</a>
+            <ul class="dropdown-menu">
+                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserManager">User Manager</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="ProductManager">Product Manager</a></li>
+            </ul>
+        </li>*@
                             @if (Context.Session.GetString("SessionUser") != null)
                             {
                                 <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionUser").ToString()<a href="/Home/ProcessLogout">   (Logout)</a></a></li>
@@ -214,33 +221,28 @@
             });
         </script>
         <script>
-            function add() {
-                var count = 3;
-                function remove() {
-                    if (count <= 3) {
-                        return;
-                    }
-                    var s = "#DP" + (count - 1);
-                    $("div").remove(s);
-                    $("center").remove(s);
-                    count--;
-                };
-                if (checkEmpty() === false) {
+            var count = 2;
+            function removeSize() {
+                if (count <= 2) {
                     return;
-                } else {
-                    var s = "<center id='DP" + count + "'><h3>Product " + count + "</h3></center>"
-                        + "<div class='form-group' id='DP" + count + "'>"
-                        + "<label style='color: #000000; font-weight: bold' >Size: </label>"
-                        + "<input type='number' class='form-control' name='txtSize' min='0' required placeholder='Products size' />"
-                        + "</div>"
-                        + "<div class='form-group' id='DP" + count + "'>"
-                        + "<label style='color: #000000; font-weight: bold' >Quantity: </label>"
-                        + "<input type='text' class='form-control' name='txtQuantity' min='0' required placeholder='Products quantity' />"
-                        + "</div>"
-                    $("#MainProduct").append(s);
-                    count++;
                 }
-
+                var s = "#DP" + (count - 1);
+                $("div").remove(s);
+                $("center").remove(s);
+                count--;
+            };
+            function addSize() {
+                var s = "<center id='DP" + count + "'><h3>Detail " + count + "</h3></center>"
+                    + "<div class='form-group' id='DP" + count + "'>"
+                    + "<label style='color: #000000; font-weight: bold' >Size: </label>"
+                    + "<input type='number' class='form-control' name='txtSize' min='0' required placeholder='Products size' />"
+                    + "</div>"
+                    + "<div class='form-group' id='DP" + count + "'>"
+                    + "<label style='color: #000000; font-weight: bold' >Quantity: </label>"
+                    + "<input type='number' class='form-control' name='txtQuantity' min='0' required placeholder='Products quantity' />"
+                    + "</div>"
+                $("#DetailProduct").append(s);
+                count++;
             };
         </script>
         <script>
@@ -256,9 +258,6 @@
             };
 
             function add() {
-                if (checkEmpty() === false) {
-                    return;
-                } else {
                     var s = "<center id='MP" + count + "'><h3>Product " + count + "</h3></center>"
                         + "<div class='form-group' id='MP" + count + "'>"
                         + "<label style='color: #000000; font-weight: bold' >Price: </label>"
@@ -270,20 +269,44 @@
                         + "</div>"
                     $("#MainProduct").append(s);
                     count++;
-                }
+                
 
             };
-
-            function checkEmpty() {
-                var check = true;
-                var tags = document.getElementsByClassName("input");
-                for (i = 0; i < tags.length; i++) {
-                    if (tags[i].value.length === 0) {
-                        check = false;
-                        break;
-                    }
+        </script>
+        <script>
+                var count = 2;
+                var limit = 2;
+            @if(ViewBag.Shoes != null)
+            {
+                <text>
+                count = @ViewBag.Products.Count + 1;
+                limit = @ViewBag.Products.Count + 1;
+                </text>
+            }
+            function removeNewProduct() {
+                if (count <= limit) {
+                    return;
                 }
-                return check;
+                var s = "#AP" + (count - 1);
+                $("div").remove(s);
+                $("center").remove(s);
+                count--;
+            };
+
+            function addNewProduct() {
+                    var s = "<center id='AP" + count + "'><h3>Product " + count + "</h3></center>"
+                        + "<div class='form-group' id='AP" + count + "'>"
+                        + "<label style='color: #000000; font-weight: bold' >Price: </label>"
+                        + "<input type='number' class='form-control' name='txtNewPrice' min='0' required placeholder='Products price' />"
+                        + "</div>"
+                        + "<div class='form-group' id='AP" + count + "'>"
+                        + "<label style='color: #000000; font-weight: bold' >Color: </label>"
+                        + "<input type='text' class='form-control' name='txtNewColor' required placeholder='Products color' />"
+                        + "</div>"
+                    $("#MainProduct").append(s);
+                    count++;
+                
+
             };
         </script>
         <script>

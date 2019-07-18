@@ -40,21 +40,21 @@
                     <form action="UpdateProduct" method="POST">
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="">Name: </label>
-                            <input type="text" class="form-control-plaintext" readonly value="@ViewBag.Product.Name" />
+                            <input type="text" class="form-control-plaintext" readonly value="@*@ViewBag.Product.Name*@ (Read Only)" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="">Brand: </label>
-                            <input type="text" class="form-control-plaintext" readonly value="@ViewBag.Product.Brand" />
+                            <input type="text" class="form-control-plaintext" readonly value="@*@ViewBag.Product.Brand*@ (Read Only)" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="2">Price: </label>
-                            <input type="text" class="form-control" id="2" name="txtProductPrice" required placeholder="Product's price" value="@ViewBag.Product.Price" />
+                            <input type="text" class="form-control" id="2" name="txtProductPrice" required placeholder="Product's price" value="@*@ViewBag.Product.Price*@" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="3">Color: </label>
-                            <input type="text" class="form-control" id="3" name="txtColor" required placeholder="Product's color" value="@ViewBag.Product.Color" />
+                            <input type="text" class="form-control" id="3" name="txtColor" required placeholder="Product's color" value="@*@ViewBag.Product.Color*@" />
                         </div>
-                        <div class="form-group" id="MainProduct">
+                        <div class="form-group" id="DetailProduct">
                             <center><h3>Detail 1</h3></center>
                             <div class="form-group">
                                 <label style="color: #000000; font-weight: bold">Price: </label>
@@ -68,6 +68,7 @@
                         <div class="form-group">
                             <center>
                                 <button class="primary-btn btn-sm" type="button" onclick="addSize()">Add more size</button>
+                                <button class="primary-btn btn-sm" type="button" onclick="removeSize()" style="margin-left:40px;">Remove size</button>
                             </center>
                         </div>
                         <div class="form-group">

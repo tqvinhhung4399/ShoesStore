@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using System.Text;
 
 namespace OnlineShoesStore.Models
@@ -23,8 +24,6 @@ namespace OnlineShoesStore.Models
             get { return image; }
             set { image = value; }
         }
-
-
 
         private int productId;
         private int shoesId;
@@ -75,6 +74,34 @@ namespace OnlineShoesStore.Models
 
     public class ProductData
     {
+        public List<ProductDTO> GetProductsByShoesID(int shoesID)
+        {
+            List<ProductDTO> list = new List<ProductDTO>();
+            string sql = "SELECT * FROM Products WHERE shoesID = @shoesID AND isDeleted=0";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@shoesID", shoesID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            string color;
+            int productID;
+            double price;
+            ProductDTO dto = null;
+            while (dr.Read())
+            {
+                price = dr.GetDouble(2);
+                productID = dr.GetInt32(0);
+                color = dr.GetString(3);
+                dto = new ProductDTO(productID, shoesID, price, color, false);
+                list.Add(dto);
+            }
+            cnn.Close();
+            return list;
+        }
+
         public List<ProductDTO> GetProductsByCategoryID(int id)
         {
             List<ProductDTO> list = new List<ProductDTO>();
@@ -136,6 +163,65 @@ namespace OnlineShoesStore.Models
             }
             cnn.Close();
             return list;
+        }
+
+        public bool AddProduct(List<ProductDTO> productList)
+        {
+            DataTable dt = new DataTable();
+            dt = ToDataTable<ProductDTO>(productList);
+
+            bool check = false;
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.InsertCommand = new SqlCommand("Insert Into Products(shoesID, price, color, isDeleted) Values (@ShoesId, @Price, @Color, @IsDeleted)");
+            da.InsertCommand.Parameters.Add("@ShoesId", SqlDbType.Int, productList.Count, "shoesID");
+            da.InsertCommand.Parameters.Add("@Price", SqlDbType.Float, productList.Count, "price");
+            da.InsertCommand.Parameters.Add("@Color", SqlDbType.VarChar, productList.Count, "color");
+            da.InsertCommand.Parameters.Add("@IsDeleted", SqlDbType.Bit, productList.Count, "isDeleted");
+            da.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
+            da.UpdateBatchSize = productList.Count;
+            da.Update(dt);
+            cnn.Close();
+            return check;
+        }
+
+        private DataTable ToDataTable<T>(List<T> collection)
+        {
+            DataTable dt = new DataTable("DataTable");
+            Type t = typeof(T);
+            PropertyInfo[] pia = t.GetProperties();
+
+            //Inspect the properties and create the columns in the DataTable
+            foreach (PropertyInfo pi in pia)
+            {
+                Type ColumnType = pi.PropertyType;
+                if ((ColumnType.IsGenericType))
+                {
+                    ColumnType = ColumnType.GetGenericArguments()[0];
+                }
+                dt.Columns.Add(pi.Name, ColumnType);
+            }
+
+            //Populate the data table
+            foreach (T item in collection)
+            {
+                DataRow dr = dt.NewRow();
+                dr.BeginEdit();
+                foreach (PropertyInfo pi in pia)
+                {
+                    if (pi.GetValue(item, null) != null)
+                    {
+                        dr[pi.Name] = pi.GetValue(item, null);
+                    }
+                }
+                dr.EndEdit();
+                dt.Rows.Add(dr);
+            }
+            return dt;
         }
     }
 }
