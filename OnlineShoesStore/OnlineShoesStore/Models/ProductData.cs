@@ -75,7 +75,7 @@ namespace OnlineShoesStore.Models
 
     }
 
-    public class ProductData 
+    public class ProductData
     {
         public List<ProductDTO> GetProductsByShoesID(int shoesID)
         {
@@ -170,64 +170,29 @@ namespace OnlineShoesStore.Models
 
         public bool InsertProducts(List<ProductDTO> productsList)
         {
-            DataTable dt = new DataTable();
-            dt = ConvertToTable(productsList);
-
-            bool check = false;
+            bool check = true;
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
-            SqlCommand cmd = new SqlCommand("Insert Into Products(shoesID, price, color, isDeleted) Values (@ShoesId, @Price, @Color, @IsDeleted)", cnn);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.InsertCommand = cmd;
-            
-            da.InsertCommand.Parameters.Add("@ShoesId", SqlDbType.Int, 0, "shoesId");
-            da.InsertCommand.Parameters.Add("@Price", SqlDbType.Float, 0, "price");
-            da.InsertCommand.Parameters.Add("@Color", SqlDbType.VarChar, 50, "color");
-            da.InsertCommand.Parameters.Add("@IsDeleted", SqlDbType.Bit, 0, "isDeleted");
-            //da.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
-            cmd.UpdatedRowSource = UpdateRowSource.None;
-            da.UpdateBatchSize = productsList.Count;
-            da.Update(dt);
+            string sql = "Insert Into Products(shoesID, price, color, isDeleted) Values (@ShoesId, @Price, @Color, @IsDeleted)";
+            SqlCommand cmd;
+            foreach (ProductDTO product in productsList)
+            {
+                cmd = new SqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@ShoesId", product.ShoesId);
+                cmd.Parameters.AddWithValue("@Price", product.Price);
+                cmd.Parameters.AddWithValue("@Color", product.Color);
+                cmd.Parameters.AddWithValue("@IsDeleted", product.IsDeleted);
+                if (cmd.ExecuteNonQuery() <= 0)
+                {
+                    check = false;
+                    break;
+                }
+            }            
             cnn.Close();
             return check;
-        }
-
-        private DataTable ToDataTable<T>(List<T> collection)
-        {
-            DataTable dt = new DataTable("DataTable");
-            Type t = typeof(T);
-            PropertyInfo[] pia = t.GetProperties();
-
-            //Inspect the properties and create the columns in the DataTable
-            foreach (PropertyInfo pi in pia)
-            {
-                Type ColumnType = pi.PropertyType;
-                if ((ColumnType.IsGenericType))
-                {
-                    ColumnType = ColumnType.GetGenericArguments()[0];
-                }
-                dt.Columns.Add(pi.Name, ColumnType);
-            }
-
-            //Populate the data table
-            foreach (T item in collection)
-            {
-                DataRow dr = dt.NewRow();
-                dr.BeginEdit();
-                foreach (PropertyInfo pi in pia)
-                {
-                    if (pi.GetValue(item, null) != null)
-                    {
-                        dr[pi.Name] = pi.GetValue(item, null);
-                    }
-                }
-                dr.EndEdit();
-                dt.Rows.Add(dr);
-            }
-            return dt;
         }
 
         public bool UpdateProductById(ProductDTO product)
