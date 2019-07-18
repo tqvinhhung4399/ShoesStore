@@ -80,5 +80,17 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return result;
         }
+
+        public bool UpdateProductDetailBySize(List<ProductDetailDTO> listProducts)
+        {
+            bool check = false;
+            return check;
+        }
+
+        public bool AddProductByProductId(List<ProductDetailDTO> listProducts)
+        {
+            bool check = false;
+            return check;
+        }
     }
 }

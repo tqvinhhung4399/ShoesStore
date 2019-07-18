@@ -486,6 +486,7 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
+
         public int GetNewestShoesId()
         {
             int shoesId = 0;
@@ -503,6 +504,7 @@ namespace OnlineShoesStore.Models
             }
             return shoesId;
         }
+
 
         public ShoesDTO GetShoesInformationByShoesID(int shoesID)
         {
