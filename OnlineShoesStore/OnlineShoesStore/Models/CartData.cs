@@ -81,6 +81,7 @@ namespace OnlineShoesStore.Models
         }
 
         //lúc check out thì update thuộc tính isDeleted của bảng Carts
+        //đồng thời tạo mới record bên bảng Order
         public bool CheckOutCartByCartID(int cartID)
         {
             bool result = false;

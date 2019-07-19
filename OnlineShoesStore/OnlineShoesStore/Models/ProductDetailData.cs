@@ -138,5 +138,10 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return check;
         }
+
+        public List<int> GetAvailableQuantityByProductDetailIDs(List<ProductDetailDTO> listProductDetail)
+        {
+            
+        }
     }
 }

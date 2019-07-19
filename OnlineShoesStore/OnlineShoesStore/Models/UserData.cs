@@ -36,11 +36,6 @@ namespace OnlineShoesStore.Models
             this.role = role;
         }
 
-        public UserDTO()
-        {
-
-        }
-
         public string Username
         {
             get { return username; }
