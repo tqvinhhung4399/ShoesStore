@@ -20,6 +20,8 @@
 </section>
 <!-- End Banner Area -->
 <!--================Single Product Area =================-->
+@{int quantity = ViewBag.ListProductDetails[0].Quantity;
+    int i = 0;}
 <div class="product_image_area">
     <div class="container">
         <div class="row s_product_inner">
@@ -52,16 +54,19 @@
                         <div class="form-group">
                             <br />
                             <br />
-                            @*<script>
-                                function changeMax() {
-                                    document.getElementById('sst').setAttribute('max', 10);
-                                    console.log(document.getElementById('qnt').innerHTML)
+                            
+                            <script>
+                                function changeMax(s) {
+                                    var x = document.getElementById('sst');
+                                    var a = s[s.selectedIndex].id;
+                                    
+                                    console.log(a);
                                 }
-                            </script>*@
-                            <select name="slSize">
+                            </script>
+                            <select name="slSize" onchange="changeMax(this)">
                                 @foreach (ProductDetailDTO dto in ViewBag.ListProductDetails)
                                 {
-                                    <option value="@dto.Size">Size: @dto.Size - @dto.Quantity pairs available ) </option>
+                                    <option value="@dto.Size" id="@ViewBag.ListProductDetails.IndexOf(dto)">Size: @dto.Size - @dto.Quantity pairs available  </option>
                                 }
                             </select>
                             <br />
@@ -69,7 +74,7 @@
                         </div>
                         <div class="product_count">
                             <label for="qty">Quantity:</label>
-                            <input type="number" name="txtQuantity" id="sst" min="1" max="Myvar" value="1" title="Quantity:" class="input-text qty">
+                            <input type="number" name="txtQuantity" id="sst" min="1" value="1" title="Quantity:" class="input-text qty">
                         </div>
                         <div class="card_area d-flex align-items-center">
                             @*<a class="primary-btn" href="#">Add to Cart</a>*@
