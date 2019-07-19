@@ -332,7 +332,5 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return check;
         }
-
-
     }
 }

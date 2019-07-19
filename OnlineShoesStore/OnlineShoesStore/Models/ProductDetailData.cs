@@ -162,5 +162,29 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return listQuantity;
         }
+
+        public List<int> GetAvailableQuantityByProductDetailIDs(List<CartItemDTO> listCartItems)
+        {
+            List<int> listQuantity = new List<int>();
+            string sql = "Select quantity From ProductDetails Where productDetailID = @id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            foreach (CartItemDTO item in listCartItems) 
+            {
+                cmd.Parameters.AddWithValue("@id", item.ProductDetailId);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    int quantity = (int)dr[0];
+                    listQuantity.Add(quantity);
+                }
+            }
+            cnn.Close();
+            return listQuantity;
+        }
     }
 }
