@@ -33,21 +33,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (ProductDetailDTO dto in ViewBag.Cart)
+                        @foreach (CartItemDTO dto in ViewBag.Cart)
                         {
                             <tr>
                                 <td>
                                     <div class="media">
-                                        <div class="d-flex">
+                                        @*<div class="d-flex">
                                             <img src="~/img/cart.jpg" alt="">
-                                        </div>
+                                        </div>*@
                                         <div class="media-body">
-                                            @*<p>@dto.Name - @dto.Color - @dto.Brand</p>*@
+                                            <p>@dto.Name</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    @*<h5>@dto.Price</h5>*@
+                                    <h5>@dto.Price</h5>
                                 </td>
                                 <td>
                                     <div class="product_count">
@@ -64,7 +64,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>$720.00</h5>
+                                    @{ double total = dto.Quantity * dto.Price;}
+                                    <h5>@total</h5>
                                 </td>
                             </tr>
                         }

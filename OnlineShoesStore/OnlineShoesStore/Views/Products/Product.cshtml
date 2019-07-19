@@ -48,7 +48,7 @@
                         <li><a href="#"><span>Color</span> : @ViewBag.Shoes.Color</a></li>
                         <li><a href="#"><span>Brand</span> : @ViewBag.Shoes.BrandName</a></li>
                     </ul>
-                    <form action="#" method="get">
+                    <form action="/Shopping/AddToCart" method="get">
                         <div class="form-group">
                             <br />
                             <br />
@@ -58,10 +58,10 @@
                                     console.log(document.getElementById('qnt').innerHTML)
                                 }
                             </script>*@
-                            <select name="slSize">
+                            <select name="slProductDetail">
                                 @foreach (ProductDetailDTO dto in ViewBag.ListProductDetails)
                                 {
-                                    <option value="@dto.Size">Size: @dto.Size - @dto.Quantity pairs available ) </option>
+                                    <option value="@dto.ProductDetailId">Size: @dto.Size - @dto.Quantity pairs available ) </option>
                                 }
                             </select>
                             <br />

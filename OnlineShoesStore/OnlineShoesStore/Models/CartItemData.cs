@@ -138,6 +138,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@cartID", cartID);
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
@@ -176,6 +177,26 @@ namespace OnlineShoesStore.Models
             return result;
         }
 
-        
+        public bool AlreadyExistedInCart(int cartID, int productDetailID)
+        {
+            bool result = false;
+            string sql = "SELECT * FROM CartItem WHERE cartID=@cartID AND productDetailID=@productDetailID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@cartID", cartID);
+            cmd.Parameters.AddWithValue("@productDetailID", productDetailID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                result = true;
+            }
+            cnn.Close();
+            return result;
+        }
+
     }
 }

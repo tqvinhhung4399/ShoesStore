@@ -12,6 +12,8 @@ namespace OnlineShoesStore.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly string index = "~/Views/Home/Index.cshtml";
+
         //H
         public IActionResult ProcessUpdateShoes()
         {
@@ -170,8 +172,6 @@ namespace OnlineShoesStore.Controllers
             ViewBag.ProductID = HttpContext.Request.Query["txtProductID"];
             return View("UploadImage");
         }
-
-        private readonly string index = "~/Views/Home/Index.cshtml";
 
         public async Task<IActionResult> UploadImage(List<IFormFile> files)
         {
