@@ -44,6 +44,7 @@ namespace OnlineShoesStore.Controllers
             ViewBag.Shoes = new ShoesData().GetShoesDetailByProductID(productID);
             ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(productID);
             ViewBag.ListImages = new ProductImageData().GetImagesByProductID(productID);
+            ViewBag.ListQuantities = new ProductDetailData().GetAvailableQuantityByProductDetailIDs(new ProductDetailData().GetProductDetailsByProductID(productID));
             return View("Product");
         }
     }
