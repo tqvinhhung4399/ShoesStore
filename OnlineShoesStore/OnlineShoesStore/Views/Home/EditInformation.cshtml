@@ -73,7 +73,7 @@
                         }
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="2">Birthdate: </label>
-                            <input type="date" class="form-control date" id="2" name="txtDob" value="@ViewBag.UserInfo.Dob" />
+                            <input type="date" class="form-control date" id="2" value="@ViewBag.UserInfo.Dob.ToString("yyyy-MM-dd")" name="txtDob" />
                         </div>
                         <div class="form-group">
                             <label style="color: #000000; font-weight: bold" class="" for="3">Address (Use for delivery): </label>

@@ -48,24 +48,24 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
-        public IActionResult ProcessEditInfo()
-        {
-            string username = HttpContext.Session.GetString("SessionUser");
-            string fullname = Request.Form["txtFullname"];
-            string gender = Request.Form["slGender"];
-            string dob = Request.Form["txtBirthdate"];
-            string address = Request.Form["txtAddress"];
-            string phoneNumber = Request.Form["txtPhonenumber"];
-            UserDTO user = new UserDTO { Username = username, Fullname = fullname, Gender = gender, Dob = DateTime.Parse(dob), Address = address, Tel = phoneNumber};
-            if (new UserData().UpdateUserInfoByUsername(user))
-            {
-                ViewBag.Success = "Update information successfully!";
-            } else
-            {
-                ViewBag.Failed = "Update information failed!";
-            }
-            return RedirectToAction("ViewInfo");
-        }
+        //public IActionResult ProcessEditInfo()
+        //{
+        //    string username = HttpContext.Session.GetString("SessionUser");
+        //    string fullname = Request.Form["txtFullname"];
+        //    string gender = Request.Form["slGender"];
+        //    string dob = Request.Form["txtBirthdate"];
+        //    string address = Request.Form["txtAddress"];
+        //    string phoneNumber = Request.Form["txtPhonenumber"];
+        //    UserDTO user = new UserDTO { Username = username, Fullname = fullname, Gender = gender, Dob = DateTime.Parse(dob), Address = address, Tel = phoneNumber};
+        //    if (new UserData().UpdateUserInfoByUsername(user))
+        //    {
+        //        ViewBag.Success = "Update information successfully!";
+        //    } else
+        //    {
+        //        ViewBag.Failed = "Update information failed!";
+        //    }
+        //    return RedirectToAction("ViewInfo");
+        //}
 
         public IActionResult ViewInfo() //create ViewInfo.cshtml
         {
@@ -96,10 +96,10 @@ namespace OnlineShoesStore.Controllers
                 Address = address,
                 Tel = phoneNumber
             };
-            if (new UserData().ChangeInfo(dto))
+            if (new UserData().UpdateUserInfoByUsername(dto))
             {
                 ViewBag.Success = "Update successfully";
-                
+
             }
             else
             {
