@@ -50,7 +50,7 @@
                         <li><a href="#"><span>Color</span> : @ViewBag.Shoes.Color</a></li>
                         <li><a href="#"><span>Brand</span> : @ViewBag.Shoes.BrandName</a></li>
                     </ul>
-                    <form action="#" method="get">
+                    <form action="/Shopping/AddToCart" method="get">
                         <div class="form-group">
                             <br />
                             <br />
@@ -67,6 +67,11 @@
                                 @foreach (ProductDetailDTO dto in ViewBag.ListProductDetails)
                                 {
                                     <option value="@dto.Size" id="@ViewBag.ListProductDetails.IndexOf(dto)">Size: @dto.Size - @dto.Quantity pairs available  </option>
+                            </script>*@
+                            <select name="slProductDetail">
+                                @foreach (ProductDetailDTO dto in ViewBag.ListProductDetails)
+                                {
+                                    <option value="@dto.ProductDetailId">Size: @dto.Size - @dto.Quantity pairs available ) </option>
                                 }
                             </select>
                             <br />
