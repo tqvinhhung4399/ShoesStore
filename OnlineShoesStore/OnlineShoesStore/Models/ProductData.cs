@@ -271,9 +271,29 @@ namespace OnlineShoesStore.Models
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
+                int shoesID = (int)dr[1];
                 double price = (double)dr[2];
                 string color = (string)dr[3];
-                product = new ProductDTO { Price = price, Color = color, ProductId = productID };
+                product = new ProductDTO {ShoesId = shoesID, Price = price, Color = color, ProductId = productID };
+            }
+            cnn.Close();
+            return product;
+        }
+
+        public ProductDTO GetProductByProductDetailID(int productDetailID)
+        {
+            ProductDTO product = null;
+            string sql = "Select P.shoesID, P.price, P.color From Products P, ProductDetails PD Where P.productID = PD.productID and PD.productDetailID = @productDetailID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@productDetailID", productDetailID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                int shoesID = (int)dr[0];
+                double price = (double)dr[1];
+                string color = (string)dr[2];
+                product = new ProductDTO { ShoesId = shoesID, Price = price, Color = color};
             }
             cnn.Close();
             return product;

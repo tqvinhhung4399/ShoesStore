@@ -141,7 +141,26 @@ namespace OnlineShoesStore.Models
 
         public List<int> GetAvailableQuantityByProductDetailIDs(List<ProductDetailDTO> listProductDetail)
         {
-            
+            List<int> listQuantity = new List<int>();
+            string sql = "Select quantity From ProductDetails Where productDetailID = @id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            foreach (ProductDetailDTO item in listProductDetail) 
+            {
+                cmd.Parameters.AddWithValue("@id", item.ProductDetailId);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    int quantity = (int)dr[0];
+                    listQuantity.Add(quantity);
+                }
+            }
+            cnn.Close();
+            return listQuantity;
         }
     }
 }
