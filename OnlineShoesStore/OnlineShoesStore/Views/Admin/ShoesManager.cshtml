@@ -40,6 +40,12 @@
             {
                 <h5>@ViewBag.RestoreSuccessful</h5>
             }
+            @if (ViewBag.Announcement != null)
+            {
+                <script>
+                    alert("@ViewBag.Announcement");
+                </script>
+            }
             <a class="primary-btn btn-lg" asp-controller="Admin" asp-action="AddProduct">Add new product</a>
         </center>
         <div>

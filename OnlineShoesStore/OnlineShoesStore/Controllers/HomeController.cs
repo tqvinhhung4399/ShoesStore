@@ -21,7 +21,7 @@ namespace OnlineShoesStore.Controllers
         public IActionResult ViewUserInformation()
         {
             string username = HttpContext.Session.GetString("SessionUser");
-            if(username != null)
+            if (username != null)
             {
                 ViewBag.UserInfo = new UserData().GetUserInfoByUserID(username);
             }
@@ -34,17 +34,11 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult EditInformation()
         {
-            string username = HttpContext.Session.GetString("SessionUser");
-            if (username != null)
-            {
-                ViewBag.UserInfo = new UserData().GetUserInfoByUserID(username);
-            }
-            else
+            if (!IsUser())
             {
                 return View("Index");
             }
-            UserDTO user = new UserData().GetUserInfoByUsername(HttpContext.Session.GetString("SessionUser"));
-            ViewBag.User = user;
+            ViewBag.UserInfo = new UserData().GetUserInfoByUserID(HttpContext.Session.GetString("SessionUser"));
             return View();
         }
 
@@ -98,7 +92,7 @@ namespace OnlineShoesStore.Controllers
             };
             if (new UserData().UpdateUserInfoByUsername(dto))
             {
-                ViewBag.Success = "Update successfully";
+                ViewBag.Successful = "Update successfully";
 
             }
             else
@@ -122,7 +116,34 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
-        public IActionResult ProcessRegister() {
+        public IActionResult ProcessChangePassword()
+        {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
+            string oldPassword = Request.Form["txtOldPassword"];
+            string newPassword = Request.Form["txtNewPassword"];
+            UserData data = new UserData();
+            if(data.CheckMatchingOldPassword(oldPassword, HttpContext.Session.GetString("SessionUser")))
+            {
+                if(data.ChangePassword(HttpContext.Session.GetString("SessionUser"), newPassword))
+                {
+                    ViewBag.Successful = "Update password successfully";
+                }
+                else
+                {
+                    ViewBag.Failed = "Update password failed";
+                }
+                ViewBag.UserInfo = new UserData().GetUserInfoByUserID(HttpContext.Session.GetString("SessionUser"));
+                return View("ViewUserInformation");
+            }
+            ViewBag.Error = "Wrong password";
+            return View("ChangePassword");
+        }
+
+        public IActionResult ProcessRegister()
+        {
             string username = Request.Form["txtUsername"];
             string password = Request.Form["txtPassword"];
             string gender = Request.Form["txtGender"];
@@ -139,7 +160,8 @@ namespace OnlineShoesStore.Controllers
             if (ud.RegisterUser(user))
             {
                 return View("Index");
-            } else
+            }
+            else
             {
                 return View("Error");
             }
@@ -155,12 +177,14 @@ namespace OnlineShoesStore.Controllers
                 ViewBag.Invalid = "Wrong username or password";
                 ViewBag.Username = username;
                 return View("Login");
-            } else if (user.Role.Equals("admin"))
+            }
+            else if (user.Role.Equals("admin"))
             {
                 HttpContext.Session.SetString("SessionUser", user.Username);
                 HttpContext.Session.SetString("SessionRole", user.Role);
                 return RedirectToAction("UserManager", "Admin");
-            } else
+            }
+            else
             {
                 HttpContext.Session.SetString("SessionUser", user.Username);
                 HttpContext.Session.SetString("SessionRole", user.Role);
@@ -202,5 +226,20 @@ namespace OnlineShoesStore.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public bool IsUser()
+        {
+            string role = HttpContext.Session.GetString("SessionRole");
+            if (role != null)
+            {
+                if (role.Equals("user"))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
     }
 }

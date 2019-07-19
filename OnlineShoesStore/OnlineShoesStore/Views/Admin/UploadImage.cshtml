@@ -23,20 +23,15 @@
 <section class="tracking_box_area section_gap">
     <div class="container">
         <center>
-            <h1 style="color=red;">Administrator - Add new product</h1>
-            @if (ViewBag.UploadSuccessful != null)
-            {
-                <h1>@ViewBag.UploadSuccessful</h1>
-            }
+            <h1 style="color=red;">Administrator - Upload Image</h1>
         </center>
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center">
                 <div class="col-12 col-md-10">
-                    <form asp-controller="Admin" asp-action="UploadImage" method="post"
-                          enctype="multipart/form-data">
-
-                        <input type="file" name="files" multiple/>
-                        <button type="submit">Upload File</button>
+                    <form asp-controller="Admin" asp-action="UploadImage" method="post" enctype="multipart/form-data">
+                        <input type="file" name="files" multiple />
+                        <input type="hidden" name="txtProductID" value="@ViewBag.ProductID" />
+                        <button type="submit" class="primary-btn btn-lg">Upload File</button>
                     </form>
                 </div>
             </div>

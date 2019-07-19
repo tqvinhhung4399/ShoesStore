@@ -39,7 +39,12 @@
                 </script>
                 <h3 style="color:red;">@ViewBag.Failed</h3>
             }
-
+            @if (ViewBag.Announcement != null)
+            {
+                <script>
+                    alert("@ViewBag.Announcement");
+                </script>
+            }
         </center>
         <div>
             <table id="example" class="display" style="width:100%">

@@ -586,6 +586,7 @@ namespace OnlineShoesStore.Models
             cmd.Parameters.AddWithValue("@originID", shoes.OriginId);
             cmd.Parameters.AddWithValue("@shoesID", shoes.ShoesId);
             result = cmd.ExecuteNonQuery() > 0;
+            //Console.Write(result);
             return result;
         }
 
