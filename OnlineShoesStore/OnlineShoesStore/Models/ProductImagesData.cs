@@ -82,5 +82,29 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return image;
         }
+
+        public bool InsertImagesByProductID(int productID , List<string> images)
+        {
+            bool check = true;
+            string sql = "INSERT INTO ProductImages Values(@productID, @image)";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if(cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            foreach (string image in images)
+            {
+                SqlCommand cmd = new SqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@productID", productID);
+                cmd.Parameters.AddWithValue("@image", image);
+                if (cmd.ExecuteNonQuery() <= 0)
+                {
+                    check = false;
+                    break;
+                }
+            }
+            cnn.Close();
+            return check;
+        }
     }
 }

@@ -23,6 +23,18 @@
     <div class="container">
         <center>
             <h1 style="color=red;">Administrator - Add new product</h1>
+            @if (ViewBag.Successful != null)
+            {
+                <script>
+                    alert("@ViewBag.Successful");
+                </script>
+            }
+            @if (ViewBag.Failed != null)
+            {
+                <script>
+                    alert("s@ViewBag.Failed");
+                </script>
+            }
         </center>
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center">

@@ -32,15 +32,13 @@
                 <div class="top-filter-head">Product Filters</div>
                 <div class="common-filter">
                     <div class="head">Brands</div>
-                    <form action="#">
+                    @foreach (BrandDTO brand in new BrandData().GetBrands())
+                    {
                         <ul>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="" name="brand"><label for="apple">Adidas<span>(29)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="" name="brand"><label for="asus">Nike<span>(29)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="" name="brand"><label for="gionee">Puma<span>(19)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="" name="brand"><label for="micromax">Bitis<span>(19)</span></label></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="" name="brand"><label for="samsung">New Balance<span>(19)</span></label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" name="txtBrand" value="@brand.BrandId"><label>@brand.Name</label></li>
                         </ul>
-                    </form>
+                    }
+                    <form action="#"></form>
                 </div>
                 @*<div class="common-filter">
                         <div class="head">Color</div>

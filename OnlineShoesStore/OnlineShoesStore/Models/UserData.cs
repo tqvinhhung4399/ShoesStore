@@ -311,5 +311,28 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return dto;
         }
+
+        public bool CheckMatchingOldPassword(string oldPassword, string username)
+        {
+            bool check = false;
+            string sql = "SELECT password FROM Users WHERE userID=@username";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@username", username);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                if (dr.GetString(0).Equals(oldPassword))
+                {
+                    check = true;
+                }
+            }
+            cnn.Close();
+            return check;
+        }
     }
 }

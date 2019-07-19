@@ -167,6 +167,7 @@ namespace OnlineShoesStore.Controllers
         }
         public IActionResult UploadImageAction()
         {
+            ViewBag.ProductID = HttpContext.Request.Query["txtProductID"];
             return View("UploadImage");
         }
 
@@ -174,11 +175,15 @@ namespace OnlineShoesStore.Controllers
 
         public async Task<IActionResult> UploadImage(List<IFormFile> files)
         {
+            List<string> images = new List<string>();
+            int productID = int.Parse(Request.Form["txtProductID"]);
             foreach (var formFile in files)
             {
                 if (formFile.Length > 0)
                 {
+                    string image = "/img/" + formFile.FileName;
                     // full path to file in temp location
+                    images.Add(image);
                     var path = Path.Combine(
                         Directory.GetCurrentDirectory(), "wwwroot/img",
                         formFile.FileName);
@@ -189,7 +194,14 @@ namespace OnlineShoesStore.Controllers
                     }
                 }
             }
-            return View("UploadImage");
+            if (new ProductImageData().InsertImagesByProductID(productID, images))
+            {
+                ViewBag.Announcement = "Upload image(s) for Product (ID = " + productID + ") successfully";
+            } else
+            {
+                ViewBag.Announcement = "Upload image(s) for Product (ID = " + productID + ") failed";
+            }
+            return View("ProductManager");
         }
 
         //H
@@ -251,13 +263,17 @@ namespace OnlineShoesStore.Controllers
                 {
                     listProducts.Add(new ProductDTO { ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]), IsDeleted = false });
                 }
-                //if (new ProductData().InsertProducts(listProducts))
-                //{
-                //    ViewBag.AddSuccess = "Add new product successfully!";
-                //}
+                if (new ProductData().InsertProducts(listProducts))
+                {
+                    ViewBag.Anouncement = "Add new product successfully!";
+                }
             }
-            ViewBag.AddFailed = "Add new product failed!";
-            return RedirectToAction("ShoesManager");
+            else
+            {
+                ViewBag.Anouncement = "Add new product failed!";
+            }
+            ViewBag.ListShoes = new ShoesData().GetAllShoes();
+            return View("ShoesManager");
 
             //if (new ShoesData().AddNewShoes(shoes))
             //{
@@ -291,10 +307,9 @@ namespace OnlineShoesStore.Controllers
             return View();
         }
 
-
         public IActionResult ProductManager()
         {
-            if (CheckAdmin() != null)
+            if (!IsAdmin())
             {
                 return View(index);
             }
@@ -312,18 +327,18 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult UserManager()
         {
-            if (CheckAdmin() != null)
+            if (!IsAdmin())
             {
                 return View(index);
             }
             ViewBag.ListUser = new UserData().LoadUsers();
-            return View(CheckAdmin());
+            return View();
         }
 
         public IActionResult UnbanUser(string username)
         {
             UserData data = new UserData();
-            if (CheckAdmin() != null)
+            if (!IsAdmin())
             {
                 return View(index);
             }
@@ -342,7 +357,7 @@ namespace OnlineShoesStore.Controllers
         public IActionResult BanUser(string username)
         {
             UserData data = new UserData();
-            if (CheckAdmin() != null)
+            if (!IsAdmin())
             { //role khong phai admin
                 return View(index);
             }
@@ -359,17 +374,17 @@ namespace OnlineShoesStore.Controllers
         }
 
 
-        private string CheckAdmin()
+        private bool IsAdmin()
         {
             if (HttpContext.Session.GetString("SessionRole") == null) //chưa đăng nhập
             {
-                return index;
+                return false;
             }
             else if (!HttpContext.Session.GetString("SessionRole").Equals("admin")) //role khác admin
             {
-                return index;
+                return false;
             }
-            return null; //role là admin
+            return true; //role là admin
         }
 
         //Quản lí sản phảm
@@ -381,6 +396,54 @@ namespace OnlineShoesStore.Controllers
             ViewBag.Product = new ProductData().GetProductByProductID(productID);
             ViewBag.ListProductDetails = new ProductDetailData().GetProductDetailsByProductID(productID);
             return View("EditProduct");
+        }
+
+        //H
+        public IActionResult ProcessEditShoes()
+        {
+            bool check = true;
+            int shoesID = int.Parse(Request.Form["txtShoesID"]);
+            string name = Request.Form["txtName"];
+            int categoryID = int.Parse(Request.Form["slCategory"]);
+            int brandID = int.Parse(Request.Form["slBrand"]);
+            string material = Request.Form["txtMaterial"];
+            string description = Request.Form["txtDescription"];
+            int originID = int.Parse(Request.Form["slOrigin"]);
+            string[] colors = Request.Form["txtColor"];
+            string[] prices = Request.Form["txtPrice"];
+            string[] productIDs = Request.Form["txtProductID"];
+            string[] newColors = Request.Form["txtNewColor"];
+            string[] newPrices = Request.Form["txtNewPrice"];
+            if (check = new ShoesData().UpdateShoes(new ShoesDTO {ShoesId = shoesID, Name = name, CategoryId = categoryID, BrandId = brandID, Material = material, Description = description, OriginId = originID }))
+            {
+                List<ProductDTO> listProducts = new List<ProductDTO>();
+                for (int i = 0; i < colors.Length; i++)
+                {
+                    listProducts.Add(new ProductDTO {ProductId = int.Parse(productIDs[i]) , ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]) });
+                }
+                if (check = new ProductData().UpdateListProducstById(listProducts))
+                {
+                    if (newColors != null || newPrices != null)
+                    {
+                        List<ProductDTO> newList = new List<ProductDTO>();
+                        for (int i = 0; i < newColors.Length; i++)
+                        {
+                            newList.Add(new ProductDTO { ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]), IsDeleted = false });
+                        }
+                        check = new ProductData().InsertProducts(newList);
+                    }
+                }
+            }
+            if (check)
+            {
+                ViewBag.Announcement = "Edit shoes successfully!";
+            }
+            else
+            {
+                ViewBag.Announcement = "Edit shoes failed!";
+            }
+            ViewBag.ListShoes = new ShoesData().GetAllShoes();
+            return View("ShoesManager");
         }
     }
 }
