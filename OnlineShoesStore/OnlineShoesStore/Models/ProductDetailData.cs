@@ -148,9 +148,10 @@ namespace OnlineShoesStore.Models
             {
                 cnn.Open();
             }
-            SqlCommand cmd = new SqlCommand(sql, cnn);
+            
             foreach (ProductDetailDTO item in listProductDetail) 
             {
+                SqlCommand cmd = new SqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@id", item.ProductDetailId);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.Read())
@@ -158,6 +159,7 @@ namespace OnlineShoesStore.Models
                     int quantity = (int)dr[0];
                     listQuantity.Add(quantity);
                 }
+                dr.Close();
             }
             cnn.Close();
             return listQuantity;
