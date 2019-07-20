@@ -19,7 +19,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xl-3 col-lg-4 col-md-5">
-            <div class="sidebar-categories">
+            @*<div class="sidebar-categories">
                 <div class="head">Categories</div>
                 <ul class="main-categories">
                     @foreach (CategoryDTO category in new CategoryData().GetCategories())
@@ -27,47 +27,45 @@
                         <li class="main-nav-list"><a href="/Products/Category?txtCategory=@category.CategoryId">@category.Name</a></li>
                     }
                 </ul>
-            </div>
+            </div>*@
             <div class="sidebar-filter mt-50">
-                <div class="top-filter-head">Product Filters</div>
-                <div class="common-filter">
-                    <div class="head">Brands</div>
-                    @foreach (BrandDTO brand in new BrandData().GetBrands())
-                    {
+                <form action="/Products/SearchByFilters" method="post">
+                    <div class="top-filter-head">Product Filters</div>
+                    <div class="common-filter">
+                        <div class="head">Category</div>
                         <ul>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" name="txtBrand" value="@brand.BrandId"><label>@brand.Name</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" name="txtCategory" value="%" checked><label>All Categories</label></li>
+                            @foreach (CategoryDTO category in new CategoryData().GetCategories())
+                            {
+                                <li class="filter-list"><input class="pixel-radio" type="radio" name="txtCategory" value="@category.CategoryId"><label>@category.Name</label></li>
+                            }
                         </ul>
-                    }
-                    <form action="#"></form>
-                </div>
-                @*<div class="common-filter">
-                        <div class="head">Color</div>
-                        <form action="#">
-                            <ul>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label for="black">Black<span>(29)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather" name="color"><label for="balckleather">Black
-                                        Leather<span>(29)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label for="blackred">Black
-                                        with red<span>(19)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label for="gold">Gold<span>(19)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="spacegrey" name="color"><label for="spacegrey">Spacegrey<span>(19)</span></label></li>
-                            </ul>
-                        </form>
-                    </div>*@
-                <div class="common-filter">
-                    <div class="head">Price</div>
-                    <div class="price-range-area">
-                        <div id="price-range"></div>
-                        <div class="value-wrapper d-flex">
-                            <div class="price">Price:</div>
-                            <span>$</span>
-                            <div id="lower-value"></div>
-                            <div class="to">to</div>
-                            <span>$</span>
-                            <div id="upper-value"></div>
+                    </div>
+                    <div class="common-filter">
+                        <div class="head">Brands</div>
+                        <ul>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" name="txtBrand" value="%" checked><label>All Brands</label></li>
+                            @foreach (BrandDTO brand in new BrandData().GetBrands())
+                            {
+                                <li class="filter-list"><input class="pixel-radio" type="radio" name="txtBrand" value="@brand.BrandId"><label>@brand.Name</label></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="common-filter">
+                        <div class="head">Brands</div>
+                        <ul>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" name="txtPrice" value="0" checked><label>All Prices</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" name="txtPrice" value="1"><label>$0 - $100</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" name="txtPrice" value="2"><label>$100 - $200</label></li>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" name="txtPrice" value="3"><label>$200 >>></label></li>
+                        </ul>
+                    </div>
+                    <div class="common-filter">
+                        <div class="checkout_btn_inner d-flex align-items-center">
+                            <button class="primary-btn">Search by filter</button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">
