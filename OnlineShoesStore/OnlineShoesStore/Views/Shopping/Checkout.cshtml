@@ -21,121 +21,49 @@
 <!--================Checkout Area =================-->
 <section class="checkout_area section_gap">
     <div class="container">
-        @*<div class="returning_customer">
-                <div class="check_title">
-                    <h2>Returning Customer? <a href="#">Click here to login</a></h2>
-                </div>
-
-                //Form nay danh cho nhung nguoi chua login thi hien len
-
-                <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-                    <div class="col-md-6 form-group p_star">
-                        <input type="text" class="form-control" id="name" name="name">
-                        <span class="placeholder" data-placeholder="Username or Email"></span>
-                    </div>
-                    <div class="col-md-6 form-group p_star">
-                        <input type="password" class="form-control" id="password" name="password">
-                        <span class="placeholder" data-placeholder="Password"></span>
-                    </div>
-                    <div class="col-md-12 form-group">
-                        <button type="submit" value="submit" class="primary-btn">login</button>
-                        <div class="creat_account">
-                            <input type="checkbox" id="f-option" name="selector">
-                            <label for="f-option">Remember me</label>
-                        </div>
-                        <a class="lost_pass" href="#">Lost your password?</a>
-                    </div>
-                </form>
-            </div>*@
         <div class="billing_details">
             <div class="row">
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
-                    <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-                        <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="first" name="name">
-                            <span class="placeholder" data-placeholder="First name"></span>
+                    <form class="row contact_form" action="#" method="post">
+                        <div class="form-group col-md-12">
+                            <label style="color: #000000; font-weight: bold" class="" for="0">Username (Email): </label>
+                            <input type="text" class="form-control" readonly id="0" value="@ViewBag.UserInfo.Username" />
                         </div>
-                        <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="last" name="name">
-                            <span class="placeholder" data-placeholder="Last name"></span>
+                        <div class="form-group col-md-12">
+                            <label style="color: #000000; font-weight: bold" class="" for="1">Fullname: </label>
+                            <input type="text" class="form-control" readonly id="1" value="@ViewBag.UserInfo.Fullname" />
                         </div>
-                        <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="company" name="company" placeholder="Company name">
+                        <div class="form-group col-md-12">
+                            <label style="color: #000000; font-weight: bold" class="" for="2">Address to ship: </label>
+                            <input type="text" class="form-control" readonly id="2" value="@ViewBag.UserInfo.Address" />
                         </div>
-                        <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="number" name="number">
-                            <span class="placeholder" data-placeholder="Phone number"></span>
-                        </div>
-                        <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="email" name="compemailany">
-                            <span class="placeholder" data-placeholder="Email Address"></span>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <select class="country_select">
-                                <option value="1">Country</option>
-                                <option value="2">Country</option>
-                                <option value="4">Country</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="add1" name="add1">
-                            <span class="placeholder" data-placeholder="Address line 01"></span>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="add2" name="add2">
-                            <span class="placeholder" data-placeholder="Address line 02"></span>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="city" name="city">
-                            <span class="placeholder" data-placeholder="Town/City"></span>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <select class="country_select">
-                                <option value="1">District</option>
-                                <option value="2">District</option>
-                                <option value="4">District</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="creat_account">
-                                <input type="checkbox" id="f-option2" name="selector">
-                                <label for="f-option2">Create an account?</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="creat_account">
-                                <h3>Shipping Details</h3>
-                                <input type="checkbox" id="f-option3" name="selector">
-                                <label for="f-option3">Ship to a different address?</label>
-                            </div>
-                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
+                        <div class="form-group col-md-12">
+                            <label style="color: #000000; font-weight: bold" class="" for="3">Phone number: </label>
+                            <input type="text" class="form-control" readonly id="3" value="@ViewBag.UserInfo.Tel" />
                         </div>
                     </form>
                 </div>
-                <div class="col-lg-4">
-                    <div class="order_box">
-                        <h2>Your Order</h2>
-                        <ul class="list">
-                            <li><a href="#">Product <span>Total</span></a></li>
-                            @{ double total = 0; double cartTotal = 0;}
-                            @foreach (CartItemDTO dto in ViewBag.Cart)
-                            {
-                                total = dto.Price * dto.Quantity;
-                                <li><a href="#">@dto.Name <span class="middle">x @dto.Quantity</span> <span class="last">$@total</span></a></li>
-                                cartTotal = cartTotal + total;
-                            }
-                        </ul>
-                        <ul class="list list_2">
-                            <li><a href="#">Total <span>$@cartTotal</span></a></li>
-                        </ul>
-                        <form action="/Shopping/Confirmation" method="get">
+                <form action="/Shopping/Confirmation" method="post">
+                    <div class="col-lg-4">
+                        <div class="order_box">
+                            <h2>Your Order</h2>
+                            <ul class="list">
+                                <li><a href="#">Product <span>Total</span></a></li>
+                                @{ double total = 0; double cartTotal = 0;}
+                                @foreach (CartItemDTO dto in ViewBag.Cart)
+                                {
+                                    total = dto.Price * dto.Quantity;
+                                    <li><a href="#">@dto.Name <span class="middle">x @dto.Quantity</span> <span class="last">$@total</span></a></li>
+                                    cartTotal = cartTotal + total;
+                                }
+                            </ul>
+                            <ul class="list list_2">
+                                <li><a href="#">Total <span>$@cartTotal</span></a></li>
+                            </ul>
                             <div class="payment_item">
                                 <div class="radion_btn">
-                                    <input type="radio" id="f-option5" name="txtPaymentMethod" value="COD">
+                                    <input type="radio" id="f-option5" name="txtPaymentMethod" value="COD" checked>
                                     <label for="f-option5">Ship COD</label>
                                     <div class="check"></div>
                                 </div>
@@ -171,10 +99,11 @@
                                 <label for="f-option4">I’ve read and accept the </label>
                                 <a href="#">terms & conditions*</a>
                             </div>
+                            <input type="hidden" name="txtTotal" value="@cartTotal"/>
                             <button class="primary-btn">Purchase</button>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
