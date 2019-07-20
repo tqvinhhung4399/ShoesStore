@@ -20,8 +20,7 @@
 </section>
 <!-- End Banner Area -->
 <!--================Single Product Area =================-->
-@{int quantity = ViewBag.ListProductDetails[0].Quantity;
-    int i = 0;}
+@{int quantity = ViewBag.ListProductDetails[0].Quantity;}
 <div class="product_image_area">
     <div class="container">
         <div class="row s_product_inner">
@@ -34,11 +33,11 @@
                         </div>
                     }
                     @*<div class="single-prd-item">
-            <img class="img-fluid" src="~/img/category/s-p1.jpg" alt="">
-        </div>
-        <div class="single-prd-item">
-            <img class="img-fluid" src="~/img/category/s-p1.jpg" alt="">
-        </div>*@
+                            <img class="img-fluid" src="~/img/category/s-p1.jpg" alt="">
+                        </div>
+                        <div class="single-prd-item">
+                            <img class="img-fluid" src="~/img/category/s-p1.jpg" alt="">
+                        </div>*@
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1">
@@ -50,30 +49,40 @@
                         <li><a href="#"><span>Color</span> : @ViewBag.Shoes.Color</a></li>
                         <li><a href="#"><span>Brand</span> : @ViewBag.Shoes.BrandName</a></li>
                     </ul>
-                    <form action="/Shopping/AddToCart" method="get">
+                    <form action="/Shopping/AddToCart" method="post">
                         <div class="form-group">
                             <br />
                             <br />
-                            
                             <script>
                                 function changeMax(s) {
                                     var x = document.getElementById('sst');
                                     var a = s[s.selectedIndex].id;
-                                    
+                                    x.value = 1;
+                                    @for (int i = 0; i < ViewBag.ListProductDetails.Count; i++)
+                                    {
+                                        <text>
+                                        if (a == @i) {
+                                            x.max = @ViewBag.ListProductDetails[i].Quantity;
+                                        }
+                                        </text>
+                                    }
+                                    //a khong dung index
                                     console.log(a);
                                 }
                             </script>
-                            <select name="slSize" onchange="changeMax(this)">
+                            <select name="slProductDetail" onchange="changeMax(this)">
                                 @foreach (ProductDetailDTO dto in ViewBag.ListProductDetails)
                                 {
-                                    <option value="@dto.Size" id="@ViewBag.ListProductDetails.IndexOf(dto)">Size: @dto.Size - @dto.Quantity pairs available  </option>
-                            </script>*@
-                            <select name="slProductDetail">
+                                    <option value="@dto.ProductDetailId" id="@ViewBag.ListProductDetails.IndexOf(dto)">Size: @dto.Size - @dto.Quantity pair(s) available  </option>
+                                    
+                                }
+                            </select>
+                            @*<select name="slProductDetail">
                                 @foreach (ProductDetailDTO dto in ViewBag.ListProductDetails)
                                 {
                                     <option value="@dto.ProductDetailId">Size: @dto.Size - @dto.Quantity pairs available ) </option>
                                 }
-                            </select>
+                            </select>*@
                             <br />
                             <br />
                         </div>

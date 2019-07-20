@@ -14,6 +14,7 @@ namespace OnlineShoesStore.Models
         public float Price { get; set; }
         public string Color { get; set; }
         public string Name { get; set; }
+        public double Size { get; set; }
         public CartItemDTO()
         {
 
@@ -76,15 +77,18 @@ namespace OnlineShoesStore.Models
             {
                 cnn.Open();
             }
-            SqlCommand cmd = new SqlCommand(sql, cnn);
             foreach (CartItemDTO item in listCartItems)
             {
+                SqlCommand cmd = new SqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@id", item.ProductDetailId);
-                if (!cmd.ExecuteReader().Read())
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (!dr.Read())
                 {
                     listCartItems.Remove(item);
                     result = false;
                 }
+                //H
+                dr.Close();
             }
             cnn.Close();
             return result;
@@ -114,9 +118,9 @@ namespace OnlineShoesStore.Models
             {
                 cnn.Open();
             }
-            SqlCommand cmd = new SqlCommand(sql, cnn);
             foreach (CartItemDTO item in listCartItems)
             {
+                SqlCommand cmd = new SqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@quantity", item.Quantity);
                 cmd.Parameters.AddWithValue("@cartID", item.CartId);
                 cmd.Parameters.AddWithValue("@productDetailID", item.ProductDetailId);
@@ -148,7 +152,8 @@ namespace OnlineShoesStore.Models
                 double price = product.Price;
                 string color = product.Color;
                 string name = new ShoesData().GetShoesDetailByProductID(product.ProductId).Name;
-                CartItemDTO dto = new CartItemDTO { ProductDetailId = productDetailID, Quantity = quantity, Price = (float)price, Color = color, Name = name };
+                double size = new ProductDetailData().getSizeByProductDetailID(productDetailID);
+                CartItemDTO dto = new CartItemDTO { ProductDetailId = productDetailID, Quantity = quantity, Price = (float)price, Color = color, Name = name, Size = size };
                 listCartItems.Add(dto);
             }
             cnn.Close();
@@ -159,7 +164,7 @@ namespace OnlineShoesStore.Models
         public bool InsertNewItemToCart(CartItemDTO item)
         {
             bool result = false;
-            string sql = "Insert into CartItems values(@cartID, @productDetailID, @quantity)";
+            string sql = "Insert into CartItem values(@cartID, @productDetailID, @quantity)";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {

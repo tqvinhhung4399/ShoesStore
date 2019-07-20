@@ -35,8 +35,10 @@ namespace OnlineShoesStore.Controllers
                 return View(index);
             }
             int cartID = new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser"));
-            int productDetailID = int.Parse(Request.Form["slProductDetail"]);
+
             int quantity = int.Parse(Request.Form["txtQuantity"]);
+            int productDetailID = int.Parse(Request.Form["slProductDetail"]);
+            
             CartItemData cid = new CartItemData();
             if(cid.AlreadyExistedInCart(cartID, productDetailID))
             {
@@ -72,6 +74,31 @@ namespace OnlineShoesStore.Controllers
             {
                 return false;
             }
+        }
+
+        public IActionResult ProcessUpdateCart()
+        {
+            bool check = true;
+            List<CartItemDTO> list = new List<CartItemDTO>();
+            string[] productDetailID = Request.Form["txtProductDetailID"];
+            string[] quantity = Request.Form["txtQuantity"];
+            int cartID = new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser"));
+            for (int i = 0; i < productDetailID.Length; i++)
+            {
+                int pdID = int.Parse(productDetailID[i]);
+                int qtt = int.Parse(quantity[i]);
+                list.Add(new CartItemDTO { CartId = cartID, Quantity = qtt, ProductDetailId = pdID });
+            }
+            if(check = new CartItemData().CheckValidCartItems(list))
+            {
+                ViewBag.Announcement = "Update Successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Update failed";
+            }
+            ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);
+            return View("Cart");
         }
     }
 }

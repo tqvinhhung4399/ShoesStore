@@ -287,8 +287,12 @@ namespace OnlineShoesStore.Models
         public ProductDTO GetProductByProductDetailID(int productDetailID)
         {
             ProductDTO product = null;
-            string sql = "Select P.shoesID, P.price, P.color From Products P, ProductDetails PD Where P.productID = PD.productID and PD.productDetailID = @productDetailID";
+            string sql = "Select P.shoesID, P.price, P.color, P.productID From Products P, ProductDetails PD Where P.productID = PD.productID and PD.productDetailID = @productDetailID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if(cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@productDetailID", productDetailID);
             SqlDataReader dr = cmd.ExecuteReader();
@@ -297,7 +301,9 @@ namespace OnlineShoesStore.Models
                 int shoesID = (int)dr[0];
                 double price = (double)dr[1];
                 string color = (string)dr[2];
-                product = new ProductDTO { ShoesId = shoesID, Price = price, Color = color};
+                //H
+                int productID = (int)dr[3];
+                product = new ProductDTO { ShoesId = shoesID, Price = price, Color = color, ProductId = productID};
             }
             cnn.Close();
             return product;

@@ -148,8 +148,8 @@ namespace OnlineShoesStore.Models
             {
                 cnn.Open();
             }
-            
-            foreach (ProductDetailDTO item in listProductDetail) 
+
+            foreach (ProductDetailDTO item in listProductDetail)
             {
                 SqlCommand cmd = new SqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@id", item.ProductDetailId);
@@ -174,9 +174,9 @@ namespace OnlineShoesStore.Models
             {
                 cnn.Open();
             }
-            SqlCommand cmd = new SqlCommand(sql, cnn);
-            foreach (CartItemDTO item in listCartItems) 
+            foreach (CartItemDTO item in listCartItems)
             {
+                SqlCommand cmd = new SqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@id", item.ProductDetailId);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.Read())
@@ -184,9 +184,31 @@ namespace OnlineShoesStore.Models
                     int quantity = (int)dr[0];
                     listQuantity.Add(quantity);
                 }
+                dr.Close();
             }
             cnn.Close();
             return listQuantity;
         }
-    }
+
+        //H
+        public double getSizeByProductDetailID(int productDetailID)
+        {
+            double size = 0;
+            string sql = "Select size From ProductDetails Where productDetailID = @id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@id", productDetailID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                size = (double)dr[0];
+            }
+            cnn.Close();
+            return size;
+        }
+}
 }
