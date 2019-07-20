@@ -15,6 +15,7 @@ namespace OnlineShoesStore.Models
         public string Color { get; set; }
         public string Name { get; set; }
         public double Size { get; set; }
+        public string Image { get; set; }
         public CartItemDTO()
         {
 
@@ -120,14 +121,33 @@ namespace OnlineShoesStore.Models
             }
             foreach (CartItemDTO item in listCartItems)
             {
-                SqlCommand cmd = new SqlCommand(sql, cnn);
-                cmd.Parameters.AddWithValue("@quantity", item.Quantity);
-                cmd.Parameters.AddWithValue("@cartID", item.CartId);
-                cmd.Parameters.AddWithValue("@productDetailID", item.ProductDetailId);
-                cmd.ExecuteNonQuery();
+                if (item.Quantity == 0)
+                {
+                    DeleteCartItem(item);
+                    listCartItems.Remove(item);
+                } else
+                {
+                    SqlCommand cmd = new SqlCommand(sql, cnn);
+                    cmd.Parameters.AddWithValue("@quantity", item.Quantity);
+                    cmd.Parameters.AddWithValue("@cartID", item.CartId);
+                    cmd.Parameters.AddWithValue("@productDetailID", item.ProductDetailId);
+                    cmd.ExecuteNonQuery();
+                }
+                
             }
             cnn.Close();
         }
+
+        private void DeleteCartItem(CartItemDTO cartItem)
+        {
+            string sql = "Delete From CartItem Where cartID = @cartID and productDetailID = @productDetailID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+        }   
 
         
 
@@ -154,6 +174,7 @@ namespace OnlineShoesStore.Models
                 string name = new ShoesData().GetShoesDetailByProductID(product.ProductId).Name;
                 double size = new ProductDetailData().getSizeByProductDetailID(productDetailID);
                 CartItemDTO dto = new CartItemDTO { ProductDetailId = productDetailID, Quantity = quantity, Price = (float)price, Color = color, Name = name, Size = size };
+                dto.Image = new ProductImageData().GetImageByProductID(new ProductData().GetProductByProductDetailID(dto.ProductDetailId).ProductId);
                 listCartItems.Add(dto);
             }
             cnn.Close();

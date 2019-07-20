@@ -342,5 +342,58 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return check;
         }
+
+        public List<ProductDTO> GetProductsByFilters(string categoryID, string brandID, string priceRange)
+        {
+            List<ProductDTO> list = new List<ProductDTO>();
+            string sql = "Select s.name, p.price, p.productID, p.color From Products p, Shoes s Where p.shoesID = s.ShoesID " +
+                "and s.categoryID like @categoryID and s.brandID like @brandID AND p.price >= @lowPrice and p.price <= @highPrice AND s.isDeleted=0 AND p.isDeleted=0";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@categoryID", categoryID);
+            cmd.Parameters.AddWithValue("@brandID", brandID);
+            int lowPrice = 0;
+            int highPrice = 1000000;
+            switch(priceRange)
+            {
+                case "0":
+                    break;
+                case "1":
+                    highPrice = 100;
+                    break;
+                case "2":
+                    lowPrice = 100;
+                    highPrice = 200;
+                    break;
+                case "3":
+                    lowPrice = 200;
+                    break;
+            }
+            cmd.Parameters.AddWithValue("@lowPrice", lowPrice);
+            cmd.Parameters.AddWithValue("@highPrice", highPrice);
+            SqlDataReader dr = cmd.ExecuteReader();
+            string color;
+            int productID;
+            double price;
+            string name;
+            ProductDTO dto = null;
+            while (dr.Read())
+            {
+                name = dr.GetString(0);
+                price = dr.GetDouble(1);
+                productID = dr.GetInt32(2);
+                color = dr.GetString(3);
+                dto = new ProductDTO(productID, 0, price, color, false);
+                dto.Name = name;
+                dto.Image = new ProductImageData().GetImageByProductID(productID);
+                list.Add(dto);
+            }
+            cnn.Close();
+            return list;
+        }
     }
 }
