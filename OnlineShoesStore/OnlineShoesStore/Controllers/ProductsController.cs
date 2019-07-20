@@ -47,5 +47,15 @@ namespace OnlineShoesStore.Controllers
             ViewBag.ListQuantities = new ProductDetailData().GetAvailableQuantityByProductDetailIDs(new ProductDetailData().GetProductDetailsByProductID(productID));
             return View("Product");
         }
+
+        public IActionResult SearchByFilters()
+        {
+            string categoryID = Request.Form["txtCategory"];
+            string brandID = Request.Form["txtBrand"];
+            string price = Request.Form["txtPrice"];
+            List<ProductDTO> result = new ProductData().GetProductsByFilters(categoryID, brandID, price);
+            ViewBag.Products = result;
+            return View("Category");
+        }
     }
 }

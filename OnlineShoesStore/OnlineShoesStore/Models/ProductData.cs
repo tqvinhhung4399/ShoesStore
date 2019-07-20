@@ -395,5 +395,37 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return list;
         }
+
+        public List<ProductDTO> SearchProductsByName(string search)
+        {
+            List<ProductDTO> list = new List<ProductDTO>();
+            string sql = "Select s.name, p.price, p.productID, p.color From Products p, Shoes s Where p.shoesID = s.ShoesID and s.name like @name AND s.isDeleted=0 AND p.isDeleted=0";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@name", "%" + search + "%");
+            SqlDataReader dr = cmd.ExecuteReader();
+            string color;
+            int productID;
+            double price;
+            string name;
+            ProductDTO dto = null;
+            while (dr.Read())
+            {
+                name = dr.GetString(0);
+                price = dr.GetDouble(1);
+                productID = dr.GetInt32(2);
+                color = dr.GetString(3);
+                dto = new ProductDTO(productID, 0, price, color, false);
+                dto.Name = name;
+                dto.Image = new ProductImageData().GetImageByProductID(productID);
+                list.Add(dto);
+            }
+            cnn.Close();
+            return list;
+        }
     }
 }
