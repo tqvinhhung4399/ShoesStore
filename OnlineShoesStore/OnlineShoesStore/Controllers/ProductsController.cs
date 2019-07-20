@@ -33,8 +33,9 @@ namespace OnlineShoesStore.Controllers
         public IActionResult Search(string search)
         {
             //lay gia tri can search: Products/Search/search=yezzy
-            ViewBag.ListSearch = new ShoesData().FindByName(search);
-            return View();
+            List<ProductDTO> listProducts = new ProductData().SearchProductsByName(Request.Query["search"]);
+            ViewBag.Products = listProducts;
+            return View("Category");
         }
 
         public IActionResult ProductDetail()
@@ -53,8 +54,8 @@ namespace OnlineShoesStore.Controllers
             string categoryID = Request.Form["txtCategory"];
             string brandID = Request.Form["txtBrand"];
             string price = Request.Form["txtPrice"];
-            List<ProductDTO> result = new ProductData().GetProductsByFilters(categoryID, brandID, price);
-            ViewBag.Products = result;
+            List<ProductDTO> listProducts = new ProductData().GetProductsByFilters(categoryID, brandID, price);
+            ViewBag.Products = listProducts;
             return View("Category");
         }
     }
