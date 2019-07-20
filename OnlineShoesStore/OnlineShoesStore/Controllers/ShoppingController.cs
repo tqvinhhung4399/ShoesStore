@@ -42,6 +42,7 @@ namespace OnlineShoesStore.Controllers
             }
             if (check = new CartItemData().CheckValidCartItems(list))
             {
+                ViewBag.UserInfo = new UserData().GetUserInfoByUserID(HttpContext.Session.GetString("SessionUser"));
                 ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);
                 return View();
             }
@@ -49,6 +50,7 @@ namespace OnlineShoesStore.Controllers
             {
                 ViewBag.Announcement = "Update failed";
             }
+
             ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);
             return View("Cart");
         }

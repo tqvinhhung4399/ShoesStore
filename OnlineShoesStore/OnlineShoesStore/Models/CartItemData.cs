@@ -124,7 +124,7 @@ namespace OnlineShoesStore.Models
                 if (item.Quantity == 0)
                 {
                     DeleteCartItem(item);
-                    listCartItems.Remove(item);
+                    //listCartItems.Remove(item);
                 } else
                 {
                     SqlCommand cmd = new SqlCommand(sql, cnn);
@@ -147,6 +147,8 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@cartID", cartItem.CartId);
+            cmd.Parameters.AddWithValue("@productDetailID", cartItem.ProductDetailId);
             cmd.ExecuteNonQuery();
         }   
 
