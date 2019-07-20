@@ -83,6 +83,40 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return brandName;
         }
+
+        public bool AddNewBrand(BrandDTO brand)
+        {
+            bool check = false;
+            string sql = "Insert Into Brands(name, isDeleted) Values(@Name, @IsDeleted)";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Name", brand.Name);
+            cmd.Parameters.AddWithValue("@IsDeleted", false);
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
+        
+        public bool UpdateBrand(BrandDTO brand)
+        {
+            bool check = false;
+            string sql = "Update Brands Set name = @Name Where brandID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Name", brand.Name);
+            cmd.Parameters.AddWithValue("@Id", brand.BrandId);
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
     }
 }
 

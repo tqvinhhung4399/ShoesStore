@@ -161,5 +161,39 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return categoryID;
         }
+
+        public bool AddNewCategory(CategoryDTO category)
+        {
+            bool check = false;
+            string sql = "Insert Into Categories(name, isDeleted) Values(@Name, @IsDeleted)";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Name", category.Name);
+            cmd.Parameters.AddWithValue("@IsDeleted", false);
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
+
+        public bool UpdateCategory(CategoryDTO category)
+        {
+            bool check = false;
+            string sql = "Update Categories Set name = @Name Where categoryID = @Id";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@Name", category.Name);
+            cmd.Parameters.AddWithValue("@Id", category.CategoryId);
+            check = cmd.ExecuteNonQuery() > 0;
+            cnn.Close();
+            return check;
+        }
     }
 }
