@@ -100,9 +100,9 @@ namespace OnlineShoesStore.Models
             List<int> listQuantities = new ProductDetailData().GetAvailableQuantityByProductDetailIDs(listCartItems);
             for(int i = 0; i < listCartItems.Count; i++)
             {
-                if (listCartItems[0].Quantity > listQuantities[0])
+                if (listCartItems[i].Quantity > listQuantities[i])
                 {
-                    listCartItems[0].Quantity = listQuantities[0];
+                    listCartItems[i].Quantity = listQuantities[i];
                     result = false;
                 }
             }

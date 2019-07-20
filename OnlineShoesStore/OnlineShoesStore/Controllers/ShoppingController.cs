@@ -15,8 +15,44 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Checkout()
         {
-            return View();
+            //if (!IsAuthorizedUser())
+            //{
+            //    return View(index);
+            //}
+            //if (new CartItemData().CheckValidCartItems(new CartItemData().GetCartItemsByCartID(new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser"))))){
+            //    return View();
+            //} else
+            //{
+            //    return RedirectToAction("Cart");
+            //}
+            if (!IsAuthorizedUser())
+            {
+                return View(index);
+            }
+            bool check = true;
+            List<CartItemDTO> list = new List<CartItemDTO>();
+            string[] productDetailID = Request.Form["txtProductDetailID"];
+            string[] quantity = Request.Form["txtQuantity"];
+            int cartID = new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser"));
+            for (int i = 0; i < productDetailID.Length; i++)
+            {
+                int pdID = int.Parse(productDetailID[i]);
+                int qtt = int.Parse(quantity[i]);
+                list.Add(new CartItemDTO { CartId = cartID, Quantity = qtt, ProductDetailId = pdID });
+            }
+            if (check = new CartItemData().CheckValidCartItems(list))
+            {
+                ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);
+                return View();
+            }
+            else
+            {
+                ViewBag.Announcement = "Update failed";
+            }
+            ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);
+            return View("Cart");
         }
+
         public IActionResult Cart()
         {
             if (!IsAuthorizedUser())
@@ -61,6 +97,25 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Confirmation()
         {
+            if (!IsAuthorizedUser())
+            {
+                return View(index);
+            }
+            if (new CartItemData().CheckValidCartItems(new CartItemData().GetCartItemsByCartID(new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser")))))
+            {
+                string paymentMethod = HttpContext.Request.Query["txtPaymentMethod"];
+
+                return View();
+            }
+            else
+            {
+                ViewBag.Announcement = "Invalid product's quantity";
+                int cartID = new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser"));
+                ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);
+                return View("Cart");
+            }
+            
+
             return View();
         }
 
@@ -78,6 +133,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ProcessUpdateCart()
         {
+            if (!IsAuthorizedUser())
+            {
+                return View(index);
+            }
             bool check = true;
             List<CartItemDTO> list = new List<CartItemDTO>();
             string[] productDetailID = Request.Form["txtProductDetailID"];
