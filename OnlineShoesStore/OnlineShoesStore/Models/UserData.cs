@@ -126,7 +126,13 @@ namespace OnlineShoesStore.Models
             cmd.Parameters.AddWithValue("@address", user.Address);
             cmd.Parameters.AddWithValue("@tel", user.Tel);
             cmd.Parameters.AddWithValue("@isDeleted", user.IsDeleted);
-            result = cmd.ExecuteNonQuery() > 0;
+            try
+            {
+                result = cmd.ExecuteNonQuery() > 0;
+            } catch (Exception e)
+            {
+                throw new Exception("Duplicate");
+            }
             cnn.Close();
             return result;
         }
@@ -188,13 +194,14 @@ namespace OnlineShoesStore.Models
         public List<UserDTO> LoadUsers()
         {
             List<UserDTO> result = new List<UserDTO>();
-            string sql = "Select userID, fullname, gender, dob, address, tel, isDeleted, role From Users";
+            string sql = "Select userID, fullname, gender, dob, address, tel, isDeleted, role From Users Where role like @role";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@role", "user");
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read()) {
                 string username = (string)dr[0];
