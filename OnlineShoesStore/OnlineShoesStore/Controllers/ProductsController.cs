@@ -34,7 +34,7 @@ namespace OnlineShoesStore.Controllers
         {
             //lay gia tri can search: Products/Search/search=yezzy
             ViewBag.ListSearch = new ShoesData().FindByName(search);
-            return View();
+            return View("Category");
         }
 
         public IActionResult ProductDetail()

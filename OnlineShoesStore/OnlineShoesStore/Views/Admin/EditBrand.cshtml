@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "EditBrand";
+    Layout = "_Admin";
+}
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Order Tracking</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="#">Admin<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Brand Manager</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Tracking Box Area =================-->
+<section class="tracking_box_area section_gap">
+    <div class="container">
+        <center>
+            <h1 style="color:red;">Administrator - Brand Manager</h1>
+        </center>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-12 col-md-10">
+                    <form action="/Admin/ProcessEditBrand" method="POST">
+                        <div class="form-group">
+                            <label style="color: #000000; font-weight: bold" class="" for="1">Name: </label>
+                            <input type="text" class="form-control" id="1" name="txtBrand" required placeholder="Name" value="@ViewBag.Brand" />
+                        </div>
+                        <input type="hidden" name="txtBrandID" value="@ViewBag.ID" />
+                        <div class="form-group">
+                            <button style="width:100%; margin-top:40px;" class="primary-btn btn-lg">UPDATE</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->

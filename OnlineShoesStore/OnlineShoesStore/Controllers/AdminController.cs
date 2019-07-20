@@ -445,5 +445,155 @@ namespace OnlineShoesStore.Controllers
             ViewBag.ListShoes = new ShoesData().GetAllShoes();
             return View("ShoesManager");
         }
+
+        public IActionResult BrandManager()
+        {
+            ViewBag.Brand = new BrandData().GetBrands();
+            return View();
+        }
+
+        public IActionResult EditBrand()
+        {
+            ViewBag.ID = HttpContext.Request.Query["txtBrandID"];
+            int id = int.Parse(HttpContext.Request.Query["txtBrandID"]);
+            ViewBag.Brand = new BrandData().GetBrandNameByID(id);
+            return View();
+        }
+
+        public IActionResult ProcessEditBrand()
+        {
+            string brand = Request.Form["txtBrand"];
+            int id = int.Parse(Request.Form["txtBrandID"]);
+            if(new BrandData().UpdateBrand(new BrandDTO { BrandId = id, Name = brand }))
+            {
+                ViewBag.Announcement = "Update Successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Update Failed";
+            }
+            ViewBag.Brand = new BrandData().GetBrands();
+            return View("BrandManager");
+        }
+
+        public IActionResult AddBrand()
+        {
+            return View();
+        }
+
+        public IActionResult ProcessAddBrand()
+        {
+            string brand = Request.Form["txtBrand"];
+            if(new BrandData().AddNewBrand(brand))
+            {
+                ViewBag.Announcement = "Add new brand successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Add new brand failed";
+            }
+            ViewBag.Brand = new BrandData().GetBrands();
+            return View("BrandManager");
+        }
+
+        public IActionResult CategoryManager()
+        {
+            ViewBag.Category = new CategoryData().GetCategories();
+            return View();
+        }
+
+        public IActionResult EditCategory()
+        {
+            ViewBag.ID = HttpContext.Request.Query["txtCategoryID"];
+            int id = int.Parse(HttpContext.Request.Query["txtCategoryID"]);
+            ViewBag.Category = new CategoryData().getCategoryNameByCategoryID(id);
+            return View();
+        }
+
+        public IActionResult ProcessEditCategory()
+        {
+            string category = Request.Form["txtCategory"];
+            int id = int.Parse(Request.Form["txtCategoryID"]);
+            if (new CategoryData().UpdateCategory(new CategoryDTO { CategoryId = id, Name = category }))
+            {
+                ViewBag.Announcement = "Update Successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Update Failed";
+            }
+            ViewBag.Category = new CategoryData().GetCategories();
+            return View("CategoryManager");
+        }
+
+        public IActionResult AddCategory()
+        {
+            return View();
+        }
+
+        public IActionResult ProcessAddCategory()
+        {
+            string category = Request.Form["txtCategory"];
+            if (new CategoryData().AddNewCategory(category))
+            {
+                ViewBag.Announcement = "Add new category successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Add new category failed";
+            }
+            ViewBag.Category = new CategoryData().GetCategories();
+            return View("CategoryManager");
+        }
+
+        public IActionResult OriginManager()
+        {
+            ViewBag.Origin = new OriginData().GetOrigins();
+            return View();
+        }
+
+        public IActionResult EditOrigin()
+        {
+            ViewBag.ID = HttpContext.Request.Query["txtOriginID"];
+            int id = int.Parse(HttpContext.Request.Query["txtOriginID"]);
+            ViewBag.Origin = new OriginData().GetOriginNameByID(id);
+            return View();
+        }
+
+        public IActionResult ProcessEditOrigin()
+        {
+            string origin = Request.Form["txtOrigin"];
+            int id = int.Parse(Request.Form["txtOriginID"]);
+            if (new OriginData().UpdateOrigin(new OriginDTO { OriginId = id, Name = origin }))
+            {
+                ViewBag.Announcement = "Update Successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Update Failed";
+            }
+            ViewBag.Origin = new OriginData().GetOrigins();
+            return View("OriginManager");
+        }
+
+        public IActionResult AddOrigin()
+        {
+            return View();
+        }
+
+        public IActionResult ProcessAddOrigin()
+        {
+            string origin = Request.Form["txtOrigin"];
+            if (new OriginData().AddNewOrigin(origin))
+            {
+                ViewBag.Announcement = "Add new origin successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Add new origin failed";
+            }
+            ViewBag.Origin = new OriginData().GetOrigins();
+            return View("OriginManager");
+        }
     }
 }

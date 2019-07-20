@@ -12,6 +12,11 @@ namespace OnlineShoesStore.Models
         private string name;
         private bool isDeleted;
 
+        public CategoryDTO()
+        {
+
+        }
+
         public CategoryDTO(int categoryId, string name, bool isDeleted)
         {
             this.categoryId = categoryId;
@@ -162,7 +167,7 @@ namespace OnlineShoesStore.Models
             return categoryID;
         }
 
-        public bool AddNewCategory(CategoryDTO category)
+        public bool AddNewCategory(string name)
         {
             bool check = false;
             string sql = "Insert Into Categories(name, isDeleted) Values(@Name, @IsDeleted)";
@@ -172,7 +177,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@Name", category.Name);
+            cmd.Parameters.AddWithValue("@Name", name);
             cmd.Parameters.AddWithValue("@IsDeleted", false);
             check = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
@@ -194,6 +199,26 @@ namespace OnlineShoesStore.Models
             check = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
             return check;
+        }
+
+        public string getCategoryNameByCategoryID(int id)
+        {
+            string categoryName = "";
+            string sql = "Select name From Categories Where categoryID = @categoryID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@categoryID", id);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                categoryName = (string)dr[0];
+            }
+            cnn.Close();
+            return categoryName;
         }
     }
 }
