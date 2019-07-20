@@ -147,6 +147,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.ExecuteNonQuery();
         }   
 
         
