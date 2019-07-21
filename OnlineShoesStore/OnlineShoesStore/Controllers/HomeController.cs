@@ -157,13 +157,20 @@ namespace OnlineShoesStore.Controllers
 
             UserData ud = new UserData();
             UserDTO user = new UserDTO(username, password, fullname, gender, DateTime.Parse(dob), address, phoneNumber, isDeleted, role);
-            if (ud.RegisterUser(user))
+            try
             {
-                return View("Index");
-            }
-            else
+                if (ud.RegisterUser(user))
+                {
+                    return View("Index");
+                }
+                else
+                {
+                    return View("Error");
+                }
+            } catch (Exception e)
             {
-                return View("Error");
+                ViewBag.Duplicate = "Username is already existed. Please input another username";
+                return View("Register");
             }
         }
 

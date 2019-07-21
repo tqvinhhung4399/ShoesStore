@@ -175,7 +175,7 @@ namespace OnlineShoesStore.Models
                 double price = product.Price;
                 string color = product.Color;
                 string name = new ShoesData().GetShoesDetailByProductID(product.ProductId).Name;
-                double size = new ProductDetailData().getSizeByProductDetailID(productDetailID);
+                double size = new ProductDetailData().GetSizeByProductDetailID(productDetailID);
                 CartItemDTO dto = new CartItemDTO { ProductDetailId = productDetailID, Quantity = quantity, Price = (float)price, Color = color, Name = name, Size = size };
                 dto.Image = new ProductImageData().GetImageByProductID(new ProductData().GetProductByProductDetailID(dto.ProductDetailId).ProductId);
                 listCartItems.Add(dto);

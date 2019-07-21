@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "CategoryManager";
+    Layout = "_Admin";
+}
+
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Category Manager</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="#">Admin<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Category Manager</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Tracking Box Area =================-->
+<section class="tracking_box_area section_gap">
+    <div class="container">
+        <center>
+            <h1 style="color:red;">Administrator - Category Manager</h1>
+            @if (ViewBag.Announcement != null)
+            {
+                <script>
+                    alert("@ViewBag.Announcement");
+                </script>
+            }
+            <a class="primary-btn btn-lg" asp-controller="Admin" asp-action="AddCategory">Add new category</a>
+        </center>
+        <div>
+            <table id="test" class="display">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (CategoryDTO dto in ViewBag.Category)
+                    {
+                        <tr>
+                            <td>@dto.CategoryId</td>
+                            <td>@dto.Name</td>
+                            <td><a href="/Admin/EditCategory?txtCategoryID=@dto.CategoryId" class="btn-success btn-sm">Edit</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->

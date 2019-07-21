@@ -334,7 +334,7 @@ namespace OnlineShoesStore.Models
         public List<ShoesDTO> FindByName(string search) //tim kiem giay theo ten, hien thi o trang search: name, category, brand, price, image
         {
             List<ShoesDTO> result = null;
-            string sql = "Select shoeID, name, categoryID, brandID From Shoes Where isDeleted = @Deleted And name like @name";
+            string sql = "Select shoesID, name, categoryID, brandID From Shoes Where isDeleted = @Deleted And name like @name";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {

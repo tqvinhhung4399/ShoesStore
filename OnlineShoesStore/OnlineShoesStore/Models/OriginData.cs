@@ -12,6 +12,11 @@ namespace OnlineShoesStore.Models
         private string name;
         private bool isDeleted;
 
+        public OriginDTO()
+        {
+
+        }
+
         public OriginDTO(int originId, string name, bool isDeleted)
         {
             this.originId = originId;
@@ -83,7 +88,7 @@ namespace OnlineShoesStore.Models
             return originName;
         }
 
-        public bool AddNewOrigin(OriginDTO origin)
+        public bool AddNewOrigin(string name)
         {
             bool check = false;
             string sql = "Insert Into Origins(name, isDeleted) Values(@Name, @IsDeleted)";
@@ -93,7 +98,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@Name", origin.Name);
+            cmd.Parameters.AddWithValue("@Name", name);
             cmd.Parameters.AddWithValue("@IsDeleted", false);
             check = cmd.ExecuteNonQuery() > 0;
             cnn.Close();

@@ -12,6 +12,11 @@ namespace OnlineShoesStore.Models
         private string name;
         private bool isDeleted;
 
+        public BrandDTO()
+        {
+
+        }
+
         public BrandDTO(int brandId, string name, bool isDeleted)
         {
             this.brandId = brandId;
@@ -84,7 +89,7 @@ namespace OnlineShoesStore.Models
             return brandName;
         }
 
-        public bool AddNewBrand(BrandDTO brand)
+        public bool AddNewBrand(string name)
         {
             bool check = false;
             string sql = "Insert Into Brands(name, isDeleted) Values(@Name, @IsDeleted)";
@@ -94,7 +99,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@Name", brand.Name);
+            cmd.Parameters.AddWithValue("@Name", name);
             cmd.Parameters.AddWithValue("@IsDeleted", false);
             check = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
