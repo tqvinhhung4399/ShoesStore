@@ -110,7 +110,7 @@ namespace OnlineShoesStore.Controllers
                 float total = float.Parse(Request.Form["txtTotal"]);
                 DateTime date = new DateTime();
                 string status = "pending";
-                if (new OrderData().InsertNewOrder(new OrderDTO { cartID = cartID, Total = total, DateCreated = date, Status = status, PaymentMethod = paymentMethod}))
+                if (new OrderData().InsertNewOrder(new OrderDTO { CartID = cartID, Total = total, DateCreated = date, Status = status, PaymentMethod = paymentMethod}))
                 {
                     new CartData().CheckOutCartByCartID(cartID);
                     ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);

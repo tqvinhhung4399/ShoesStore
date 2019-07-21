@@ -1,6 +1,7 @@
 ﻿
 @{
-    ViewData["Title"] = "HistoryOrders";
+    ViewData["Title"] = "OrderManager";
+    Layout = "_Admin";
 }
 
 
@@ -9,10 +10,10 @@
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
-                <h1>Origin Manager</h1>
+                <h1>Brand Manager</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="#">User<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="#">Orders' history</a>
+                    <a href="#">Admin<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Order Manager</a>
                 </nav>
             </div>
         </div>
@@ -23,17 +24,26 @@
 <section class="tracking_box_area section_gap">
     <div class="container">
         <center>
-            <h1 style="color:red;">Orders' history</h1>
+            <h1 style="color:red;">Administrator - Order Manager</h1>
+            @if (ViewBag.Announcement != null)
+            {
+                <script>
+                    alert("@ViewBag.Announcement");
+                </script>
+            }
         </center>
         <div>
             <table id="test" class="display">
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>User</th>
                         <th>Payment Method</th>
                         <th>Total</th>
                         <th>Time</th>
                         <th>Status</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,10 +51,13 @@
                     {
                         <tr>
                             <td>@dto.OrderId</td>
+                            <td>@dto.Username</td>
                             <td>@dto.PaymentMethod</td>
                             <td>$ @dto.Total</td>
                             <td>@dto.DateCreated</td>
                             <td>@dto.Status</td>
+                            <td><a href="/Admin/ProcessChangeOrderStatus?txtOrderID=@dto.OrderId&txtStatus=delivering" class="btn-warning btn-sm">Delivering</a></td>
+                            <td><a href="/Admin/ProcessChangeOrderStatus?txtOrderID=@dto.OrderId&txtStatus=delivered" class="btn-success btn-sm">Delivered</a></td>
                         </tr>
                     }
                 </tbody>

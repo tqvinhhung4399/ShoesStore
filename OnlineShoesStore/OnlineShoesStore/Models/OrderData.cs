@@ -13,7 +13,7 @@ namespace OnlineShoesStore.Models
         private float total;
         private DateTime dateCreated;
         private string status;
-
+        public string Username { get; set; }
         public int CartID { get; set; }
         public OrderDTO()
         {
@@ -72,7 +72,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@cartID", order.cartID);
+            cmd.Parameters.AddWithValue("@cartID", order.CartID);
             cmd.Parameters.AddWithValue("@paymentMethod", order.PaymentMethod);
             cmd.Parameters.AddWithValue("@total", order.Total);
             cmd.Parameters.AddWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
@@ -107,7 +107,7 @@ namespace OnlineShoesStore.Models
         public List<OrderDTO> GetAllOrders()
         {
             List<OrderDTO> listOrders = new List<OrderDTO>();
-            string sql = "Select * From Orders";
+            string sql = "SELECT o.*, userID FROM Carts c, Orders o WHERE c.cartID = o.cartID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed){
                 cnn.Open();
@@ -122,7 +122,8 @@ namespace OnlineShoesStore.Models
                 double total = (double)dr[3];
                 DateTime date = (DateTime)dr[4];
                 string status = (string)dr[5];
-                listOrders.Add(new OrderDTO { OrderId = orderID, CartID = cartID, PaymentMethod = paymentMethod, DateCreated = date, Status = status, Total = (float)total });
+                string username = (string)dr[6];
+                listOrders.Add(new OrderDTO { OrderId = orderID, CartID = cartID, PaymentMethod = paymentMethod, DateCreated = date, Status = status, Total = (float)total, Username = username });
             }
             cnn.Close();
             return listOrders;

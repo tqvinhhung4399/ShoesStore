@@ -595,5 +595,27 @@ namespace OnlineShoesStore.Controllers
             ViewBag.Origin = new OriginData().GetOrigins();
             return View("OriginManager");
         }
+
+        public IActionResult OrderManager()
+        {
+            ViewBag.Orders = new OrderData().GetAllOrders();
+            return View();
+        }
+
+        public IActionResult ProcessChangeOrderStatus()
+        {
+            int id = int.Parse(HttpContext.Request.Query["txtOrderID"]);
+            string status = HttpContext.Request.Query["txtStatus"];
+            if(new OrderData().UpdateOrderStatusByOrderID(id, status))
+            {
+                ViewBag.Announcement = "Update status successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Update status failed";
+            }
+            ViewBag.Orders = new OrderData().GetAllOrders();
+            return View("OrderManager");
+        }
     }
 }
