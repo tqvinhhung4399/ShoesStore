@@ -248,5 +248,15 @@ namespace OnlineShoesStore.Controllers
 
         }
 
+        public IActionResult HistoryOrders()
+        {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
+            ViewBag.Orders = new OrderData().GetAllOrdersByUsername(HttpContext.Session.GetString("SessionUser"));
+            return View();
+        }
+
     }
 }

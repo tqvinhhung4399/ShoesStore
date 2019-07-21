@@ -83,5 +83,26 @@ namespace OnlineShoesStore.Models
             }
             return result;
         }
+
+        public List<OrderDTO> GetAllOrdersByUsername(string username)
+        {
+            List<OrderDTO> list = new List<OrderDTO>();
+            string sql = "SELECT o.* FROM Carts c, Orders o WHERE c.cartID = o.cartID AND c.userID = @userID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if(cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@userID", username);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                list.Add(new OrderDTO { OrderId = dr.GetInt32(0), PaymentMethod = dr.GetString(2), Total = (float)dr.GetDouble(3), DateCreated = dr.GetDateTime(4), Status = dr.GetString(5) });
+            }
+            dr.Close();
+            cnn.Close();
+            return list;
+        }
     }
 }
