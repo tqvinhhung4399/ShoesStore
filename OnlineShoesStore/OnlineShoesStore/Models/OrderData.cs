@@ -72,7 +72,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@cartID", order.cartID);
+            cmd.Parameters.AddWithValue("@cartID", order.CartID);
             cmd.Parameters.AddWithValue("@paymentMethod", order.PaymentMethod);
             cmd.Parameters.AddWithValue("@total", order.Total);
             cmd.Parameters.AddWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
