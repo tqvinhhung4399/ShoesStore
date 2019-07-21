@@ -726,5 +726,14 @@ namespace OnlineShoesStore.Controllers
             ViewBag.Message = new ContactData().GetMessageByContactID(id);
             return View();
         }
+
+        public IActionResult WelcomeAdmin()
+        {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
+            return View();
+        }
     }
 }

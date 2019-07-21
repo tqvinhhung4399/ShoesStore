@@ -202,7 +202,7 @@ namespace OnlineShoesStore.Controllers
                 HttpContext.Session.SetString("SessionUser", user.Username);
                 HttpContext.Session.SetString("SessionRole", user.Role);
                 HttpContext.Session.SetString("SessionFullname", user.Fullname);
-                return RedirectToAction("UserManager", "Admin");
+                return RedirectToAction("WelcomeAdmin", "Admin");
             }
             else
             {

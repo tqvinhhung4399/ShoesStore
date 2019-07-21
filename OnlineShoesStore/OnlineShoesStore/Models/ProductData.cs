@@ -431,7 +431,7 @@ namespace OnlineShoesStore.Models
         public List<ProductDTO> GetTrendingProducts()
         {
             List<ProductDTO> list = new List<ProductDTO>();
-            string sql = "Select Top 8 s.name, p.price, p.productID, p.color From Products p, Shoes s Where p.shoesID = s.ShoesID AND s.isDeleted=0 AND p.isDeleted=0 OrderBy P.ProductID DESC";
+            string sql = "Select Top 8 s.name, p.price, p.productID, p.color From Products p, Shoes s Where p.shoesID = s.ShoesID AND s.isDeleted=0 AND p.isDeleted=0 Order By P.ProductID DESC";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
