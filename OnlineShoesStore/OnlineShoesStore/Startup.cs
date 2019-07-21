@@ -26,6 +26,7 @@ namespace OnlineShoesStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Consts.Consts.connectionString = Configuration.GetConnectionString("ShoesStoreDB");
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
@@ -53,7 +54,7 @@ namespace OnlineShoesStore
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
