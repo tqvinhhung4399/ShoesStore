@@ -90,7 +90,7 @@
         </li>*@
                             @if (Context.Session.GetString("SessionUser") != null)
                             {
-                                <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionUser").ToString()<a href="/Home/ProcessLogout">   (Logout)</a></a></li>
+                                <li class="nav-item">Welcome, <a class="nav-link" href="#">@Context.Session.GetString("SessionFullname").ToString()<a href="/Home/ProcessLogout">   (Logout)</a></a></li>
                             }
                             else
                             {

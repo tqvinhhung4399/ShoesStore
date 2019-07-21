@@ -70,11 +70,19 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ChangePassword() //create ChangePassword.cshtml
         {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
             return View();
         }
 
         public IActionResult ProcessEditInfo()
         {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
             string username = Request.Form["txtUsername"];
             string fullname = Request.Form["txtFullname"];
             string gender = Request.Form["slGender"];
@@ -105,6 +113,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Cart()
         {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
             return View();
         }
         public IActionResult Login()
