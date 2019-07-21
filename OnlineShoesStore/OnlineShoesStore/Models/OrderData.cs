@@ -65,7 +65,7 @@ namespace OnlineShoesStore.Models
         public bool InsertNewOrder(OrderDTO order)
         {
             bool result = false;
-            string sql = "Insert into Orders values(@cartID, @paymentMethod, @total, @date, @status)";
+            string sql = "Insert into Orders(cartID, paymentMethod, total, date, status) values(@cartID, @paymentMethod, @total, @date, @status)";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
             if (cnn.State == ConnectionState.Closed)
             {
@@ -75,7 +75,7 @@ namespace OnlineShoesStore.Models
             cmd.Parameters.AddWithValue("@cartID", order.cartID);
             cmd.Parameters.AddWithValue("@paymentMethod", order.PaymentMethod);
             cmd.Parameters.AddWithValue("@total", order.Total);
-            cmd.Parameters.AddWithValue("@date", order.DateCreated);
+            cmd.Parameters.AddWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
             cmd.Parameters.AddWithValue("@status", order.Status);
             if (cmd.ExecuteNonQuery() > 0)
             {
