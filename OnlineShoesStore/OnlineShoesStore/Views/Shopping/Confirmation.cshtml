@@ -68,61 +68,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <p>Pixelstore fresh Blackberry</p>
-                            </td>
-                            <td>
-                                <h5>x 02</h5>
-                            </td>
-                            <td>
-                                <p>$720.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>Pixelstore fresh Blackberry</p>
-                            </td>
-                            <td>
-                                <h5>x 02</h5>
-                            </td>
-                            <td>
-                                <p>$720.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>Pixelstore fresh Blackberry</p>
-                            </td>
-                            <td>
-                                <h5>x 02</h5>
-                            </td>
-                            <td>
-                                <p>$720.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Subtotal</h4>
-                            </td>
-                            <td>
-                                <h5></h5>
-                            </td>
-                            <td>
-                                <p>$2160.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Shipping</h4>
-                            </td>
-                            <td>
-                                <h5></h5>
-                            </td>
-                            <td>
-                                <p>Flat rate: $50.00</p>
-                            </td>
-                        </tr>
+                        @{ double total = 0; double cartTotal = 0;}
+                        @foreach (CartItemDTO dto in ViewBag.Cart)
+                        {
+                            total = dto.Price * dto.Quantity;
+                            cartTotal = cartTotal + total;
+                            <tr>
+                                <td>
+                                    <p>@dto.Name</p>
+                                </td>
+                                <td>
+                                    <h5>@dto.Quantity</h5>
+                                </td>
+                                <td>
+                                    <p>$ @total</p>
+                                </td>
+                            </tr>
+                        }
                         <tr>
                             <td>
                                 <h4>Total</h4>
@@ -131,7 +93,7 @@
                                 <h5></h5>
                             </td>
                             <td>
-                                <p>$2210.00</p>
+                                <p>$ @cartTotal</p>
                             </td>
                         </tr>
                     </tbody>
