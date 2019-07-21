@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Data;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace OnlineShoesStore.Models
 {
@@ -118,7 +120,7 @@ namespace OnlineShoesStore.Models
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@username", user.Username);
-            cmd.Parameters.AddWithValue("@password", user.Password);
+            cmd.Parameters.AddWithValue("@password", ComputeSha256Hash(user.Password));
             cmd.Parameters.AddWithValue("@role", user.Role);
             cmd.Parameters.AddWithValue("@fullname", user.Fullname);
             cmd.Parameters.AddWithValue("@gender", user.Gender);
@@ -148,7 +150,7 @@ namespace OnlineShoesStore.Models
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@password", ComputeSha256Hash(password));
             cmd.Parameters.AddWithValue("@false", false);
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
@@ -263,7 +265,7 @@ namespace OnlineShoesStore.Models
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@Password", password);
+            cmd.Parameters.AddWithValue("@Password", ComputeSha256Hash(password));
             cmd.Parameters.AddWithValue("@userID", username);
             result = cmd.ExecuteNonQuery() > 0;
             cnn.Close();
@@ -333,7 +335,7 @@ namespace OnlineShoesStore.Models
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-                if (dr.GetString(0).Equals(oldPassword))
+                if (dr.GetString(0).Equals(ComputeSha256Hash(oldPassword)))
                 {
                     check = true;
                 }
@@ -341,5 +343,24 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return check;
         }
+
+        private string ComputeSha256Hash(string rawData)
+        {
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
     }
 }

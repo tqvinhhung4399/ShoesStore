@@ -190,8 +190,10 @@ namespace OnlineShoesStore.Models
             return listQuantity;
         }
 
+
+
         //H
-        public double getSizeByProductDetailID(int productDetailID)
+        public double GetSizeByProductDetailID(int productDetailID)
         {
             double size = 0;
             string sql = "Select size From ProductDetails Where productDetailID = @id";
@@ -210,5 +212,24 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return size;
         }
-}
+
+        public void UpdateAvailableProductDetailQuantity(List<CartItemDTO> listCartItems)
+        {
+            string sql = "Update ProductDetails Set Quantity = @quantity Where ProductDetailID = @productDetailID";
+            List<int> listQuantity = GetAvailableQuantityByProductDetailIDs(listCartItems);
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd;
+            for (int i = 0; i < listCartItems.Count; i++)
+            {
+                cmd = new SqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@quantity", listQuantity[i] - listCartItems[i].Quantity);
+                cmd.ExecuteNonQuery();
+            }
+            cnn.Close();
+        }
+    }
 }
