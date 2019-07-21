@@ -32,7 +32,6 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Search()
         {
-            //lay gia tri can search: Products/Search/search=yezzy
             List<ProductDTO> listProducts = new ProductData().SearchProductsByName(Request.Query["search"]);
             ViewBag.Products = listProducts;
             return View("Category");

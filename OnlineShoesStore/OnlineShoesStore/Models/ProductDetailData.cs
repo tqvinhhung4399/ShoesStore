@@ -227,6 +227,7 @@ namespace OnlineShoesStore.Models
             {
                 cmd = new SqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@quantity", listQuantity[i] - listCartItems[i].Quantity);
+                cmd.Parameters.AddWithValue("@productDetailID", listCartItems[i].ProductDetailId);
                 cmd.ExecuteNonQuery();
             }
             cnn.Close();
