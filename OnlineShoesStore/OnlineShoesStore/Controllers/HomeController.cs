@@ -189,12 +189,14 @@ namespace OnlineShoesStore.Controllers
             {
                 HttpContext.Session.SetString("SessionUser", user.Username);
                 HttpContext.Session.SetString("SessionRole", user.Role);
+                HttpContext.Session.SetString("SessionFullname", user.Fullname);
                 return RedirectToAction("UserManager", "Admin");
             }
             else
             {
                 HttpContext.Session.SetString("SessionUser", user.Username);
                 HttpContext.Session.SetString("SessionRole", user.Role);
+                HttpContext.Session.SetString("SessionFullname", user.Fullname);
                 return View("Index");
             }
         }
@@ -203,6 +205,7 @@ namespace OnlineShoesStore.Controllers
         {
             HttpContext.Session.Remove("SessionUser");
             HttpContext.Session.Remove("SessionRole");
+            HttpContext.Session.Remove("SessionFullname");
             return View("Index");
         }
 
@@ -256,6 +259,22 @@ namespace OnlineShoesStore.Controllers
             }
             ViewBag.Orders = new OrderData().GetAllOrdersByUsername(HttpContext.Session.GetString("SessionUser"));
             return View();
+        }
+
+        public IActionResult ProcessContact()
+        {
+            string name = Request.Form["txtName"];
+            string email = Request.Form["txtEmail"];
+            string message = Request.Form["txtMessage"];
+            if(new ContactData().InsertNewContact(new ContactDTO { Email = email, Fullname = name, Message = message }))
+            {
+                ViewBag.Announcement = "Send message successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Send message fail";
+            }
+            return View("Contact");
         }
 
     }

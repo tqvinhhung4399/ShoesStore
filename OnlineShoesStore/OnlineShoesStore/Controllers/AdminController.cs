@@ -617,5 +617,18 @@ namespace OnlineShoesStore.Controllers
             ViewBag.Orders = new OrderData().GetAllOrders();
             return View("OrderManager");
         }
+
+        public IActionResult ContactManager()
+        {
+            ViewBag.Contact = new ContactData().GetAllData();
+            return View();
+        }
+
+        public IActionResult ViewContactMessage()
+        {
+            int id = int.Parse(HttpContext.Request.Query["txtContactID"]);
+            ViewBag.Message = new ContactData().GetMessageByContactID(id);
+            return View();
+        }
     }
 }
