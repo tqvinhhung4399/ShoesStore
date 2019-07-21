@@ -114,6 +114,7 @@ namespace OnlineShoesStore.Controllers
                 {
                     new CartData().CheckOutCartByCartID(cartID);
                     ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);
+                    new ProductDetailData().UpdateAvailableProductDetailQuantity(new CartItemData().GetCartItemsByCartID(cartID));
                     return View();
                 } else
                 {
