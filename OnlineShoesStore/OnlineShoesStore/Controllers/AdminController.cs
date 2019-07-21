@@ -17,6 +17,10 @@ namespace OnlineShoesStore.Controllers
         //H
         public IActionResult ProcessUpdateShoes()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             bool check = true;
             int shoesID = int.Parse(Request.Form["txtShoesID"]);
             string name = Request.Form["txtName"];
@@ -36,18 +40,6 @@ namespace OnlineShoesStore.Controllers
                 {
                     listProducts.Add(new ProductDTO { ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]), IsDeleted = false });
                 }
-                //if(check = new ProductData().UpdateProductByNOTEHAM())
-                //{
-                //    if(newColors != null || newPrices != null)
-                //    {
-                //        List<ProductDTO> listNewProducts = new List<ProductDTO>();
-                //        for (int i = 0; i < colors.Length; i++)
-                //        {
-                //            listNewProducts.Add(new ProductDTO { ShoesId = shoesID, Color = colors[i], Price = double.Parse(prices[i]), IsDeleted = false });
-                //        }
-                //        check = new ProductData().InsertProducts(listNewProducts);
-                //    }
-                //}
             }
             if (check)
             {
@@ -58,22 +50,15 @@ namespace OnlineShoesStore.Controllers
                 ViewBag.Failed = "Update failed";
             }
             return View("ShoesManager");
-
-            //if (new ShoesData().AddNewShoes(shoes))
-            //{
-            //    ViewBag.Success = "Add new shoes successfully";
-            //    return View(); //view tuong ung sau khi AddNewShoes
-            //}
-            //else
-            //{
-            //    ViewBag.Failed = "Add new shoes failed!";
-            //    return View(); //view tuong ung khi add that bai
-            //}
         }
 
         //H
         public IActionResult RestoreProduct()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ProductData data = new ProductData();
             int productID = Int32.Parse(HttpContext.Request.Query["txtProductID"]);
             if (data.RestoreProduct(productID))
@@ -90,6 +75,10 @@ namespace OnlineShoesStore.Controllers
         //H
         public IActionResult RemoveProduct()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ProductData data = new ProductData();
             int productID = Int32.Parse(HttpContext.Request.Query["txtProductID"]);
             if(data.RemoveProduct(productID))
@@ -106,6 +95,10 @@ namespace OnlineShoesStore.Controllers
         //H
         public IActionResult UpdateProduct()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             bool check =false;
             string productIDStr = Request.Form["txtProductID"];
             int productID = Int32.Parse(productIDStr);
@@ -169,12 +162,17 @@ namespace OnlineShoesStore.Controllers
         }
         public IActionResult UploadImageAction()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.ProductID = HttpContext.Request.Query["txtProductID"];
             return View("UploadImage");
         }
 
         public async Task<IActionResult> UploadImage(List<IFormFile> files)
         {
+
             List<string> images = new List<string>();
             int productID = int.Parse(Request.Form["txtProductID"]);
             foreach (var formFile in files)
@@ -207,6 +205,10 @@ namespace OnlineShoesStore.Controllers
         //H
         public IActionResult ProcessRemoveShoes()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
             int id = Int32.Parse(shoesIDStr);
             if (new ShoesData().RemoveShoesByShoesID(id))
@@ -223,6 +225,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ProcessRestoreShoes()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
             int id = Int32.Parse(shoesIDStr);
             if (new ShoesData().RestoreShoesByShoesID(id))
@@ -239,6 +245,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult AddProduct()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.ListCategories = new CategoryData().GetCategories();
             ViewBag.ListBrands = new BrandData().GetBrands();
             ViewBag.ListOrigins = new OriginData().GetOrigins();
@@ -247,6 +257,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ProcessAddNewShoes()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string name = Request.Form["txtName"];
             int categoryID = int.Parse(Request.Form["slCategory"]);
             int brandID = int.Parse(Request.Form["slBrand"]);
@@ -274,22 +288,15 @@ namespace OnlineShoesStore.Controllers
             }
             ViewBag.ListShoes = new ShoesData().GetAllShoes();
             return View("ShoesManager");
-
-            //if (new ShoesData().AddNewShoes(shoes))
-            //{
-            //    ViewBag.Success = "Add new shoes successfully";
-            //    return View(); //view tuong ung sau khi AddNewShoes
-            //}
-            //else
-            //{
-            //    ViewBag.Failed = "Add new shoes failed!";
-            //    return View(); //view tuong ung khi add that bai
-            //}
         }
 
         //H
         public IActionResult ShoesManager()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.ListShoes = new ShoesData().GetAllShoes();
             return View();
         }
@@ -297,6 +304,10 @@ namespace OnlineShoesStore.Controllers
         //H
         public IActionResult EditShoes()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string shoesIDStr = HttpContext.Request.Query["txtShoesID"];
             int shoesID = Int32.Parse(shoesIDStr);
             ViewBag.Shoes = new ShoesData().GetShoesInformationByShoesID(shoesID);
@@ -319,6 +330,7 @@ namespace OnlineShoesStore.Controllers
         //H
         public IActionResult LoadDataTable()
         {
+
             DataTableData data = new DataTableData();
 
             var result = data.GetData();
@@ -390,6 +402,10 @@ namespace OnlineShoesStore.Controllers
         //Quản lí sản phảm
         public IActionResult EditProduct()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string shoesIDStr = HttpContext.Request.Query["txtProductID"];
             int productID = Int32.Parse(shoesIDStr);
             ViewBag.ShoesForPageEditProduct = new ShoesData().GetShoesDetailByProductID(productID);
@@ -401,6 +417,10 @@ namespace OnlineShoesStore.Controllers
         //H
         public IActionResult ProcessEditShoes()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             bool check = true;
             int shoesID = int.Parse(Request.Form["txtShoesID"]);
             string name = Request.Form["txtName"];
@@ -448,12 +468,20 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult BrandManager()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.Brand = new BrandData().GetBrands();
             return View();
         }
 
         public IActionResult EditBrand()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.ID = HttpContext.Request.Query["txtBrandID"];
             int id = int.Parse(HttpContext.Request.Query["txtBrandID"]);
             ViewBag.Brand = new BrandData().GetBrandNameByID(id);
@@ -462,6 +490,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ProcessEditBrand()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string brand = Request.Form["txtBrand"];
             int id = int.Parse(Request.Form["txtBrandID"]);
             if(new BrandData().UpdateBrand(new BrandDTO { BrandId = id, Name = brand }))
@@ -478,11 +510,19 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult AddBrand()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             return View();
         }
 
         public IActionResult ProcessAddBrand()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string brand = Request.Form["txtBrand"];
             if(new BrandData().AddNewBrand(brand))
             {
@@ -498,12 +538,20 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult CategoryManager()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.Category = new CategoryData().GetCategories();
             return View();
         }
 
         public IActionResult EditCategory()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.ID = HttpContext.Request.Query["txtCategoryID"];
             int id = int.Parse(HttpContext.Request.Query["txtCategoryID"]);
             ViewBag.Category = new CategoryData().getCategoryNameByCategoryID(id);
@@ -512,6 +560,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ProcessEditCategory()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string category = Request.Form["txtCategory"];
             int id = int.Parse(Request.Form["txtCategoryID"]);
             if (new CategoryData().UpdateCategory(new CategoryDTO { CategoryId = id, Name = category }))
@@ -528,11 +580,19 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult AddCategory()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             return View();
         }
 
         public IActionResult ProcessAddCategory()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string category = Request.Form["txtCategory"];
             if (new CategoryData().AddNewCategory(category))
             {
@@ -548,12 +608,20 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult OriginManager()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.Origin = new OriginData().GetOrigins();
             return View();
         }
 
         public IActionResult EditOrigin()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             ViewBag.ID = HttpContext.Request.Query["txtOriginID"];
             int id = int.Parse(HttpContext.Request.Query["txtOriginID"]);
             ViewBag.Origin = new OriginData().GetOriginNameByID(id);
@@ -562,6 +630,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ProcessEditOrigin()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string origin = Request.Form["txtOrigin"];
             int id = int.Parse(Request.Form["txtOriginID"]);
             if (new OriginData().UpdateOrigin(new OriginDTO { OriginId = id, Name = origin }))
@@ -578,11 +650,19 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult AddOrigin()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             return View();
         }
 
         public IActionResult ProcessAddOrigin()
         {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
             string origin = Request.Form["txtOrigin"];
             if (new OriginData().AddNewOrigin(origin))
             {
@@ -594,6 +674,57 @@ namespace OnlineShoesStore.Controllers
             }
             ViewBag.Origin = new OriginData().GetOrigins();
             return View("OriginManager");
+        }
+
+        public IActionResult OrderManager()
+        {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
+            ViewBag.Orders = new OrderData().GetAllOrders();
+            return View();
+        }
+
+        public IActionResult ProcessChangeOrderStatus()
+        {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
+            int id = int.Parse(HttpContext.Request.Query["txtOrderID"]);
+            string status = HttpContext.Request.Query["txtStatus"];
+            if(new OrderData().UpdateOrderStatusByOrderID(id, status))
+            {
+                ViewBag.Announcement = "Update status successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Update status failed";
+            }
+            ViewBag.Orders = new OrderData().GetAllOrders();
+            return View("OrderManager");
+        }
+
+        public IActionResult ContactManager()
+        {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
+            ViewBag.Contact = new ContactData().GetAllData();
+            return View();
+        }
+
+        public IActionResult ViewContactMessage()
+        {
+            if (!IsAdmin())
+            {
+                return View(index);
+            }
+            int id = int.Parse(HttpContext.Request.Query["txtContactID"]);
+            ViewBag.Message = new ContactData().GetMessageByContactID(id);
+            return View();
         }
     }
 }

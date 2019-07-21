@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "HistoryOrders";
+}
+
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Origin Manager</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="#">User<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Orders' history</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Tracking Box Area =================-->
+<section class="tracking_box_area section_gap">
+    <div class="container">
+        <center>
+            <h1 style="color:red;">Orders' history</h1>
+        </center>
+        <div>
+            <table id="test" class="display">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Payment Method</th>
+                        <th>Total</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (OrderDTO dto in ViewBag.Orders)
+                    {
+                        <tr>
+                            <td>@dto.OrderId</td>
+                            <td>@dto.PaymentMethod</td>
+                            <td>$ @dto.Total</td>
+                            <td>@dto.DateCreated</td>
+                            <td>@dto.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->

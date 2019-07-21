@@ -70,11 +70,19 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult ChangePassword() //create ChangePassword.cshtml
         {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
             return View();
         }
 
         public IActionResult ProcessEditInfo()
         {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
             string username = Request.Form["txtUsername"];
             string fullname = Request.Form["txtFullname"];
             string gender = Request.Form["slGender"];
@@ -105,6 +113,10 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Cart()
         {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
             return View();
         }
         public IActionResult Login()
@@ -189,12 +201,14 @@ namespace OnlineShoesStore.Controllers
             {
                 HttpContext.Session.SetString("SessionUser", user.Username);
                 HttpContext.Session.SetString("SessionRole", user.Role);
+                HttpContext.Session.SetString("SessionFullname", user.Fullname);
                 return RedirectToAction("UserManager", "Admin");
             }
             else
             {
                 HttpContext.Session.SetString("SessionUser", user.Username);
                 HttpContext.Session.SetString("SessionRole", user.Role);
+                HttpContext.Session.SetString("SessionFullname", user.Fullname);
                 return View("Index");
             }
         }
@@ -203,6 +217,7 @@ namespace OnlineShoesStore.Controllers
         {
             HttpContext.Session.Remove("SessionUser");
             HttpContext.Session.Remove("SessionRole");
+            HttpContext.Session.Remove("SessionFullname");
             return View("Index");
         }
 
@@ -246,6 +261,32 @@ namespace OnlineShoesStore.Controllers
             }
             return false;
 
+        }
+
+        public IActionResult HistoryOrders()
+        {
+            if (!IsUser())
+            {
+                return View("Index");
+            }
+            ViewBag.Orders = new OrderData().GetAllOrdersByUsername(HttpContext.Session.GetString("SessionUser"));
+            return View();
+        }
+
+        public IActionResult ProcessContact()
+        {
+            string name = Request.Form["txtName"];
+            string email = Request.Form["txtEmail"];
+            string message = Request.Form["txtMessage"];
+            if(new ContactData().InsertNewContact(new ContactDTO { Email = email, Fullname = name, Message = message }))
+            {
+                ViewBag.Announcement = "Send message successfully";
+            }
+            else
+            {
+                ViewBag.Announcement = "Send message fail";
+            }
+            return View("Contact");
         }
 
     }

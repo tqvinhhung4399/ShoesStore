@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "ContactManager";
+    Layout = "_Admin";
+}
+
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Brand Manager</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="#">Admin<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Contact Manager</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Tracking Box Area =================-->
+<section class="tracking_box_area section_gap">
+    <div class="container">
+        <center>
+            <h1 style="color:red;">Administrator - Contact Manager</h1>
+            @if (ViewBag.Announcement != null)
+            {
+                <script>
+                    alert("@ViewBag.Announcement");
+                </script>
+            }
+        </center>
+        <div>
+            <table id="test" class="display">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ContactDTO dto in ViewBag.Contact)
+                    {
+                        <tr>
+                            <td>@dto.ContactID</td>
+                            <td>@dto.Fullname</td>
+                            <td>@dto.Email</td>
+                            <td><a href="/Admin/ViewContactMessage?txtContactID=@dto.ContactID" class="btn-success btn-sm">View Message</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->
