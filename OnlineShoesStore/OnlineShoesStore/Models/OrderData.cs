@@ -14,7 +14,7 @@ namespace OnlineShoesStore.Models
         private DateTime dateCreated;
         private string status;
 
-        public int cartID { get; set; }
+        public int CartID { get; set; }
         public OrderDTO()
         {
 
@@ -89,8 +89,7 @@ namespace OnlineShoesStore.Models
             List<OrderDTO> list = new List<OrderDTO>();
             string sql = "SELECT o.* FROM Carts c, Orders o WHERE c.cartID = o.cartID AND c.userID = @userID";
             SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
-            if(cnn.State == ConnectionState.Closed)
-            {
+            if(cnn.State == ConnectionState.Closed){
                 cnn.Open();
             }
             SqlCommand cmd = new SqlCommand(sql, cnn);
@@ -103,6 +102,49 @@ namespace OnlineShoesStore.Models
             dr.Close();
             cnn.Close();
             return list;
+        }
+
+        public List<OrderDTO> GetAllOrders()
+        {
+            List<OrderDTO> listOrders = new List<OrderDTO>();
+            string sql = "Select * From Orders";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed){
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                int orderID = (int)dr[0];
+                int cartID = (int)dr[1];
+                string paymentMethod = (string)dr[2];
+                double total = (double)dr[3];
+                DateTime date = (DateTime)dr[4];
+                string status = (string)dr[5];
+                listOrders.Add(new OrderDTO { OrderId = orderID, CartID = cartID, PaymentMethod = paymentMethod, DateCreated = date, Status = status, Total = (float)total });
+            }
+            cnn.Close();
+            return listOrders;
+        }
+
+        public bool UpdateOrderStatusByOrderID(int orderID, string status)
+        {
+            bool result = false;
+            string sql = "Update Orders Set status = @status Where orderID = @orderID";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("@status", status);
+            cmd.Parameters.AddWithValue("@orderID", orderID);
+            if (cmd.ExecuteNonQuery() > 0)
+            {
+                result = true;
+            }
+            return result;
         }
     }
 }
