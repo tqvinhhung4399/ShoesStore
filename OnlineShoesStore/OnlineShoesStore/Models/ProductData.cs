@@ -427,5 +427,38 @@ namespace OnlineShoesStore.Models
             cnn.Close();
             return list;
         }
+
+        public List<ProductDTO> GetTrendingProducts()
+        {
+            List<ProductDTO> list = new List<ProductDTO>();
+            string sql = "Select Top 8 s.name, p.price, p.productID, p.color From Products p, Shoes s Where p.shoesID = s.ShoesID AND s.isDeleted=0 AND p.isDeleted=0 OrderBy P.ProductID DESC";
+            SqlConnection cnn = new SqlConnection(Consts.Consts.connectionString);
+            if (cnn.State == ConnectionState.Closed)
+            {
+                cnn.Open();
+            }
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            string color;
+            int productID;
+            double price;
+            string name;
+            ProductDTO dto = null;
+            while (dr.Read())
+            {
+                name = dr.GetString(0);
+                price = dr.GetDouble(1);
+                productID = dr.GetInt32(2);
+                color = dr.GetString(3);
+                dto = new ProductDTO(productID, 0, price, color, false);
+                dto.Image = new ProductImageData().GetImageByProductID(productID);
+                dto.Name = name;
+                list.Add(dto);
+            }
+            cnn.Close();
+            return list;
+        }
     }
+
+
 }
