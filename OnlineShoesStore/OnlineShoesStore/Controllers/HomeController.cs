@@ -61,12 +61,12 @@ namespace OnlineShoesStore.Controllers
         //    return RedirectToAction("ViewInfo");
         //}
 
-        public IActionResult ViewInfo() //create ViewInfo.cshtml
-        {
-            UserDTO user = new UserData().GetUserInfoByUsername(HttpContext.Session.GetString("SessionUser"));
-            ViewBag.User = user;
-            return View();
-        }
+        //public IActionResult ViewInfo() //create ViewInfo.cshtml
+        //{
+        //    UserDTO user = new UserData().GetUserInfoByUsername(HttpContext.Session.GetString("SessionUser"));
+        //    ViewBag.User = user;
+        //    return View();
+        //}
 
         public IActionResult ChangePassword() //create ChangePassword.cshtml
         {

@@ -12,20 +12,11 @@ namespace OnlineShoesStore.Controllers
     public class ShoppingController : Controller
     {
         private readonly string index = "~/Views/Home/Index.cshtml";
+        private readonly string login = "~/Views/Home/Login.cshtml";
 
         public IActionResult Checkout()
         {
-            //if (!IsAuthorizedUser())
-            //{
-            //    return View(index);
-            //}
-            //if (new CartItemData().CheckValidCartItems(new CartItemData().GetCartItemsByCartID(new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser"))))){
-            //    return View();
-            //} else
-            //{
-            //    return RedirectToAction("Cart");
-            //}
-            if (!IsAuthorizedUser())
+            if (!IsUser())
             {
                 return View(index);
             }
@@ -57,9 +48,9 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Cart()
         {
-            if (!IsAuthorizedUser())
+            if (!IsUser())
             {
-                return View(index);
+                return View(login);
             }
             int cartID = new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser"));
             ViewBag.Cart = new CartItemData().GetCartItemsByCartID(cartID);
@@ -68,9 +59,9 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult AddToCart()
         {
-            if (!IsAuthorizedUser())
+            if (!IsUser())
             {
-                return View(index);
+                return View(login);
             }
             int cartID = new CartData().GetCartIDByUsername(HttpContext.Session.GetString("SessionUser"));
 
@@ -99,7 +90,7 @@ namespace OnlineShoesStore.Controllers
 
         public IActionResult Confirmation()
         {
-            if (!IsAuthorizedUser())
+            if (!IsUser())
             {
                 return View(index);
             }
@@ -132,21 +123,23 @@ namespace OnlineShoesStore.Controllers
             }
         }
 
-        public bool IsAuthorizedUser()
+        public bool IsUser()
         {
-            if(HttpContext.Session.GetString("SessionUser") != null)
+            string role = HttpContext.Session.GetString("SessionRole");
+            if (role != null)
             {
-                return true;
+                if (role.Equals("user"))
+                {
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
+
         }
 
         public IActionResult ProcessUpdateCart()
         {
-            if (!IsAuthorizedUser())
+            if (!IsUser())
             {
                 return View(index);
             }

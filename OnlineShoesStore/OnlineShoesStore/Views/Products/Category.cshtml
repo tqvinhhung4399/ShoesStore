@@ -91,39 +91,51 @@
             <!-- Start Best Seller -->
             <section class="lattest-product-area pb-40 category-list">
                 <div class="row" id="content">
+                    @if (ViewBag.Products != null)
+                    {
+                        if (ViewBag.Products.Count == 0)
+                        {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-product">
+                            <h2>THE LIST IS EMPTY</h2>
+                        </div>
+                    </div>
+                            
+                        }
+                    }
                     <!-- single product -->
                     @*@foreach (ProductDTO dto in ViewBag.Products)
-            {
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-product">
-                        <img class="img-fluid" src="~/img/product/p1.jpg" alt="">
-                        <div class="product-details">
-                            <center>
-                                <a class="btn-info btn-sm" style="font-size:25px;" href="/Products/ProductDetail?txtID=@dto.ProductId">@dto.Name</a>
-                                <h6>
-                                    <br />
-                                    @dto.Color
-                                </h6>
-                                <h6 style="font-size:20px;">$@dto.Price</h6>
-                            </center>
-                            <div class="price">
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="single-product">
+                    <img class="img-fluid" src="~/img/product/p1.jpg" alt="">
+                    <div class="product-details">
+                        <center>
+                            <a class="btn-info btn-sm" style="font-size:25px;" href="/Products/ProductDetail?txtID=@dto.ProductId">@dto.Name</a>
+                            <h6>
+                                <br />
+                                @dto.Color
+                            </h6>
+                            <h6 style="font-size:20px;">$@dto.Price</h6>
+                        </center>
+                        <div class="price">
 
-                            </div>
-                            <div class="prd-bottom">
+                        </div>
+                        <div class="prd-bottom">
 
-                                <a href="" class="social-info">
-                                    <span class="ti-bag"></span>
-                                    <p class="hover-text">Add to cart</p>
-                                </a>
-                                <a href="" class="social-info">
-                                    <span class="lnr lnr-move"></span>
-                                    <p class="hover-text">Show details</p>
-                                </a>
-                            </div>
+                            <a href="" class="social-info">
+                                <span class="ti-bag"></span>
+                                <p class="hover-text">Add to cart</p>
+                            </a>
+                            <a href="" class="social-info">
+                                <span class="lnr lnr-move"></span>
+                                <p class="hover-text">Show details</p>
+                            </a>
                         </div>
                     </div>
                 </div>
-            }*@
+            </div>
+        }*@
                 </div>
                 <ul id="pagination-demo" class="pagination-lg"></ul>
             </section>
