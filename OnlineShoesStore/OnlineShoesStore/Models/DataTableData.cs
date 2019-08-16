@@ -101,7 +101,6 @@ namespace OnlineShoesStore.Models
                 string sq = "" + dr.GetDouble(0) + " - " + dr.GetInt32(1);
                 sizeQuantity.Add(sq);
             }
-            dr.Close();
             cnn.Close();
             return sizeQuantity;
         }
@@ -142,7 +141,6 @@ namespace OnlineShoesStore.Models
                 isDeleted = dr.GetBoolean(5);
                 result.Add(new DataTableDTO(brand, name, color, prices, sizeQuantity, proID, isDeleted));
             }
-            dr.Close();
             cnn.Close();
             return result;
         }

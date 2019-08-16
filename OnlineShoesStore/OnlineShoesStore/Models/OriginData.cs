@@ -66,7 +66,6 @@ namespace OnlineShoesStore.Models
                 name = dr.GetString(1);
                 result.Add(new OriginDTO(originId, name, false));
             }
-            dr.Close();
             cnn.Close();
             return result;
         }
@@ -85,7 +84,6 @@ namespace OnlineShoesStore.Models
             if (dr.Read()) {
                 originName = (string)dr[0];
             }
-            dr.Close();
             cnn.Close();
             return originName;
         }

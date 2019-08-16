@@ -125,7 +125,6 @@ namespace OnlineShoesStore.Models
                 string username = (string)dr[6];
                 listOrders.Add(new OrderDTO { OrderId = orderID, CartID = cartID, PaymentMethod = paymentMethod, DateCreated = date, Status = status, Total = (float)total, Username = username });
             }
-            dr.Close();
             cnn.Close();
             return listOrders;
         }

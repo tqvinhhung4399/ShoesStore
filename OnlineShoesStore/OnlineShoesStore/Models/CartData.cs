@@ -52,7 +52,6 @@ namespace OnlineShoesStore.Models
             {
                 cartID = (int)dr[0];
             }
-            dr.Close();
             cnn.Close();
             return cartID;
         }
