@@ -67,6 +67,7 @@ namespace OnlineShoesStore.Models
                 name = dr.GetString(1);
                 result.Add(new BrandDTO(brandId, name, false));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -85,6 +86,7 @@ namespace OnlineShoesStore.Models
             if (dr.Read()) {
                 brandName = (string)dr[0];
             }
+            dr.Close();
             cnn.Close();
             return brandName;
         }

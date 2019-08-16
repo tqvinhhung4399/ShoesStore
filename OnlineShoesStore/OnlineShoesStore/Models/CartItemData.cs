@@ -180,6 +180,7 @@ namespace OnlineShoesStore.Models
                 dto.Image = new ProductImageData().GetImageByProductID(new ProductData().GetProductByProductDetailID(dto.ProductDetailId).ProductId);
                 listCartItems.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return listCartItems;
         }
@@ -223,6 +224,7 @@ namespace OnlineShoesStore.Models
             {
                 result = true;
             }
+            dr.Close();
             cnn.Close();
             return result;
         }

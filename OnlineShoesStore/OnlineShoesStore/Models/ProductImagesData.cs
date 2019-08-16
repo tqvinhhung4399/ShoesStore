@@ -59,6 +59,7 @@ namespace OnlineShoesStore.Models
                 string image = (string)dr[2];
                 result.Add(new ProductImagesDTO(productImageID, productID, image));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -79,6 +80,7 @@ namespace OnlineShoesStore.Models
             {
                 image = (string)dr[0];
             }
+            dr.Close();
             cnn.Close();
             return image;
         }

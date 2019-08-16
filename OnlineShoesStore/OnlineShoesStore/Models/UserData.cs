@@ -163,6 +163,7 @@ namespace OnlineShoesStore.Models
                 string role = (string)dr[5];
                 user = new UserDTO(username, password = null, fullname, gender, dob, address, tel, false, role);
             }
+            dr.Close();
             cnn.Close();
             return user;
         }
@@ -189,6 +190,7 @@ namespace OnlineShoesStore.Models
                 string role = (string)dr[5];
                 user = new UserDTO(username, null, fullname, gender, dob, address, tel, false, role);
             }
+            dr.Close();
             cnn.Close();
             return user;
         }
@@ -217,6 +219,7 @@ namespace OnlineShoesStore.Models
                 UserDTO user = new UserDTO(username,null,fullname,gender,dob,address,tel,isDeleted,role);
                 result.Add(user);
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -317,6 +320,7 @@ namespace OnlineShoesStore.Models
                     Username = username
                 };
             }
+            dr.Close();
             cnn.Close();
             return dto;
         }
@@ -340,6 +344,7 @@ namespace OnlineShoesStore.Models
                     check = true;
                 }
             }
+            dr.Close();
             cnn.Close();
             return check;
         }
