@@ -502,13 +502,8 @@ namespace OnlineShoesStore.Models
             {
                 shoesId = dr.GetInt32(0);
             }
-<<<<<<< HEAD
-=======
             dr.Close();
-<<<<<<< HEAD
->>>>>>> parent of 33e6768... Merge branch 'master' of https://github.com/tqvinhhung4399/ShoesStore
-=======
->>>>>>> parent of 33e6768... Merge branch 'master' of https://github.com/tqvinhhung4399/ShoesStore
+            cnn.Close();
             return shoesId;
         }
 
