@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OnlineShoesStore</title>
 
-    <environment include="Development">
+    <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/DataTableCSS.css">
         <link rel="stylesheet" href="~/css/linearicons.css">
         <link rel="stylesheet" href="~/css/font-awesome.min.css">
@@ -171,7 +171,7 @@
         </footer>
     </div>
 
-    <environment include="Development">
+    <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>

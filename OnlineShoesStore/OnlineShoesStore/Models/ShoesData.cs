@@ -502,6 +502,8 @@ namespace OnlineShoesStore.Models
             {
                 shoesId = dr.GetInt32(0);
             }
+            dr.Close();
+            cnn.Close();
             return shoesId;
         }
 
