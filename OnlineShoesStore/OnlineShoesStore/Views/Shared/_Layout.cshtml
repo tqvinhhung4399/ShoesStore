@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OnlineShoesStore</title>
 
-    <environment names="Staging,Production">
+    <environment include="Development">
         <link rel="stylesheet" href="~/css/DataTableCSS.css">
         <link rel="stylesheet" href="~/css/linearicons.css">
         <link rel="stylesheet" href="~/css/font-awesome.min.css">
@@ -22,8 +22,7 @@
         <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
         <link rel="icon" href="~/img/fav.png">
     </environment>
-    @*<environment exclude="
-        ">
+    @*<environment exclude="Development">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
                   asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
@@ -172,7 +171,7 @@
         </footer>
     </div>
 
-    <environment names="Staging,Production">
+    <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>

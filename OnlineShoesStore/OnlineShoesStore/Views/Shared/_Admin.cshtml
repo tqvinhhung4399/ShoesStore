@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OnlineShoesStore</title>
 
-    <environment names="Staging,Production">
+    <environment include="Development">
         <link rel="stylesheet" href="~/file4.css" />
         <link rel="stylesheet" href="~/file5.css" />
         <link rel="stylesheet" href="~/css/datatable.css" />
@@ -185,7 +185,7 @@
         </footer>
     </div>
 
-    <environment names="Staging,Production">
+    <environment include="Development">
         <script src="~/file1.js"></script>
         <script src="~/file2.js"></script>
         <script src="~/file3.js"></script>
