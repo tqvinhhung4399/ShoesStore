@@ -201,6 +201,7 @@ namespace OnlineShoesStore.Models
                 originId = dr.GetInt32(6);
                 result.Add(new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -237,6 +238,7 @@ namespace OnlineShoesStore.Models
                 dto.OriginName = new OriginData().GetOriginNameByID(originId);
                 result.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -267,6 +269,7 @@ namespace OnlineShoesStore.Models
                 originId = dr.GetInt32(6);
                 result.Add(new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -297,6 +300,7 @@ namespace OnlineShoesStore.Models
                 originId = dr.GetInt32(6);
                 result.Add(new ShoesDTO(shoesId, name, categoryId, brandId, material, des, originId, false));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -327,6 +331,7 @@ namespace OnlineShoesStore.Models
                 des = dr.GetString(5);
                 result.Add(new ShoesDTO(shoesId, name, categoryId, originId, material, des, originId, false));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -357,6 +362,7 @@ namespace OnlineShoesStore.Models
                 string image = GetImageByShoesID(shoesID);
                 result.Add(new ShoesDTO(shoesID, name, categoryName, brandName, price, image));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -377,6 +383,7 @@ namespace OnlineShoesStore.Models
             {
                 shoesID = (int)dr[0];
             }
+            dr.Close();
             cnn.Close();
             return shoesID;
         }
@@ -415,6 +422,7 @@ namespace OnlineShoesStore.Models
                 shoes.Description = description;
                 shoes.OriginName = originName;
             }
+            dr.Close();
             cnn.Close();
             return shoes;
         }
@@ -435,6 +443,7 @@ namespace OnlineShoesStore.Models
             {
                 price = (float)dr[0];
             }
+            dr.Close();
             cnn.Close();
             return price;
         }
@@ -457,6 +466,7 @@ namespace OnlineShoesStore.Models
             {
                 image = (string)dr[0];
             }
+            dr.Close();
             cnn.Close();
             return image;
         }
@@ -502,6 +512,8 @@ namespace OnlineShoesStore.Models
             {
                 shoesId = dr.GetInt32(0);
             }
+            dr.Close();
+            cnn.Close();
             return shoesId;
         }
 
@@ -544,6 +556,7 @@ namespace OnlineShoesStore.Models
                     OriginName = originName
                 };
             }
+            dr.Close();
             cnn.Close();
             return shoes;
         }
@@ -564,6 +577,7 @@ namespace OnlineShoesStore.Models
             {
                 shoesName = dr.GetString(0);
             }
+            dr.Close();
             cnn.Close();
             return shoesName;
         }

@@ -82,6 +82,7 @@ namespace OnlineShoesStore.Models
                 dto.Image = image;
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
@@ -120,6 +121,7 @@ namespace OnlineShoesStore.Models
                 dto.Image = image;
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
@@ -145,6 +147,7 @@ namespace OnlineShoesStore.Models
                 name = dr.GetString(1);
                 result.Add(new CategoryDTO(categoryId, name, false));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -163,6 +166,7 @@ namespace OnlineShoesStore.Models
             if (dr.Read()) {
                 categoryID = (string)dr[0];
             }
+            dr.Close();
             cnn.Close();
             return categoryID;
         }
@@ -217,6 +221,7 @@ namespace OnlineShoesStore.Models
             {
                 categoryName = (string)dr[0];
             }
+            dr.Close();
             cnn.Close();
             return categoryName;
         }

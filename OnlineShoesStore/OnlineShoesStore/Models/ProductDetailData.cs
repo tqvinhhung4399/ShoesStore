@@ -82,6 +82,7 @@ namespace OnlineShoesStore.Models
                 bool isDeleted = (bool)dr[4];
                 result.Add(new ProductDetailDTO(productDetailID, (float)size, quantity, productID, isDeleted));
             }
+            dr.Close();
             cnn.Close();
             return result;
         }
@@ -209,6 +210,7 @@ namespace OnlineShoesStore.Models
             {
                 size = (double)dr[0];
             }
+            dr.Close();
             cnn.Close();
             return size;
         }

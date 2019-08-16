@@ -121,6 +121,7 @@ namespace OnlineShoesStore.Models
                 dto = new ProductDTO(productID, shoesID, price, color, false);
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
@@ -153,6 +154,7 @@ namespace OnlineShoesStore.Models
                 dto.Image = new ProductImageData().GetImageByProductID(productID);
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
@@ -184,6 +186,7 @@ namespace OnlineShoesStore.Models
                 dto.Name = name;
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
@@ -280,6 +283,7 @@ namespace OnlineShoesStore.Models
                 string color = (string)dr[3];
                 product = new ProductDTO {ShoesId = shoesID, Price = price, Color = color, ProductId = productID };
             }
+            dr.Close();
             cnn.Close();
             return product;
         }
@@ -305,6 +309,7 @@ namespace OnlineShoesStore.Models
                 int productID = (int)dr[3];
                 product = new ProductDTO { ShoesId = shoesID, Price = price, Color = color, ProductId = productID};
             }
+            dr.Close();
             cnn.Close();
             return product;
         }
@@ -392,6 +397,7 @@ namespace OnlineShoesStore.Models
                 dto.Image = new ProductImageData().GetImageByProductID(productID);
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
@@ -424,6 +430,7 @@ namespace OnlineShoesStore.Models
                 dto.Image = new ProductImageData().GetImageByProductID(productID);
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
@@ -455,6 +462,7 @@ namespace OnlineShoesStore.Models
                 dto.Name = name;
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
