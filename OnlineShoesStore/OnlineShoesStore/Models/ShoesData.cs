@@ -505,6 +505,9 @@ namespace OnlineShoesStore.Models
 <<<<<<< HEAD
 =======
             dr.Close();
+<<<<<<< HEAD
+>>>>>>> parent of 33e6768... Merge branch 'master' of https://github.com/tqvinhhung4399/ShoesStore
+=======
 >>>>>>> parent of 33e6768... Merge branch 'master' of https://github.com/tqvinhhung4399/ShoesStore
             return shoesId;
         }
