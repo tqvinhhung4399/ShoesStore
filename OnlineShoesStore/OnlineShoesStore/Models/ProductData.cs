@@ -455,6 +455,7 @@ namespace OnlineShoesStore.Models
                 dto.Name = name;
                 list.Add(dto);
             }
+            dr.Close();
             cnn.Close();
             return list;
         }
